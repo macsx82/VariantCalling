@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -10,17 +11,25 @@ echo
 SM=$1					#sample name
 gVCF="${SM}_g.vcf.gz"			#final_merged 
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #12
 echo
-cd ${fol6}/
+# cd ${fol6}/
 echo "> Check gVCF"
-while read -r f1; do ${GATK4} --java-options ${java_opt1x} ValidateVariants -V ${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES; done < ${sorgILhg38ChrCHECK}
+while read -r f1
+do
+    ${GATK4} --java-options ${java_opt1x} ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
+
+done < ${sorgILhg38ChrCHECK}
 echo "- END -"
 
-exit
+touch step12.done
 
 
 
