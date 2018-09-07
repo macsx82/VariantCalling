@@ -9,8 +9,8 @@
 #                                                   #
 #                                                   #
 #####################################################
+set -e
 
-echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
 dt1=$(date '+%Y/%m/%d %H:%M:%S');
 echo "${dt1}"
@@ -25,7 +25,6 @@ uBAM="${SM}_unmapped.bam"		#unmapped bam
 ### - SOURCEs - ###
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1
-
 source ${param_file}
 ### - CODE - ###
 
@@ -76,6 +75,7 @@ echo
 rm -v ${fol1}/"${SM}_header"
 
 # exit
-
+#generate a file that will tell us if the step is completed
+touch step0101.done
 
 

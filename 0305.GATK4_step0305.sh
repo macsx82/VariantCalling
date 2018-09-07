@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -15,8 +16,11 @@ mdBAM="${SM}_markdup.bam"		#mark dupplicates of the merged bam
 metfile="${SM}_dupmetrics.txt"		#metrics file
 fBAM="${SM}_fixed.bam"			#sorted and fixed file
 fBAMs="${SM}_fixedsort.bam"		#fixed sorted bam
+
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+#We will provide a different param file for each user, with variables and softwares paths as needed
+param_file=$1
+source ${param_file}
 ### - CODE - ###
 
 #3
