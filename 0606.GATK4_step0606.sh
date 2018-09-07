@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -12,18 +13,25 @@ f2=$2					#interval qsubID
 SM=$3					#sample name
 fBAM="${SM}_fixed.bam"			#sorted and fixed file
 c_bqsrrd="${SM}_${f2}_recaldata.csv"	#conting recalibration report
+
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
+### - CODE - ###
 ### - CODE - ###
 
 #loop-6
 echo
-cd ${fol1}/
+# cd ${fol1}/
 echo "> BaseRecalibrator"
-${GATK4} --java-options ${java_opt2x} BaseRecalibrator -R ${GNMhg38} -I ${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -L ${f1}
+${GATK4} --java-options ${java_opt2x} BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -L ${f1}
 echo "- END -"
 
-exit
-
+#generate a file that will tell us if the step is completed
+touch step0606.done
+# exit
 
 

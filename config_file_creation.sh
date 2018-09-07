@@ -21,6 +21,29 @@ java_XX2='-XX:GCHeapFreeLimit=10'		# 09-HaplotypeCaller
 bs=1			#batch size		# GenomicsDBImport
 rt=1			#read thread		# GenomicsDBImport
 ip2=200			#interval_padding (bp)	# GenomicsDBImport
+
+#step 1
+SM=$1                   #sample name
+val1="${SM}_1_val_1.fq.gz"      #fastq 1 after trimming
+val2="${SM}_2_val_2.fq.gz"      #fastq 2 after trimming
+uBAM="${SM}_unmapped.bam"       #unmapped bam
+
+#step 2
+bBAM="${SM}_bwa.bam"            #mapped bam
+
+#step 3-5
+mBAM="${SM}_merged.bam"         #merge unmapped bam and mapped bam
+mdBAM="${SM}_markdup.bam"       #mark dupplicates of the merged bam
+metfile="${SM}_dupmetrics.txt"      #metrics file
+fBAM="${SM}_fixed.bam"          #sorted and fixed file
+fBAMs="${SM}_fixedsort.bam"     #fixed sorted bam
+
+#step 6
+f1=$1                   #interval contings
+f2=$2                   #interval qsubID
+c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
+
+
 #---#
 java_opt1x='-Xmx5g'	#meroria java		# Chr12,Wg12,21x2
 java_opt2x='-Xmx10g'	#meroria java		# 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26

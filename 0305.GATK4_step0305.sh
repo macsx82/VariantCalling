@@ -138,7 +138,9 @@ rm -v ${fol1}/"${SM}_merged.bam"
 rm -v ${fol1}/"${SM}_unmapped.bam"
 rm -v ${fol2}/"${SM}_fixedsort.bam"
 
-exit
+#generate a file that will tell us if the step is completed
+touch step0305.done
+# exit
 
 
 
