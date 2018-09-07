@@ -26,6 +26,9 @@ uBAM="${SM}_unmapped.bam"		#unmapped bam
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1
 source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #1a
