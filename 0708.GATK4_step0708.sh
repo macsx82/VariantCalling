@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -14,47 +15,48 @@ fBAM="${SM}_fixed.bam"			#sorted and fixed file
 c_bqsrrd="${SM}_${f2}_recaldata.csv"	#conting recalibration report
 bqsrrd="${SM}_recal_data.csv"		#final_merged recalibration report
 applybqsr="${SM}_bqsr.bam"		#final_merged apply recalibration report in bam
+
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #7a
 echo
-cd ${fol3}/
+# cd ${fol3}/
 echo "> BQSRReports ID data"
-BRs=`find ${SM}_*_recaldata.csv -type f -printf "%f\n" | awk '{print " -I "$1}' | tr "\n" "\t" | sed 's/\t / /g'`
+BRs=`find ${fol3}/${SM}_*_recaldata.csv -type f -printf "%f\n" | awk '{print " -I "$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 echo "- END -"
 
 #7b
 echo
-cd ${fol3}/
+# cd ${fol3}/
 echo "> GatherBqsrReports"
-${GATK4} --java-options ${java_opt2x} GatherBQSRReports ${BRs} -O ${bqsrrd}
+${GATK4} --java-options ${java_opt2x} GatherBQSRReports ${BRs} -O ${fol3}/${bqsrrd}
 echo "- END -"
 
 #8
 echo
-cd ${fol1}/
+# cd ${fol1}/
 echo "> ApplyBQSR"
-${GATK4} --java-options ${java_opt2x} ApplyBQSR -R ${GNMhg38} -I ${fBAM} -O ${fol4}/${applybqsr} -bqsr ${fol3}/${bqsrrd} --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 --add-output-sam-program-record --create-output-bam-md5 --use-original-qualities
+${GATK4} --java-options ${java_opt2x} ApplyBQSR -R ${GNMhg38} -I ${fol1}/${fBAM} -O ${fol4}/${applybqsr} -bqsr ${fol3}/${bqsrrd} --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 --add-output-sam-program-record --create-output-bam-md5 --use-original-qualities
 echo "- END -"
 
 #Validation
 echo
 cd ${fol4}/
 echo "> Validation applybqsr"
-java -jar ${PICARD} ValidateSamFile I=${applybqsr} MODE=SUMMARY TMP_DIR=${tmp}/
-echo "- END -"
+# call the sam_validate function
+sam_validate ${fol4}/${applybqsr}
 
 #Stat
 echo
-cd ${fol4}/
-${SAMTOOLS} flagstat ${applybqsr}
-echo
-${SAMTOOLS} view -H ${applybqsr} | grep '@RG'
-echo
-${SAMTOOLS} view -H ${applybqsr} | grep '@PG'
-echo "- END -"
+# cd ${fol4}/
+# call the sam_stats function
+sam_stats ${fol4}/${applybqsr}
 
 #del
 echo
@@ -66,4 +68,4 @@ rm -r ${fol1}/"${SM}_fixed.bam.md5"
 exit
 
 
-
+touch step0708.done
