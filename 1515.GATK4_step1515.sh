@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -12,7 +13,11 @@ f1=$2					#interval file
 f2=$3					#interval file
 int_vcf="${variantdb}_${f2}.vcf"	#interval vcf
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #15
@@ -22,7 +27,7 @@ echo "> GenotypeGVCFs"
 ${GATK4} --java-options ${java_opt2x} GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V gendb://${variantdb}/${f2} -L "${f1}"
 echo "- END -"
 
-exit
+touch step15.done
 
 
 
