@@ -1,3 +1,12 @@
+#!/usr/bin/env bash
+
+#####################################
+#This script is going to be used to create param file with custom variables and path that will be used by all the pipeline scripts
+
+
+function build_template(){
+
+cat << EOF
 ### - VARIABLEs- ###
 LB=LibXXX		#libreria		# 01,02
 PL=Illumina		#piattaforma		# 01,02
@@ -57,29 +66,50 @@ HAPMAP=/home/shared/resources/gatk4hg38db/hapmap_3.3.hg38.vcf.gz
 OMNI=/home/shared/resources/gatk4hg38db/1000G_omni2.5.hg38.vcf.gz
 OTGsnps=/home/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf.gz
 
-### - PATH FOLDERs - ###
-fol0=/home/manolis/GATK4preAnalysis/4.fastq_post
-fol1=/home/manolis/GATK4/germlineVariants/1.BAM
-fol2=/home/manolis/GATK4/germlineVariants/1.BAM/infostorage
-fol3=/home/manolis/GATK4/germlineVariants/1.BAM/processing
-fol4=/home/manolis/GATK4/germlineVariants/1.BAM/storage
-fol5=/home/manolis/GATK4/germlineVariants/2.gVCF/processing
-fol6=/home/manolis/GATK4/germlineVariants/2.gVCF/storage
-fol7=/home/manolis/GATK4/germlineVariants/3.genomicsDB
-fol8=/home/manolis/GATK4/germlineVariants/4.VCF/processing
-fol9=/home/manolis/GATK4/germlineVariants/4.VCF/storage
 
 ### - PATH TOOLs - ###
-PICARD=/share/apps/bio/picard-2.17.3/picard.jar	# v2.17.3
-BWA=/share/apps/bio/bin/bwa 			# v0.7.17-r1188
-SAMTOOLS=/share/apps/bio/samtools/samtools	# v1.9-2-g02d93a1
-GATK4=/share/apps/bio/gatk-4.0.8.1/gatk		# v4.0.8.1
-BCFTOOLS=/share/apps/bio/bcftools/bcftools	# v1.9-18-gbab2aad
+PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
+BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
+SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
+GATK4=/share/apps/bio/gatk-4.0.8.1/gatk     # v4.0.8.1
+BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
+
+### - PATH FOLDERs - ###
+base_out=$1
+fol0=${base_out}/preAnalysis/4.fastq_post
+fol1=${base_out}/germlineVariants/1.BAM
+fol2=${base_out}/germlineVariants/1.BAM/infostorage
+fol3=${base_out}/germlineVariants/1.BAM/processing
+fol4=${base_out}/germlineVariants/1.BAM/storage
+fol5=${base_out}/germlineVariants/2.gVCF/processing
+fol6=${base_out}/germlineVariants/2.gVCF/storage
+fol7=${base_out}/germlineVariants/3.genomicsDB
+fol8=${base_out}/germlineVariants/4.VCF/processing
+fol9=${base_out}/germlineVariants/4.VCF/storage
 
 ### - Path / Log / Tmp - ###
-hs=/home/manolis/GATK4/germlineVariants/0.pipe
-lg=/home/manolis/GATK4/germlineVariants/Log
-tmp=/home/manolis/localtemp
+hs=${base_out}/GATK4/germlineVariants/0.pipe
+lg=${base_out}/GATK4/germlineVariants/Log
+tmp=/home/${USER}/localtemp
+EOF
+}
 
+if [ $# -lt 1 ]
+then
+    echo "#########################"
+    echo "WRONG argument number!"
+    echo "Usage:"
+    echo "config_file_creation.sh <template_folder> <output_folder>"
+    echo "#########################"
+    exit 1
+fi
 
+#ARGS
+template_dir=$1
+out_dir=$2
 
+suffix=`date +"%d%m%Y%H%M%S"`
+
+build_template ${out_dir} > ${template_dir}/VarCall_${suffix}.conf
+
+echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify dditional parameters."

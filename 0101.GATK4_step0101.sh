@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+#####################################################
+# Original scripts from Athanasakis Emmanouil       #
+# e-mail: emmanouil.athanasakis[at]burlo.trieste.it #
+#                                                   #
+# Mods by Massimiliano Cocca - 06/09/2018           #
+# e-mail: massimiliano.cocca[at]burlo.trieste.it    #
+#                                                   #
+#                                                   #
+#####################################################
+
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
 dt1=$(date '+%Y/%m/%d %H:%M:%S');
@@ -11,8 +21,12 @@ SM=$1					#sample name
 val1="${SM}_1_val_1.fq.gz"		#fastq 1 after trimming
 val2="${SM}_2_val_2.fq.gz"		#fastq 2 after trimming
 uBAM="${SM}_unmapped.bam"		#unmapped bam
+
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+#We will provide a different param file for each user, with variables and softwares paths as needed
+param_file=$1
+
+source ${param_file}
 ### - CODE - ###
 
 #1a
