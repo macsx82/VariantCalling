@@ -39,20 +39,14 @@ echo "- END -"
 
 #Validation
 echo
-# cd ${fol1}/
+# call the sam_validate function
 echo "> Validation bBAM"
-java -jar ${PICARD} ValidateSamFile I=${fol1}/${bBAM} MODE=SUMMARY TMP_DIR=${tmp}/
-echo "- END -"
+sam_validate ${fol1}/${bBAM}
 
 #Stat
 echo
-# cd ${fol1}/
-${SAMTOOLS} flagstat ${fol1}/${bBAM}
-echo
-${SAMTOOLS} view -H ${fol1}/${bBAM} | grep '@RG'
-echo
-${SAMTOOLS} view -H ${fol1}/${bBAM} | grep '@PG'
-echo "- END -"
+# call the sam_stats function
+sam_stats ${fol1}/${bBAM}
 
 #del
 echo
