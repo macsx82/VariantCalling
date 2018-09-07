@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -19,21 +20,25 @@ trs="${variantdb}_snp.tranches"
 mode_S=SNP
 
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #21a
 echo
-cd ${fol8}/${variantdb}/
+# cd ${fol8}/${variantdb}/
 echo "> indel Apply VQSR"
-${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${inout} -V ${SO} --recal-file ${iVR} --tranches-file ${tri} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_I}
+${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${SO} --recal-file ${fol8}/${variantdb}/{iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_I}
 echo "- END -"
 
 #21b
 echo
-cd ${fol8}/${variantdb}/
+# cd ${fol8}/${variantdb}/
 echo "> snp Apply VQSR"
-${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${inout} --recal-file ${sVR} --tranches-file ${trs} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_S}
+${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${fol8}/${variantdb}/${inout} --recal-file ${fol8}/${variantdb}/${sVR} --tranches-file ${fol8}/${variantdb}/${trs} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_S}
 echo "- END -"
 
 #del
@@ -44,7 +49,7 @@ rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO-sVR.vcf*
 rm -v ${fol8}/${variantdb}/${variantdb}_*.tranches
 rm -v ${fol8}/${variantdb}/${variantdb}_tmp.indel.recalibrated.vcf*
 
-exit
+touc step21.done
 
 
 

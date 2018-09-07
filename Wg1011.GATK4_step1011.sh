@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
@@ -11,19 +12,23 @@ SM=$1					#sample name
 gVCF="${SM}_g.vcf.gz"			#final_merged gVCF file
 fixgVCF="${SM}-g.vcf.gz"		#fixed gVCF file
 ### - SOURCEs - ###
-source /home/manolis/GATK4/gatk4path.sh
+param_file=$1
+source ${param_file}
+#source functions file
+own_folder=`dirname $0`
+source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
 
 #10a1
 echo
-cd ${fol5}/
+# cd ${fol5}/
 echo "> gVCF list"
-mkdir "f_${SM}"
-ls ${SM}_*_g.vcf.gz > "f_${SM}"/"${SM}.list"
+mkdir -p ${fol5}/f_${SM}
+ls ${fol5}/${SM}_*_g.vcf.gz > ${fol5}/f_${SM}/${SM}.list
 
 #10a2
 echo
-cd ${fol5}/"f_${SM}"/
+# cd ${fol5}/f_${SM}/
 echo "> Split gVCF list"
 awk '{print "../"$1}' "${SM}.list" > listToSplit
 split -a 2 -d listToSplit
