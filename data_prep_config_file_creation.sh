@@ -228,6 +228,10 @@ done
 
 fastq_mode=$3
 
+mkdir -p ${out_dir}
+mkdir -p ${template_dir}
+
+
 if [[ ${fastq_mode} -eq 1 ]]; then
   #statements
   build_template_fastq ${out_dir} ${sample_name} > ${template_dir}/DataPrep_${suffix}.conf
