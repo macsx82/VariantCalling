@@ -7,9 +7,9 @@ echo "$dt1"
 echo
 
 ### - VARIABILI FISSE - ###
-SM=$1					#bam file name
-fastq1="${SM}_1.fastq"			#fastq 1
-fastq2="${SM}_2.fastq"			#fastq 2
+# SM=$1					#bam file name
+# fastq1="${SM}_1.fastq"			#fastq 1
+# fastq2="${SM}_2.fastq"			#fastq 2
 ### - SOURCEs - ###
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1
@@ -23,10 +23,10 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol2}/
 echo "> Trimming"
-${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} "${fol2}/${fastq1}.gz" "${fol2}/${fastq2}.gz"
+${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} "${fastq1}" "${fastq2}"
 echo "- END -"
 
-touch data_prep06.done
+touch data_prep05.done
 
 
 
