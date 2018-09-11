@@ -141,13 +141,15 @@ EOF
 
 function build_runner(){
 
+param_file=$1
+
 cat << EOF
 
 #!/usr/bin/env bash
 #
 
 #Runner for the data preparation pipeline with default parameter file and default steps
-source \${param_file}
+source ${param_file}
 #source functions file
 own_folder=\`dirname \$0\`
 source \${own_folder}/pipeline_functions.sh
