@@ -46,7 +46,7 @@ java_opt1x=-Xmx10g    #java memory requirement
 
 ### - PATH FILE - ###
 base_out=$1
-tmp=/home/\${USER}/localtemp
+tmp=/home/${USER}/localtemp
 
 ### - PATH FOLDER - ###
 fol1=\${base_out}/1.bam
@@ -140,16 +140,17 @@ EOF
 }
 
 function build_runner(){
+
 cat << EOF
 
 #!/usr/bin/env bash
 #
 
 #Runner for the data preparation pipeline with default parameter file and default steps
-source ${param_file}
+source \${param_file}
 #source functions file
-own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+own_folder=\`dirname \$0\`
+source \${own_folder}/pipeline_functions.sh
 
 #step 1
 echo "bash ${hs}/01.preGATK4_step1.sh $SM" | qsub -N pGs01_${SM} -cwd -l h_vmem=20G -o ${lg}/pG01_${SM}.log -e ${lg}/pG01_${SM}.error -m a -M emmanouil.a@gmail.com #IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
