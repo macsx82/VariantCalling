@@ -112,11 +112,11 @@ base_out=$1
 tmp=/home/${USER}/localtemp
 
 ### - PATH FOLDER - ###
-fol1=${base_out}/1.bam
-fol2=${base_out}/2.fastq_pre
-fol3=${base_out}/3.fastqc
-fol4=${base_out}/4.fastq_post
-fol5=${base_out}/Storage
+fol1=\${base_out}/1.bam
+fol2=\${base_out}/2.fastq_pre
+fol3=\${base_out}/3.fastqc
+fol4=\${base_out}/4.fastq_post
+fol5=\${base_out}/Storage
 
 ### - PATH TOOL - ###
 PICARD=/share/apps/bio/picard-2.17.3/picard.jar    #
