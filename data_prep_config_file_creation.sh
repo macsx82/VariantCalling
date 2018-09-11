@@ -138,7 +138,6 @@ function build_runner_all(){
 param_file=$1
 
 cat << EOF
-
 #!/usr/bin/env bash
 #
 
@@ -149,7 +148,7 @@ own_folder=\`dirname \$0\`
 source \${own_folder}/pipeline_functions.sh
 
 #output folders creation
-mkdir -p \${fol1} \${fol2} \${fol3} \${fol4} \${fol5} 
+mkdir -p \${fol1} \${fol2} \${fol3} \${fol4} \${fol5} \${lg}
 
 #step 1
 echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=20G -o \${lg}/pG01_\${SM}.log -e \${lg}/pG01_\${SM}.error -m a -M \${mail} #IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
@@ -182,7 +181,6 @@ function build_runner_fastq(){
 param_file=$1
 
 cat << EOF
-
 #!/usr/bin/env bash
 #
 
@@ -193,7 +191,7 @@ own_folder=\`dirname \$0\`
 source \${own_folder}/pipeline_functions.sh
 
 #output folders creation
-mkdir -p \${fol1} \${fol2} \${fol3} \${fol4} \${fol5} 
+mkdir -p \${fol1} \${fol2} \${fol3} \${fol4} \${fol5} \${lg}
 
 #Since we work with fast files, we will skip steps 1 to 4
 
