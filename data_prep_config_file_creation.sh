@@ -63,8 +63,8 @@ ph4=/share/apps/bio/miniconda2/bin/fastqc   #
 ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
 
 ### - PATH SCRIPT / Log - ###
-lg=${base_out}/Log
-hs=${base_out}/0.pipe
+lg=\${base_out}/Log
+hs=\${base_out}/0.pipe
 
 EOF
 
@@ -126,8 +126,8 @@ ph4=/share/apps/bio/miniconda2/bin/fastqc   #
 ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
 
 ### - PATH SCRIPT / Log - ###
-lg=${base_out}/Log
-hs=${base_out}/0.pipe
+lg=\${base_out}/Log
+hs=\${base_out}/0.pipe
 
 EOF
 
@@ -218,7 +218,7 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name>"
+    echo "data_prep_config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
     echo "#########################"
     exit 1
 fi
@@ -248,7 +248,7 @@ while getopts ":t:o:s:h:m:f" opt ${@}; do
         echo "#########################"
         echo "WRONG argument number!"
         echo "Usage:"
-        echo "config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name>"
+        echo "data_prep_config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
         echo "#########################"
         exit 1
         ;;
