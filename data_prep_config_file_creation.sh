@@ -10,6 +10,8 @@ cat << EOF
 ### - VARIABILI FISSE - ###
 #step1
 SM=$2         #sample name
+input_path=$4 #input file path
+
 inbam=\${SM}.bam     #input bam
 
 #step2
@@ -82,6 +84,7 @@ cat << EOF
 ### - VARIABILI FISSE - ###
 #step4
 SM=$2         #sample name
+input_path=$4 #input file path
 
 #Template to pre-process fastq files
 # MODIFY FASTQ PATH HERE
@@ -221,7 +224,7 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "data_prep_config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
+    echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
     echo "#########################"
     exit 1
 fi
@@ -251,10 +254,14 @@ while getopts ":t:o:s:h:m:f" opt ${@}; do
         echo "#########################"
         echo "WRONG argument number!"
         echo "Usage:"
-        echo "data_prep_config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
+        echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
         echo "#########################"
         exit 1
         ;;
+    i)
+      echo ${OPTARG}
+      input_file_folder=${OPTARG}
+    ;;
     f)
       echo "Fastq formatted data"
       fastq_mode=1
@@ -276,10 +283,10 @@ mkdir -p ${template_dir}
 
 if [[ ${fastq_mode} -eq 1 ]]; then
   #statements
-  build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_runner_fastq ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 else
-  build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 fi
 
