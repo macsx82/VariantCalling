@@ -277,13 +277,13 @@ mkdir -p ${template_dir}
 if [[ ${fastq_mode} -eq 1 ]]; then
   #statements
   build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_runner_fastq ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 else
   build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 fi
+
 echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
-
-build_runner ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
-
 echo "Runner file ${template_dir}/DataPrepRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
 
 
