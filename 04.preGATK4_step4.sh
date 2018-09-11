@@ -14,8 +14,8 @@ source ${param_file}
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
-mkdir -p ${fol4}
-#4
+mkdir -p ${fol4} ${fol3}
+ #4
 echo
 # cd ${fol2}/
 echo "> Fastq QC control"

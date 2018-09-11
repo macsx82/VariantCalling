@@ -159,22 +159,22 @@ source \${own_folder}/pipeline_functions.sh
 mkdir -p \${lg}
 
 #step 1
-echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -q \${q} -cwd -l h_vmem=20G -o \${lg}/pG01_\${SM}.log -e \${lg}/pG01_\${SM}.error -m a -M \${mail} #IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
+echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=20G -o \${lg}/pG01_\${SM}.log -e \${lg}/pG01_\${SM}.error -m a -M \${mail} -q \${q} #IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
 
 #step 2
-echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs01_\${SM} -o \${lg}/pG02_\${SM}.log -e \${lg}/pG02_\${SM}.error -m a -M \${mail} #IN BAM OUT uBAM /// RevertSam, ValidateSamFile
+echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -cwd -l h_vmem=20G -hold_jid pGs01_\${SM} -o \${lg}/pG02_\${SM}.log -e \${lg}/pG02_\${SM}.error -m a -M \${mail} -q \${q} #IN BAM OUT uBAM /// RevertSam, ValidateSamFile
 
 #step 3
-echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs02_\${SM} -o \${lg}/pG03_\${SM}.log -e \${lg}/pG03_\${SM}.error -m ea -M \${mail} #IN uBAM OUT fastq, fastqc /// bamtofastq, gzip, fastqc
+echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -cwd -l h_vmem=20G -hold_jid pGs02_\${SM} -o \${lg}/pG03_\${SM}.log -e \${lg}/pG03_\${SM}.error -m ea -M \${mail} -q \${q} #IN uBAM OUT fastq, fastqc /// bamtofastq, gzip, fastqc
 
 #step 4
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs03_\${SM} -o \${lg}/pG04_\${SM}.log -e \${lg}/pG04_\${SM}.error -m ea -M \${mail} #IN fastq OUT fastqc /// fastqc
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -hold_jid pGs03_\${SM} -o \${lg}/pG04_\${SM}.log -e \${lg}/pG04_\${SM}.error -m ea -M \${mail} -q \${q} #IN fastq OUT fastqc /// fastqc
 
 #step 5
-echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/pG05_\${SM}.log -e \${lg}/pG05_\${SM}.error -m a -M \${mail} #IN fastq OUT val /// trim_galore
+echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/pG05_\${SM}.log -e \${lg}/pG05_\${SM}.error -m a -M \${mail} -q \${q} #IN fastq OUT val /// trim_galore
 
 #step 6
-echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/pG06_\${SM}.log -e \${lg}/pG06_\${SM}.error -m ea -M \${mail} #IN val OUT fastqc /// fastqc
+echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/pG06_\${SM}.log -e \${lg}/pG06_\${SM}.error -m ea -M \${mail} -q \${q} #IN val OUT fastqc /// fastqc
 
 echo " --- END PIPELINE ---"
 
@@ -204,13 +204,13 @@ mkdir -p \${lg}
 #Since we work with fast files, we will skip steps 1 to 4
 
 #step 4
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -q \${q} -cwd -l h_vmem=20G -o \${lg}/pG04_\${SM}.log -e \${lg}/pG04_\${SM}.error -m ea -M \${mail} #IN fastq OUT fastqc /// fastqc
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -o \${lg}/pG04_\${SM}.log -e \${lg}/pG04_\${SM}.error -m ea -M \${mail} -q \${q}  #IN fastq OUT fastqc /// fastqc
 
 #step 5
-echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/pG05_\${SM}.log -e \${lg}/pG05_\${SM}.error -m a -M \${mail} #IN fastq OUT val /// trim_galore
+echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/pG05_\${SM}.log -e \${lg}/pG05_\${SM}.error -m a -M \${mail} -q \${q}  #IN fastq OUT val /// trim_galore
 
 #step 6
-echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -q \${q} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/pG06_\${SM}.log -e \${lg}/pG06_\${SM}.error -m ea -M \${mail} #IN val OUT fastqc /// fastqc
+echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/pG06_\${SM}.log -e \${lg}/pG06_\${SM}.error -m ea -M \${mail} -q \${q}  #IN val OUT fastqc /// fastqc
 
 echo " --- END PIPELINE ---"
 
@@ -285,14 +285,14 @@ if [[ ${fastq_mode} -eq 1 ]]; then
   #statements
   # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_fastq ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  build_runner_fastq ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 else
   # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  build_runner_all ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
 fi
 
-echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
+echo "Template file ${template_dir}/DataPrep_${suffix}.conf created. You can edit it to modify any non default parameter."
 echo "Runner file ${template_dir}/DataPrepRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
 
 
