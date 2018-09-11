@@ -265,9 +265,6 @@ while getopts ":t:o:s:h:m:f" opt ${@}; do
 
 done
 
-
-fastq_mode=$3
-
 mkdir -p ${out_dir}
 mkdir -p ${template_dir}
 
