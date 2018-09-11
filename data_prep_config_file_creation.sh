@@ -10,7 +10,7 @@ cat << EOF
 ### - VARIABILI FISSE - ###
 #step1
 SM=$2         #sample name
-inbam=${SM}.bam     #input bam
+inbam=\${SM}.bam     #input bam
 
 #step2
 inbam=${SM}.bam     #input bam
