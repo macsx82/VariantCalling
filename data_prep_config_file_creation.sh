@@ -10,28 +10,28 @@ cat << EOF
 ### - VARIABILI FISSE - ###
 #step1
 SM=$2         #sample name
-inbam="${SM}.bam"     #input bam
+inbam=${SM}.bam     #input bam
 
 #step2
-inbam="${SM}.bam"     #input bam
-ubam="${SM}_unmap.bam"      #unmapped bam
+inbam=${SM}.bam     #input bam
+ubam=${SM}_unmap.bam      #unmapped bam
 
 #step3
-ubam="${SM}_unmap.bam"      #unmapped bam
-fastq1="${SM}_1.fq"     #fastq 1
-fastq2="${SM}_2.fq"     #fastq 2
+ubam=${SM}_unmap.bam      #unmapped bam
+fastq1=${SM}_1.fq     #fastq 1
+fastq2=${SM}_2.fq     #fastq 2
 
 #step4
-fastq1="${SM}_1.fastq"      #fastq 1
-fastq2="${SM}_2.fastq"      #fastq 2
+fastq1=${SM}_1.fastq      #fastq 1
+fastq2=${SM}_2.fastq      #fastq 2
 
 #step5
-fastq1="${SM}_1.fastq"      #fastq 1
-fastq2="${SM}_2.fastq"      #fastq 2
+fastq1=${SM}_1.fastq      #fastq 1
+fastq2=${SM}_2.fastq      #fastq 2
 
 #step6
-val1="${SM}_1_val_1.fq.gz"    
-val2="${SM}_2_val_2.fq.gz"  
+val1=${SM}_1_val_1.fq.gz    
+val2=${SM}_2_val_2.fq.gz  
 
 ### - Pipeline parameters - ###
 # Modify these values to work with non default parameters
@@ -78,7 +78,7 @@ cat << EOF
 #Uncomment this section to access to all the other variables
 #step1
 # SM=$1         #sample name
-# inbam="${SM}.bam"     #input bam
+# inbam=${SM}.bam     #input bam
 
 #step2
 # inbam="${SM}.bam"     #input bam
