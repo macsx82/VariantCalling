@@ -8,22 +8,23 @@ function build_template(){
 
 cat << EOF
 ### - VARIABLEs- ###
-LB=LibXXX		#libreria		# 01,02
-PL=Illumina		#piattaforma		# 01,02
-thr=16			#number of thread	# 02
-cl=5			#compression level	# 02,03,04,05
-hg=hg38			#hg version		# 05
+LB=LibXXX       #libreria       # 01,02
+PL=Illumina     #piattaforma        # 01,02
+thr=16          #number of thread   # 02
+cl=5            #compression level  # 02,03,04,05
+hg=hg38         #hg version     # 05
 #---#
-ip1=100			#interval_padding (bp)	# HaplotypeCaller
-maa=2			#max alternate alleles	# HaplotypeCaller
-java_XX1='-XX:GCTimeLimit=50' 			# 09-HaplotypeCaller
-java_XX2='-XX:GCHeapFreeLimit=10'		# 09-HaplotypeCaller
-bs=1			#batch size		# GenomicsDBImport
-rt=1			#read thread		# GenomicsDBImport
-ip2=200			#interval_padding (bp)	# GenomicsDBImport
+ip1=100         #interval_padding (bp)  # HaplotypeCaller
+maa=2           #max alternate alleles  # HaplotypeCaller
+java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
+java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
+bs=1            #batch size     # GenomicsDBImport
+rt=1            #read thread        # GenomicsDBImport
+ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
+### - VARIABLEs to be used in each pipeline step - ###
 #step 1
-SM=$1                   #sample name
+SM=$2                   #sample name
 val1="${SM}_1_val_1.fq.gz"      #fastq 1 after trimming
 val2="${SM}_2_val_2.fq.gz"      #fastq 2 after trimming
 uBAM="${SM}_unmapped.bam"       #unmapped bam
@@ -43,7 +44,105 @@ f1=$1                   #interval contings
 f2=$2                   #interval qsubID
 c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
 
+#step 7-8
+f1=$2                   #interval contings
+f2=$3                   #interval qsubID
+fBAM="${SM}_fixed.bam"          #sorted and fixed file
+c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
+bqsrrd="${SM}_recal_data.csv"       #final_merged recalibration report
+applybqsr="${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 
+#step 9
+f1=$1                   #interval file
+f2=$2                   #interval file
+applybqsr="${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
+
+#step 10-11 (chr)
+gVCF="${SM}_g.vcf.gz"           #final_merged gVCF file
+fixgVCF="${SM}-g.vcf.gz"        #fixed gVCF file
+
+#step 10-11 (wgs)
+gVCF="${SM}_g.vcf.gz"           #final_merged gVCF file
+fixgVCF="${SM}-g.vcf.gz"        #fixed gVCF file
+
+#step 12 (chr)
+gVCF="${SM}_g.vcf.gz"           #final_merged 
+
+#step 12 (wgs)
+gVCF="${SM}_g.vcf.gz"           #final_merged 
+
+#step 13
+variantdb=$1                #db name
+
+#step 14
+variantdb=$1                #db name
+f1=$2                   #interval file
+f2=$3                   #interval file
+
+#step 15
+variantdb=$1                #db name
+f1=$2                   #interval file
+f2=$3                   #interval file
+int_vcf="${variantdb}_${f2}.vcf"    #interval vcf
+
+#step 16
+variantdb=$1                #db name
+f1=$2                   #interval file
+f2=$3                   #interval file
+raw="${variantdb}_raw.vcf"      #cohort raw vcf
+
+#step 17-18
+variantdb=$1                #db name
+raw="${variantdb}_raw.vcf"
+HF="${variantdb}_rawHF.vcf"
+SO="${variantdb}_rawHFSO.vcf"
+
+#step 19
+variantdb=$1                #db name
+SO="${variantdb}_rawHFSO.vcf"
+iVR="${variantdb}_rawHFSO-iVR.vcf"
+tri="${variantdb}_indel.tranches"
+mode_I=INDEL
+
+#step 20
+variantdb=$1                #db name
+SO="${variantdb}_rawHFSO.vcf"
+sVR="${variantdb}_rawHFSO-sVR.vcf"
+trs="${variantdb}_snp.tranches"
+mode_S=SNP
+
+#step 21
+variantdb=$1                #db name
+SO="${variantdb}_rawHFSO.vcf"       # -V
+final="${variantdb}_VQSR_output.vcf"    # -O
+iVR="${variantdb}_rawHFSO-iVR.vcf"
+tri="${variantdb}_indel.tranches"
+mode_I=INDEL
+inout="${variantdb}_tmp.indel.recalibrated.vcf"
+sVR="${variantdb}_rawHFSO-sVR.vcf"
+trs="${variantdb}_snp.tranches"
+mode_S=SNP
+
+#step 22-24
+variantdb=$1                #db name
+raw="${variantdb}_raw.vcf"
+final="${variantdb}_VQSR_output.vcf"
+passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+
+#step 25 (chr)
+variantdb=$1                #db name
+raw="${variantdb}_raw.vcf"
+final="${variantdb}_VQSR_output.vcf"
+passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+
+#step 26 (chr)
+variantdb=$1                #db name
+raw="${variantdb}_raw.vcf"
+final="${variantdb}_VQSR_output.vcf"
+passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+
+###########################################################
 #---#
 java_opt1x='-Xmx5g'	#meroria java		# Chr12,Wg12,21x2
 java_opt2x='-Xmx10g'	#meroria java		# 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
@@ -122,17 +221,47 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "config_file_creation.sh <template_folder> <output_folder>"
+    echo "config_file_creation.sh <template_folder> <output_folder> -s <sample_name>"
     echo "#########################"
     exit 1
 fi
 
 #ARGS
-template_dir=$1
-out_dir=$2
+# template_dir=$1
+# out_dir=$2
 
 suffix=`date +"%d%m%Y%H%M%S"`
 
-build_template ${out_dir} > ${template_dir}/VarCall_${suffix}.conf
+echo "${@}"
+while getopts ":t:o:s:h" opt ${@}; do
+  case $opt in
+    t)
+      echo ${OPTARG}
+      template_dir=${OPTARG}
+      ;;
+    o)
+      echo ${OPTARG}
+      out_dir=${OPTARG}
+      ;;
+    s)
+      echo ${OPTARG}
+      sample_name=${OPTARG}
+      ;;
+    h)
+        echo "#########################"
+        echo "WRONG argument number!"
+        echo "Usage:"
+        echo "config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name>"
+        echo "#########################"
+        exit 1
+        ;;
+    *)
+      echo $opt
+    ;;
+  esac
 
-echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify dditional parameters."
+done
+
+build_template ${out_dir} ${sample_name} > ${template_dir}/VarCall_${suffix}.conf
+
+echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
