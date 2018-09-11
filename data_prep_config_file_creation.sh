@@ -9,7 +9,7 @@ function build_template_all(){
 cat << EOF
 ### - VARIABILI FISSE - ###
 #step1
-SM=$1         #sample name
+SM=$2         #sample name
 inbam="${SM}.bam"     #input bam
 
 #step2
@@ -180,7 +180,7 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "config_file_creation.sh <template_folder> <output_folder> -s <sample_name>"
+    echo "config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name>"
     echo "#########################"
     exit 1
 fi
