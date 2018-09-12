@@ -16,12 +16,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S');
 echo "${dt1}"
 echo
 
-### - VARIABILI FISSE - ###
-SM=$1					#sample name
-val1="${SM}_1_val_1.fq.gz"		#fastq 1 after trimming
-val2="${SM}_2_val_2.fq.gz"		#fastq 2 after trimming
-uBAM="${SM}_unmapped.bam"		#unmapped bam
-
 ### - SOURCEs - ###
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1

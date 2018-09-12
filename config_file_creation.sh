@@ -25,52 +25,50 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 ### - VARIABLEs to be used in each pipeline step - ###
 #step 1
 SM=$2                   #sample name
-val1="${SM}_1_val_1.fq.gz"      #fastq 1 after trimming
-val2="${SM}_2_val_2.fq.gz"      #fastq 2 after trimming
-uBAM="${SM}_unmapped.bam"       #unmapped bam
+val1="\${SM}_1_val_1.fq.gz"      #fastq 1 after trimming
+val2="\${SM}_2_val_2.fq.gz"      #fastq 2 after trimming
+uBAM="\${SM}_unmapped.bam"       #unmapped bam
 
 #step 2
-bBAM="${SM}_bwa.bam"            #mapped bam
+bBAM="\${SM}_bwa.bam"            #mapped bam
+
+######## SET THE READ MODE TO SELECT THE BEST ALIGNMENT OPTIONS ##########
+# accepted values are "long" OR "short", DEFAULT set on "long" to use bwa mem
+read_mode=long
+#########################################################################
 
 #step 3-5
-mBAM="${SM}_merged.bam"         #merge unmapped bam and mapped bam
-mdBAM="${SM}_markdup.bam"       #mark dupplicates of the merged bam
-metfile="${SM}_dupmetrics.txt"      #metrics file
-fBAM="${SM}_fixed.bam"          #sorted and fixed file
-fBAMs="${SM}_fixedsort.bam"     #fixed sorted bam
+mBAM="\${SM}_merged.bam"         #merge unmapped bam and mapped bam
+mdBAM="\${SM}_markdup.bam"       #mark dupplicates of the merged bam
+metfile="\${SM}_dupmetrics.txt"      #metrics file
+fBAM="\${SM}_fixed.bam"          #sorted and fixed file
+fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 
 #step 6
 f1=$1                   #interval contings
 f2=$2                   #interval qsubID
-c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
+c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
 
 #step 7-8
 f1=$2                   #interval contings
 f2=$3                   #interval qsubID
-fBAM="${SM}_fixed.bam"          #sorted and fixed file
-c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
-bqsrrd="${SM}_recal_data.csv"       #final_merged recalibration report
-applybqsr="${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+fBAM="\${SM}_fixed.bam"          #sorted and fixed file
+c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
+bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
+applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 
 #step 9
 f1=$1                   #interval file
 f2=$2                   #interval file
-applybqsr="${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
-c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
+applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+c_gv="\${SM}_\${f2}_g.vcf.gz"     #conting gVCF file
 
-#step 10-11 (chr)
-gVCF="${SM}_g.vcf.gz"           #final_merged gVCF file
-fixgVCF="${SM}-g.vcf.gz"        #fixed gVCF file
+#step 10-11 (chr-wgs)
+gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
+fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
 
-#step 10-11 (wgs)
-gVCF="${SM}_g.vcf.gz"           #final_merged gVCF file
-fixgVCF="${SM}-g.vcf.gz"        #fixed gVCF file
-
-#step 12 (chr)
-gVCF="${SM}_g.vcf.gz"           #final_merged 
-
-#step 12 (wgs)
-gVCF="${SM}_g.vcf.gz"           #final_merged 
+#step 12 (chr-wgs)
+gVCF="\${SM}_g.vcf.gz"           #final_merged 
 
 #step 13
 variantdb=$1                #db name
@@ -94,53 +92,48 @@ raw="${variantdb}_raw.vcf"      #cohort raw vcf
 
 #step 17-18
 variantdb=$1                #db name
-raw="${variantdb}_raw.vcf"
-HF="${variantdb}_rawHF.vcf"
-SO="${variantdb}_rawHFSO.vcf"
+raw="\${variantdb}_raw.vcf"
+HF="\${variantdb}_rawHF.vcf"
+SO="\${variantdb}_rawHFSO.vcf"
 
-#step 19
-variantdb=$1                #db name
-SO="${variantdb}_rawHFSO.vcf"
-iVR="${variantdb}_rawHFSO-iVR.vcf"
-tri="${variantdb}_indel.tranches"
+#step 19-20-21
+SO="\${variantdb}_rawHFSO.vcf"
+iVR="\${variantdb}_rawHFSO-iVR.vcf"
+tri="\${variantdb}_indel.tranches"
 mode_I=INDEL
 
 #step 20
-variantdb=$1                #db name
-SO="${variantdb}_rawHFSO.vcf"
-sVR="${variantdb}_rawHFSO-sVR.vcf"
-trs="${variantdb}_snp.tranches"
+sVR="\${variantdb}_rawHFSO-sVR.vcf"
+trs="\${variantdb}_snp.tranches"
 mode_S=SNP
 
 #step 21
-variantdb=$1                #db name
-SO="${variantdb}_rawHFSO.vcf"       # -V
-final="${variantdb}_VQSR_output.vcf"    # -O
-iVR="${variantdb}_rawHFSO-iVR.vcf"
-tri="${variantdb}_indel.tranches"
-mode_I=INDEL
-inout="${variantdb}_tmp.indel.recalibrated.vcf"
-sVR="${variantdb}_rawHFSO-sVR.vcf"
-trs="${variantdb}_snp.tranches"
-mode_S=SNP
+final="\${variantdb}_VQSR_output.vcf"    # -O
+#iVR="${variantdb}_rawHFSO-iVR.vcf"
+#tri="${variantdb}_indel.tranches"
+#mode_I=INDEL
+inout="\${variantdb}_tmp.indel.recalibrated.vcf"
+#sVR="${variantdb}_rawHFSO-sVR.vcf"
+#trs="${variantdb}_snp.tranches"
+#mode_S=SNP
 
-#step 22-24
-variantdb=$1                #db name
-raw="${variantdb}_raw.vcf"
-final="${variantdb}_VQSR_output.vcf"
-passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+#step 22-24-25-26
+#variantdb=$1                #db name
+#raw="${variantdb}_raw.vcf"
+#final="${variantdb}_VQSR_output.vcf"
+passed="\${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
 
 #step 25 (chr)
-variantdb=$1                #db name
-raw="${variantdb}_raw.vcf"
-final="${variantdb}_VQSR_output.vcf"
-passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+#variantdb=$1                #db name
+#raw="${variantdb}_raw.vcf"
+#final="${variantdb}_VQSR_output.vcf"
+#passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
 
 #step 26 (chr)
-variantdb=$1                #db name
-raw="${variantdb}_raw.vcf"
-final="${variantdb}_VQSR_output.vcf"
-passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+#variantdb=$1                #db name
+#raw="${variantdb}_raw.vcf"
+#final="${variantdb}_VQSR_output.vcf"
+#passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
 
 ###########################################################
 #---#
@@ -150,6 +143,8 @@ java_opt3x='-Xmx25g'	#meroria java		# 19
 java_opt4x='-Xmx100g'	#meroria java		# 20
 
 ### - PATH FILEs - ###
+
+######## UNCOMMENT the desired interval set for the calling step ############################
 #24 contings: Chr contings (1-22,X,Y)
 sorgILhg38Chr=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_ID.intervals
 sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID.intervals
@@ -165,14 +160,14 @@ sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID
 #sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
-sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+#sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
+#sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+#sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
-sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+#sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
+#sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+#sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 EXONS=/home/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
@@ -198,30 +193,79 @@ BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
 
 ### - PATH FOLDERs - ###
 base_out=$1
-fol0=${base_out}/preAnalysis/4.fastq_post
-fol1=${base_out}/germlineVariants/1.BAM
-fol2=${base_out}/germlineVariants/1.BAM/infostorage
-fol3=${base_out}/germlineVariants/1.BAM/processing
-fol4=${base_out}/germlineVariants/1.BAM/storage
-fol5=${base_out}/germlineVariants/2.gVCF/processing
-fol6=${base_out}/germlineVariants/2.gVCF/storage
-fol7=${base_out}/germlineVariants/3.genomicsDB
-fol8=${base_out}/germlineVariants/4.VCF/processing
-fol9=${base_out}/germlineVariants/4.VCF/storage
+fol0=\${base_out}/preAnalysis/4.fastq_post
+fol1=\${base_out}/germlineVariants/1.BAM
+fol2=\${base_out}/germlineVariants/1.BAM/infostorage
+fol3=\${base_out}/germlineVariants/1.BAM/processing
+fol4=\${base_out}/germlineVariants/1.BAM/storage
+fol5=\${base_out}/germlineVariants/2.gVCF/processing
+fol6=\${base_out}/germlineVariants/2.gVCF/storage
+fol7=\${base_out}/germlineVariants/3.genomicsDB
+fol8=\${base_out}/germlineVariants/4.VCF/processing
+fol9=\${base_out}/germlineVariants/4.VCF/storage
 
 ### - Path / Log / Tmp - ###
-hs=${base_out}/GATK4/germlineVariants/0.pipe
-lg=${base_out}/GATK4/germlineVariants/Log
+hs=\${base_out}/0.pipe
+lg=\${base_out}/Log
 tmp=/home/${USER}/localtemp
 EOF
 }
+
+#now we need to create also the template for the script
+function build_runner_all(){
+
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+#
+
+#Runner for the data preparation pipeline with default parameter file and default steps
+source ${param_file}
+#source functions file
+source \${hs}/pipeline_functions.sh
+
+#log folders creation
+mkdir -p \${lg}
+
+#step 1
+#IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
+echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_pG01_\${SM}.log -e \${lg}/\\\$JOB_ID_pG01_\${SM}.error -m a -M \${mail} -q \${sge_q}
+
+#step 2
+#IN BAM OUT uBAM /// RevertSam, ValidateSamFile
+echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs01_\${SM} -o \${lg}/\\\$JOB_ID_pG02_\${SM}.log -e \${lg}/\\\$JOB_ID_pG02_\${SM}.error -m a -M \${mail} -q \${sge_q}
+
+#step 3
+#IN uBAM OUT fastq, fastqc /// bamtofastq, gzip, fastqc
+echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs02_\${SM} -o \${lg}/\\\$JOB_ID_pG03_\${SM}.log -e \${lg}/\\\$JOB_ID_pG03_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+
+#step 4
+#IN fastq OUT fastqc /// fastqc
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs03_\${SM} -o \${lg}/\\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+
+#step 5
+#IN fastq OUT val /// trim_galore
+echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
+
+#step 6
+#IN val OUT fastqc /// fastqc
+echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs05_\${SM} -o \${lg}/\\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+
+echo " --- END PIPELINE ---"
+
+EOF
+
+}
+
+
 
 if [ $# -lt 1 ]
 then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "config_file_creation.sh <template_folder> <output_folder> -s <sample_name>"
+    echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
     echo "#########################"
     exit 1
 fi
@@ -233,7 +277,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h" opt ${@}; do
+while getopts ":t:o:s:h:m:i:f" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -251,10 +295,22 @@ while getopts ":t:o:s:h" opt ${@}; do
         echo "#########################"
         echo "WRONG argument number!"
         echo "Usage:"
-        echo "config_file_creation.sh -t <template_folder> -o <output_folder> -s <sample_name>"
+        echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
         echo "#########################"
         exit 1
         ;;
+    i)
+      echo ${OPTARG}
+      input_file_folder=${OPTARG}
+    ;;
+    f)
+      echo "Fastq formatted data"
+      fastq_mode=1
+      ;;  
+    m)
+    echo ${OPTARG}
+    mail_to=${OPTARG}
+    ;;
     *)
       echo $opt
     ;;
@@ -262,6 +318,20 @@ while getopts ":t:o:s:h" opt ${@}; do
 
 done
 
-build_template ${out_dir} ${sample_name} > ${template_dir}/VarCall_${suffix}.conf
+mkdir -p ${out_dir}
+mkdir -p ${template_dir}
 
-echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
+
+if [[ ${fastq_mode} -eq 1 ]]; then
+  #statements
+  # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
+  build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_runner_fastq ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+else
+  # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
+  build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
+  build_runner_all ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+fi
+
+echo "Template file ${template_dir}/DataPrep_${suffix}.conf created. You can edit it to modify any non default parameter."
+echo "Runner file ${template_dir}/DataPrepRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
