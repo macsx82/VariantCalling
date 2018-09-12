@@ -24,7 +24,7 @@ mkdir -p ${fol5}
 echo
 # cd ${fol2}/
 echo "> Trimming"
-${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} "${fastq1}" "${fastq2}"
+${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} --stringency ${stringency} "${fastq1}" "${fastq2}"
 echo "- END -"
 
 touch data_prep05.done

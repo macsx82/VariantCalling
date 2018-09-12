@@ -39,6 +39,7 @@ cR1=14        #cut 5'
 cR2=14        #cut 5'
 tpcR1=3       #cut 3'
 tpcR2=3       #cut 3'
+stringency=1  #stringency parameter for adapter trimming
 #-#-#
 java_opt1x=-Xmx10g    #java memory requirement
 
@@ -104,6 +105,7 @@ cR1=14        #cut 5'
 cR2=14        #cut 5'
 tpcR1=3       #cut 3'
 tpcR2=3       #cut 3'
+stringency=1  #stringency parameter for adapter trimming
 #-#-#
 java_opt1x=-Xmx10g    #java memory requirement
 
