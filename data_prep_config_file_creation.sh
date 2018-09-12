@@ -216,7 +216,7 @@ mkdir -p \${lg}
 
 #step 4
 #IN fastq OUT fastqc /// fastqc
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${seg_q}
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${seg_q}
 
 #step 5
 #IN fastq OUT val /// trim_galore
