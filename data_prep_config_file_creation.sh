@@ -157,8 +157,7 @@ cat << EOF
 #Runner for the data preparation pipeline with default parameter file and default steps
 source ${param_file}
 #source functions file
-own_folder=\`dirname \$0\`
-source \${own_folder}/pipeline_functions.sh
+source \${hs}/pipeline_functions.sh
 
 #log folders creation
 mkdir -p \${lg}
@@ -206,8 +205,7 @@ cat << EOF
 #Runner for the data preparation pipeline with default parameter file and default steps
 source ${param_file}
 #source functions file
-own_folder=\`dirname \$0\`
-source \${own_folder}/pipeline_functions.sh
+source \${hs}/pipeline_functions.sh
 
 #log folders creation
 mkdir -p \${lg}
