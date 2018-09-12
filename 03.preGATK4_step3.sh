@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
+set -e
 
-echo
 echo "> pipeline: Το χρυσόμαλλο δέρας"
 dt1=$(date '+%Y/%m/%d %H:%M:%S');
 echo "$dt1"
