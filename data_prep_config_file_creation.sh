@@ -47,7 +47,7 @@ mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
 #########SET UP QUEUE HERE ###################
-q=all
+sge_q=all
 #########SET UP QUEUE HERE ###################
 ### - PATH FILE - ###
 base_out=$1
@@ -112,7 +112,7 @@ mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
 #########SET UP QUEUE HERE ###################
-q=all
+sge_q=all
 #########SET UP QUEUE HERE ###################
 
 ### - PATH FILE - ###
@@ -160,27 +160,27 @@ mkdir -p \${lg}
 
 #step 1
 #IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
-echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=20G -o \${lg}/\\$JOB_ID_pG01_\${SM}.log -e \${lg}/\\$JOB_ID_pG01_\${SM}.error -m a -M \${mail} -q \${q}
+echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=20G -o \${lg}/\\$JOB_ID_pG01_\${SM}.log -e \${lg}/\\$JOB_ID_pG01_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #step 2
 #IN BAM OUT uBAM /// RevertSam, ValidateSamFile
-echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -cwd -l h_vmem=20G -hold_jid pGs01_\${SM} -o \${lg}/\\$JOB_ID_pG02_\${SM}.log -e \${lg}/\\$JOB_ID_pG02_\${SM}.error -m a -M \${mail} -q \${q}
+echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -cwd -l h_vmem=20G -hold_jid pGs01_\${SM} -o \${lg}/\\$JOB_ID_pG02_\${SM}.log -e \${lg}/\\$JOB_ID_pG02_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #step 3
 #IN uBAM OUT fastq, fastqc /// bamtofastq, gzip, fastqc
-echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -cwd -l h_vmem=20G -hold_jid pGs02_\${SM} -o \${lg}/\\$JOB_ID_pG03_\${SM}.log -e \${lg}/\\$JOB_ID_pG03_\${SM}.error -m ea -M \${mail} -q \${q}
+echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -cwd -l h_vmem=20G -hold_jid pGs02_\${SM} -o \${lg}/\\$JOB_ID_pG03_\${SM}.log -e \${lg}/\\$JOB_ID_pG03_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 #step 4
 #IN fastq OUT fastqc /// fastqc
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -hold_jid pGs03_\${SM} -o \${lg}/\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${q}
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -hold_jid pGs03_\${SM} -o \${lg}/\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 #step 5
 #IN fastq OUT val /// trim_galore
-echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${q}
+echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #step 6
 #IN val OUT fastqc /// fastqc
-echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${q}
+echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 echo " --- END PIPELINE ---"
 
@@ -211,15 +211,15 @@ mkdir -p \${lg}
 
 #step 4
 #IN fastq OUT fastqc /// fastqc
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -o \${lg}/\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${q}
+echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=20G -o \${lg}/\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${seg_q}
 
 #step 5
 #IN fastq OUT val /// trim_galore
-echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${q}
+echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=20G -hold_jid pGs04_\${SM} -o \${lg}/\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${seg_q}
 
 #step 6
 #IN val OUT fastqc /// fastqc
-echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${q}
+echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=20G -hold_jid pGs05_\${SM} -o \${lg}/\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${seg_q}
 
 echo " --- END PIPELINE ---"
 
