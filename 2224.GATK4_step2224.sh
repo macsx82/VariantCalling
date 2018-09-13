@@ -7,11 +7,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S')
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-variantdb=$1				#db name
-raw="${variantdb}_raw.vcf"
-final="${variantdb}_VQSR_output.vcf"
-passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
 ### - SOURCEs - ###
 param_file=$1
 source ${param_file}

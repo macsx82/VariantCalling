@@ -34,9 +34,9 @@ sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID
 #sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
-#sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
-#sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
-#sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
+sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
 sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
@@ -44,9 +44,9 @@ sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_Whol
 sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-#sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
-#sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-#sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
+sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 EXONS=/home/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
@@ -106,20 +106,9 @@ variantdb="VcalledDB"                #db name
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
 vdb_interval=\${sorgILhg38Chr}
 
-#step 14 - 15 
-f1=$2                   #interval file
-f2=$3                   #interval file
-
-#step 15
-f1=$2                   #interval file
-f2=$3                   #interval file
-int_vcf="${variantdb}_${f2}.vcf"    #interval vcf
+#step 14 - 15 are job array based, working with intervals from the previous step
 
 #step 16
-variantdb=$1                #db name
-f1=$2                   #interval file
-f2=$3                   #interval file
-raw="${variantdb}_raw.vcf"      #cohort raw vcf
 
 #step 17-18
 variantdb=$1                #db name
@@ -140,31 +129,11 @@ mode_S=SNP
 
 #step 21
 final="\${variantdb}_VQSR_output.vcf"    # -O
-#iVR="${variantdb}_rawHFSO-iVR.vcf"
-#tri="${variantdb}_indel.tranches"
-#mode_I=INDEL
 inout="\${variantdb}_tmp.indel.recalibrated.vcf"
-#sVR="${variantdb}_rawHFSO-sVR.vcf"
-#trs="${variantdb}_snp.tranches"
-#mode_S=SNP
 
-#step 22-24-25-26
-#variantdb=$1                #db name
-#raw="${variantdb}_raw.vcf"
-#final="${variantdb}_VQSR_output.vcf"
+#step 22-24-25(-26)
 passed="\${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
-
-#step 25 (chr)
-#variantdb=$1                #db name
-#raw="${variantdb}_raw.vcf"
-#final="${variantdb}_VQSR_output.vcf"
-#passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
-
-#step 26 (chr)
-#variantdb=$1                #db name
-#raw="${variantdb}_raw.vcf"
-#final="${variantdb}_VQSR_output.vcf"
-#passed="${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+filter_interval=\${sorgILhg38wgenesINTERVALS}
 
 #########SET UP YOUR EMAIL HERE ##############
 mail=$3
@@ -174,7 +143,10 @@ mail=$3
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
 sge_q=all
-sge_m=15G #this mem requirement will work with java mem selection till 10G, set it at higher levels if working with other thresholds
+sge_m_j1=8G #this mem requirement will work with java mem selection 1
+sge_m=15G #this mem requirement will work with java mem selection 2
+sge_m_j3=30G #this mem requirement will work with java mem selection 3 
+sge_m_j4=120G #this mem requirement will work with java mem selection 4
 sge_m_dbi=15G #mem requirement to work with geneticDB import (it has to be a little higher than the correspondig mem assigned to the jvm in this step)
 sge_pe=orte
 

@@ -7,10 +7,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S')
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-SM=$1					#sample name
-gVCF="${SM}_g.vcf.gz"			#final_merged gVCF file
-fixgVCF="${SM}-g.vcf.gz"		#fixed gVCF file
 ### - SOURCEs - ###
 param_file=$1
 source ${param_file}

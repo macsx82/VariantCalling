@@ -7,12 +7,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S')
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-variantdb=$1				#db name
-SO="${variantdb}_rawHFSO.vcf"
-iVR="${variantdb}_rawHFSO-iVR.vcf"
-tri="${variantdb}_indel.tranches"
-mode_I=INDEL
 ### - SOURCEs - ###
 param_file=$1
 source ${param_file}
