@@ -5,7 +5,7 @@
 
 script_dir=`dirname $0`
 source ${script_dir}/f_build_template.sh
-source ${script_dir}/f_build_runner_alignement.sh
+source ${script_dir}/f_build_runner_alignment.sh
 source ${script_dir}/f_build_runner_BQSR.sh
 source ${script_dir}/f_build_runner_varcall.sh
 source ${script_dir}/f_build_runner_GDBIMP.sh
@@ -124,7 +124,7 @@ case ${runner_mode} in
     echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
   5 )
-    build_runner_GDIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
+    build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
   6 )
@@ -144,7 +144,7 @@ case ${runner_mode} in
     echo "Runner file ${template_dir}/VarCall_VarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
     build_runner_post_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
-    build_runner_GDIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
+    build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
     build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
