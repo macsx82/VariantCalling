@@ -7,17 +7,16 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S')
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-variantdb=$1				#db name
-f1=$2					#interval file
-f2=$3					#interval file
-int_vcf="${variantdb}_${f2}.vcf"	#interval vcf
 ### - SOURCEs - ###
-param_file=$1
+param_file=$3
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
+### - VARIABILI FISSE - ###
+f1=$1					#interval file
+f2=$2					#interval file
+int_vcf="${variantdb}_${f2}.vcf"	#interval vcf
 ### - CODE - ###
 
 #15

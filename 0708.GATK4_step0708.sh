@@ -7,15 +7,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S');
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-SM=$1					#sample name
-f1=$2					#interval contings
-f2=$3					#interval qsubID
-fBAM="${SM}_fixed.bam"			#sorted and fixed file
-c_bqsrrd="${SM}_${f2}_recaldata.csv"	#conting recalibration report
-bqsrrd="${SM}_recal_data.csv"		#final_merged recalibration report
-applybqsr="${SM}_bqsr.bam"		#final_merged apply recalibration report in bam
-
 ### - SOURCEs - ###
 param_file=$1
 source ${param_file}
@@ -47,7 +38,7 @@ echo "- END -"
 
 #Validation
 echo
-cd ${fol4}/
+# cd ${fol4}/
 echo "> Validation applybqsr"
 # call the sam_validate function
 sam_validate ${fol4}/${applybqsr}

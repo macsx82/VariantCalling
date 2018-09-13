@@ -7,18 +7,17 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S')
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-f1=$1					#interval file
-f2=$2					#interval file
-SM=$3					#sample name
-applybqsr="${SM}_bqsr.bam"		#final_merged apply recalibration report in bam
-c_gv="${SM}_${f2}_g.vcf.gz"		#conting gVCF file
 ### - SOURCEs - ###
-param_file=$1
+param_file=$3
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
+
+### - VARIABILI FISSE - ###
+f1=$1                   #interval file
+f2=$2                   #interval file
+c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
 ### - CODE - ###
 
 #loop-9

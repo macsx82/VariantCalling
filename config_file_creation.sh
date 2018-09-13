@@ -22,6 +22,41 @@ bs=1            #batch size     # GenomicsDBImport
 rt=1            #read thread        # GenomicsDBImport
 ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
+####################### INTERVAL sets #######################
+
+######## UNCOMMENT the desired interval set for the calling step ############################
+#24 contings: Chr contings (1-22,X,Y)
+sorgILhg38Chr=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_ID.intervals
+sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID.intervals
+
+#21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
+#sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_ID.intervals
+#sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
+#sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
+
+#232227 intervalli: Exons +5bp each exon side # 2018/07/25
+#sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
+#sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+#sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+
+#26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
+sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
+sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+
+#286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
+#sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
+#sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+#sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+
+#232227 intervalli: Exons +5bp each exon side # 2018/07/25
+EXONS=/home/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+#---#
+#21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
+
+####################### INTERVAL sets #######################
+
+
 ### - VARIABLEs to be used in each pipeline step - ###
 #step 1
 SM=$2                   #sample name
@@ -44,24 +79,19 @@ metfile="\${SM}_dupmetrics.txt"      #metrics file
 fBAM="\${SM}_fixed.bam"          #sorted and fixed file
 fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 
-# #step 6
-# f1=$1                   #interval contings
-# f2=$2                   #interval qsubID
-# c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
+########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for BQSR #######
+# step 6 -> select one of the intervals in the INTERVALS section above
+bqsr_intervals=\${sorgILhg38Chr}
+##############################################################################
 
 # #step 7-8
-# f1=$2                   #interval contings
-# f2=$3                   #interval qsubID
-# fBAM="\${SM}_fixed.bam"          #sorted and fixed file
-# c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
-# bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
-# applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
+applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 
+########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
-# f1=$1                   #interval file
-# f2=$2                   #interval file
-# applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
-# c_gv="\${SM}_\${f2}_g.vcf.gz"     #conting gVCF file
+vcall_interval=\${sorgILhg38wgenes}
+##############################################################################
 
 #step 10-11 (chr-wgs)
 gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
@@ -70,16 +100,18 @@ fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
 #step 12 (chr-wgs)
 gVCF="\${SM}_g.vcf.gz"           #final_merged 
 
+########### Set the variant db name for GenomicDB import #######
 #step 13
-variantdb=$1                #db name
+variantdb="VcalledDB"                #db name
 
-#step 14
-variantdb=$1                #db name
+########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
+vdb_interval=\${sorgILhg38Chr}
+
+#step 14 - 15 
 f1=$2                   #interval file
 f2=$3                   #interval file
 
 #step 15
-variantdb=$1                #db name
 f1=$2                   #interval file
 f2=$3                   #interval file
 int_vcf="${variantdb}_${f2}.vcf"    #interval vcf
@@ -140,9 +172,13 @@ mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
 #########SET UP SGE PARAMETERS HERE ##########
+# New variables with different values can be added as long as
+# they are also added to the corresponding runner file.
 sge_q=all
-seq_m=10G
+sge_m=10G
+sge_m_dbi=15G #mem requirement to work with geneticDB import (it has to be a little higher than the correspondig mem assigned to the jvm in this step)
 sge_pe=orte
+
 #########SET UP SGE PARAMETERS HERE ##########
 
 ###########################################################
@@ -154,36 +190,7 @@ java_opt4x='-Xmx100g'	#meroria java		# 20
 
 ### - PATH FILEs - ###
 
-######## UNCOMMENT the desired interval set for the calling step ############################
-#24 contings: Chr contings (1-22,X,Y)
-sorgILhg38Chr=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_ID.intervals
-sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID.intervals
-
-#21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
-#sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_ID.intervals
-#sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
-#sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
-
-#232227 intervalli: Exons +5bp each exon side # 2018/07/25
-#sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
-#sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
-#sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
-
-#26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-#sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
-#sorgILhg38wgenesCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-#sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-
-#286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-#sorgILhg38exons12Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
-#sorgILhg38exons12PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-#sorgILhg38exons12PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-
-#232227 intervalli: Exons +5bp each exon side # 2018/07/25
-EXONS=/home/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
-#---#
-#21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
-#---#
+################### Known resources ###################
 GNMhg38=/home/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
 DBSNP138=/home/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
 INDELS=/home/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
@@ -221,55 +228,8 @@ tmp=/home/${USER}/localtemp
 EOF
 }
 
-#now we need to create also the template for the script
-function build_runner_all(){
-
-param_file=$1
-
-cat << EOF
-#!/usr/bin/env bash
-#
-
-#Runner for the data preparation pipeline with default parameter file and default steps
-source ${param_file}
-#source functions file
-source \${hs}/pipeline_functions.sh
-
-#log folders creation
-mkdir -p \${lg}
-
-#step 1
-#IN unknow BAM OUT check and stat info /// ValidateSamFile, flagstat, view
-echo "bash \${hs}/01.preGATK4_step1.sh ${param_file}" | qsub -N pGs01_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_pG01_\${SM}.log -e \${lg}/\\\$JOB_ID_pG01_\${SM}.error -m a -M \${mail} -q \${sge_q}
-
-#step 2
-#IN BAM OUT uBAM /// RevertSam, ValidateSamFile
-echo "bash \${hs}/02.preGATK4_step2.sh ${param_file}" | qsub -N pGs02_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs01_\${SM} -o \${lg}/\\\$JOB_ID_pG02_\${SM}.log -e \${lg}/\\\$JOB_ID_pG02_\${SM}.error -m a -M \${mail} -q \${sge_q}
-
-#step 3
-#IN uBAM OUT fastq, fastqc /// bamtofastq, gzip, fastqc
-echo "bash \${hs}/03.preGATK4_step3.sh ${param_file}" | qsub -N pGs03_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs02_\${SM} -o \${lg}/\\\$JOB_ID_pG03_\${SM}.log -e \${lg}/\\\$JOB_ID_pG03_\${SM}.error -m ea -M \${mail} -q \${sge_q}
-
-#step 4
-#IN fastq OUT fastqc /// fastqc
-echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs03_\${SM} -o \${lg}/\\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${sge_q}
-
-#step 5
-#IN fastq OUT val /// trim_galore
-echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
-
-#step 6
-#IN val OUT fastqc /// fastqc
-echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs05_\${SM} -o \${lg}/\\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${sge_q}
-
-echo " --- END PIPELINE ---"
-
-EOF
-
-}
-
 function build_runner_alignment(){
-  param_file=$1
+param_file=$1
 
 cat << EOF
 #!/usr/bin/env bash
@@ -299,13 +259,13 @@ echo
 #pipe step 1
 #IN val OUT uBAM /// FastqToSam, ValidateSamFile, flagsta, view
 
-echo "bash \${hs}/0101.GATK4_step0101.sh \${param_file}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0101.GATK4_step0101.sh \${param_file}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${sge_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 2
 #IN uBAM OUT bBAM /// SamToFastq, ValidateSamFile, flagstat, view
 
-echo "bash \${hs}/0202.GATK4_step0202.sh \${param_file}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e \${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0202.GATK4_step0202.sh \${param_file}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${sge_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e \${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 3-5
@@ -313,7 +273,7 @@ echo "bash \${hs}/0202.GATK4_step0202.sh \${param_file}" | qsub -N G4s0202_\${SM
 #IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 #IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-echo "bash \${hs}/0305.GATK4_step0305.sh \${param_file}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0305.GATK4_step0305.sh \${param_file}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 echo
 echo " --- END PIPELINE ---"
@@ -322,8 +282,247 @@ exit
 
 EOF
 
+}
+
+
+function build_runner_BQSR(){
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+
+echo
+echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
+dt1=\$(date '+%Y/%m/%d %H:%M:%S')
+echo "\$dt1"
+echo
+
+### - SOURCEs - ###
+#We will provide a different param file for each user, with variables and softwares paths as needed
+param_file=$1
+source ${param_file}
+#source functions file
+source \${hs}/pipeline_functions.sh
+
+#log folders creation
+mkdir -p \${lg}
+
+### - CODE - ###
+
+echo " --- START PIPELINE ---"
+echo
+
+#BQSR
+#pipe step 6, job-array
+#IN fBAM OUT conting-bqsrrd /// BaseRecalibrator
+
+a_size=`wc -l \${bqsr_intervals} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/0606.GATK4_step0606.sh \${bqsr_intervals} \${param_file}" | qsub -t 1-\${a_size} -N G4s0606_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0305_\${SM} -o \${lg}/g0606_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0606_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -m a -M \${mail} -q \${sge_q}
+
+#BQSR
+#pipe step 7-8
+#IN conting-bqsrrd OUT bqsrrd /// GatherBQSRReports
+#IN fBAM+bqsrrd OUT conting-bqsrrd /// ApplyBQSR, ValidateSamFile, flagstat, view
+
+echo "bash \${hs}/0708.GATK4_step0708.sh \${param_file}" | qsub -N G4s0708_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0606_\${SM} -o \${lg}/g0708_\\\$JOB_ID_\${SM}.log -e \${lg}/g0708_\\\$JOB_ID_\${SM}.error -m a -M \${mail} -q \${sge_q}
+
+echo
+echo " --- END PIPELINE ---"
+
+exit
+
+EOF
+}
+
+
+function build_runner_VarCall(){
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+
+echo
+echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
+dt1=\$(date '+%Y/%m/%d %H:%M:%S')
+echo "\$dt1"
+echo
+
+### - SOURCEs - ###
+#We will provide a different param file for each user, with variables and softwares paths as needed
+param_file=$1
+source ${param_file}
+#source functions file
+source \${hs}/pipeline_functions.sh
+
+#log folders creation
+mkdir -p \${lg}
+
+### - CODE - ###
+
+echo " --- START PIPELINE ---"
+echo
+
+#HC
+#pipe step 9, job-array
+#IN bqsrrd OUT interval bqsrrd /// HaplotypeCaller
+
+a_size=`wc -l \${vcall_interval} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -m a -M \${mail} -q \${sge_q}
+
+echo
+echo " --- END PIPELINE ---"
+
+exit
+
+
+EOF
 
 }
+
+function build_runner_post_VarCall(){
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+
+echo
+echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
+dt1=\$(date '+%Y/%m/%d %H:%M:%S')
+echo "\$dt1"
+echo
+
+### - SOURCEs - ###
+#We will provide a different param file for each user, with variables and softwares paths as needed
+param_file=$1
+source ${param_file}
+#source functions file
+source \${hs}/pipeline_functions.sh
+
+#log folders creation
+mkdir -p \${lg}
+
+### - CODE - ###
+
+echo " --- START PIPELINE ---"
+echo
+
+#HC
+#pipe step 10-11
+#IN conting-bqsrrd OUT gVCF /// MergeVcfs
+#IN gVCF OUT fixed gVCF /// bcftools
+
+echo "bash \${hs}/Chr1011.GATK4_step1011.sh \${param_file}" | qsub -N G4s1011_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0909_\${SM} -o \${lg}/g1011_\\\$JOB_ID_\${SM}.log -e \${lg}/g1011_\\\$JOB_ID_\${SM}.error -m a -M \${mail} -q \${sge_q}
+
+#gVCF check
+#pipe step 12
+#IN fixed gVCF OUT checked gVCF /// ValidateVariants
+
+echo "\${hs}/Chr1212.GATK4_step1212.sh \${param_file}" | qsub -N G4s1212_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s1011_\${SM} -o \${lg}/g1212_\\\$JOB_ID_\${SM}.log -e \${lg}/g1212_\\\$JOB_ID_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+
+echo
+echo " --- END PIPELINE ---"
+
+exit
+
+EOF
+
+}
+
+function build_runner_GDBIMP() {
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+
+echo
+echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
+dt1=$(date '+%Y/%m/%d %H:%M:%S')
+echo "$dt1"
+echo
+
+### - VARIABILI FISSE - ###
+variantdb=$1        #db name
+### - SOURCEs - ###
+source /home/manolis/GATK4/gatk4path.sh
+### - mkdir FOLDER / make FILE - ###
+mkdir ${lg}/${variantdb}
+mkdir ${fol7}/${variantdb}
+mkdir ${fol8}/${variantdb}
+mkdir ${fol9}/${variantdb}
+mkdir ${fol9}/${variantdb}/xSamplePassedVariantsVCFs
+### - CODE - ###
+
+echo " --- START PIPELINE ---"
+echo
+
+#GenomicsDBImport
+#pipe step 13
+#IN gCVF OUT gVCF-list /// find
+
+echo "bash ${hs}/1313.GATK4_step1313.sh ${variantdb}" | qsub -N G4s1313_${variantdb} -cwd -l h_vmem=2G -q all.q -hold_jid G4s1212_* -o ${lg}/${variantdb}/g1313_${variantdb}.log -e ${lg}/${variantdb}/g1313_${variantdb}.error -m a -M emmanouil.a@gmail.com 
+
+#GenomicsDBImport
+#pipe step 14, job-array
+#IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
+
+a_size=`wc -l \${vdb_interval} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+
+
+#GenotypeGVCFs
+#pipe step 15, job-array
+#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
+a_size=`wc -l \${vdb_interval} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=${sge_m_dbi} -hold_jid G4s1414_\${variantdb} -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+
+
+#GenotypeGVCFs
+#pipe step 16
+#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
+
+echo "bash ${hs}/1616.GATK4_step1616.sh ${variantdb}" | qsub -N G4s1616_${variantdb} -cwd -l h_vmem=20G -q all.q -hold_jid G4s1515_${variantdb}_* -o ${lg}/${variantdb}/g1616_${variantdb}.log -e ${lg}/${variantdb}/g1616_${variantdb}.error -m ea -M emmanouil.a@gmail.com
+
+#Pre-VQSR
+#pipe step 17-18
+#IN cohort raw-VCF OUT cohort Hard Filtered raw-VCF /// VariantFiltration
+#IN cohort Hard Filtered raw-VCF OUT cohort Site Only raw-VCF /// MakeSitesOnlyVcf
+
+echo "bash ${hs}/1718.GATK4_step1718.sh ${variantdb}" | qsub -N G4s1718_${variantdb} -cwd -l h_vmem=20G -q all.q -hold_jid G4s1616_${variantdb} -o ${lg}/${variantdb}/g1718_${variantdb}.log -e ${lg}/${variantdb}/g1718_${variantdb}.error -m a -M emmanouil.a@gmail.com
+
+#VQSR
+#pipe step 19
+#IN Site cohort Site Only raw-VCF OUT indel tranches, indel recal /// VariantRecalibrator
+
+echo "bash ${hs}/1919.GATK4_step1919.sh ${variantdb}" | qsub -N G4s1919_${variantdb} -cwd -l h_vmem=40G -q all.q -hold_jid G4s1718_${variantdb} -o ${lg}/${variantdb}/g1919_${variantdb}.log -e ${lg}/${variantdb}/g1919_${variantdb}.error -m a -M emmanouil.a@gmail.com
+
+#VQSR
+#pipe step 20
+#IN Site cohort Site Only raw-VCF OUT snp tranches, snp recal /// VariantRecalibrator
+
+echo "bash ${hs}/2020.GATK4_step2020.sh ${variantdb}" | qsub -N G4s2020_${variantdb} -cwd -l h_vmem=120G -q all.q -hold_jid G4s1718_${variantdb} -o ${lg}/${variantdb}/g2020_${variantdb}.log -e ${lg}/${variantdb}/g2020_${variantdb}.error -m a -M emmanouil.a@gmail.com
+
+#VQSR
+#pipe step 21
+#IN Site cohort Site Only raw-VCF, tranche file, recal file OUT cohort VQSR vcf /// ApplyVQSR
+
+echo "bash ${hs}/2121.GATK4_step2121.sh ${variantdb}" | qsub -N G4s2121_${variantdb} -cwd -l h_vmem=20G -q all.q -hold_jid G4s1919_${variantdb} -hold_jid G4s2020_${variantdb} -o ${lg}/${variantdb}/g2121_${variantdb}.log -e ${lg}/${variantdb}/g2121_${variantdb}.error -m ea -M emmanouil.a@gmail.com
+
+#PASS variants selection
+#pipe step 22-24
+#IN cohort VQSR.vcf, cohort raw.vcf OUT pass.list, sample.list /// grep
+#IN cohort raw.vcf, pass.list OUT cohort-PASS-variants postVQSR /// SelectVariants
+#IN cohort-PASS-variants postVQSR, sample.list OUT per sample-PASS-variants postVQSR /// SelectVariants
+
+echo "bash ${hs}/2224.GATK4_step2224.sh ${variantdb}" | qsub -N G4s2224_${variantdb} -cwd -l h_vmem=25G -q all.q -hold_jid G4s2121_${variantdb} -o ${lg}/${variantdb}/g2224_${variantdb}.log -e ${lg}/${variantdb}/g2224_${variantdb}.error -m ea -M emmanouil.a@gmail.com
+
+echo
+echo " --- END PIPELINE ---"
+
+exit
+
+
+
+
+EOF
+
+}
+
 
 
 if [ $# -lt 1 ]
@@ -343,7 +542,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:a" opt ${@}; do
+while getopts ":t:o:s:h:m:i:abvp" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -373,6 +572,19 @@ while getopts ":t:o:s:h:m:i:a" opt ${@}; do
       echo "Alignment only"
       runner_mode=1
       ;;  
+    b)
+      echo "BQSR only"
+      runner_mode=2
+    ;;
+    v)
+      echo "Variant calling only"
+      runner_mode=3
+    ;;
+    p)
+      echo "Post Var calling only"
+      runner_mode=4
+    ;;
+    
     m)
     echo ${OPTARG}
     mail_to=${OPTARG}
@@ -390,14 +602,29 @@ mkdir -p ${template_dir}
 
 build_template ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/VarCall_${suffix}.conf
 
-if [[ ${runner_mode} -eq 1 ]]; then
-  #statements
-  # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
-else
-  # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
-fi
+case ${runner_mode} in
+  1 )
+    build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_AlignRunner_${suffix}.sh
+  ;;
+  2 )
+    build_runner_BQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_BQSRRunner_${suffix}.sh
+  ;;
+  3 )
+    build_runner_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VarCallRunner_${suffix}.sh
+  ;;
+  4 )
+    build_runner_post_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh
+  ;;
+
+esac
+
+# if [[ ${runner_mode} -eq 1 ]]; then
+#   #statements
+#   # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
+# else
+#   # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
+#   build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
+# fi
 
 echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
 echo "Runner file ${template_dir}/VarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
