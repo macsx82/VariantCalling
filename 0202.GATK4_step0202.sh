@@ -41,7 +41,7 @@ case ${read_mode} in
         # bwa sampe ref.fa 1.sai 2.sai reads.bam reads.bam > aln.sam 
         bwa aln -t ${thr} ${GNMhg38} -b1 ${fol1}/${uBAM} > ${fol1}/${uBAM}_1.sai
         bwa aln -t ${thr} ${GNMhg38} -b2 ${fol1}/${uBAM} > ${fol1}/${uBAM}_2.sai
-        bwa sampe -r "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" ${GNMhg38} ${fol1}/${uBAM}_1.sai ${fol1}/${uBAM}_2.sai ${fol1}/${uBAM} | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
+        bwa sampe -r "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" ${GNMhg38} ${fol1}/${uBAM}_1.sai ${fol1}/${uBAM}_2.sai ${fol1}/${uBAM} ${fol1}/${uBAM} | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
     ;;
     * )
     echo "The read mode selected ${read_mode} is not one of the allowed options: specify long or short read alignment method to be used"
