@@ -25,8 +25,8 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 ### - VARIABLEs to be used in each pipeline step - ###
 #step 1
 SM=$2                   #sample name
-val1="\${SM}_1_val_1.fq.gz"      #fastq 1 after trimming
-val2="\${SM}_2_val_2.fq.gz"      #fastq 2 after trimming
+val1="\${SM}_R1_val_1.fq.gz"      #fastq 1 after trimming
+val2="\${SM}_R2_val_2.fq.gz"      #fastq 2 after trimming
 uBAM="\${SM}_unmapped.bam"       #unmapped bam
 
 #step 2
@@ -299,13 +299,13 @@ echo
 #pipe step 1
 #IN val OUT uBAM /// FastqToSam, ValidateSamFile, flagsta, view
 
-echo "bash \${hs}/0101.GATK4_step0101.sh ${SM}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0101.GATK4_step0101.sh \${SM}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 2
 #IN uBAM OUT bBAM /// SamToFastq, ValidateSamFile, flagstat, view
 
-echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e ${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M ${mail} -q \${sge_q}
+echo "bash \${hs}/0202.GATK4_step0202.sh \${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e \${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 3-5
@@ -313,7 +313,7 @@ echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l
 #IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 #IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-echo "bash \${hs}/0305.GATK4_step0305.sh ${SM}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0305.GATK4_step0305.sh \${SM}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 echo
 echo " --- END PIPELINE ---"
