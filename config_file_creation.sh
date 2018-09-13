@@ -7,7 +7,7 @@ script_dir=`dirname $0`
 source ${script_dir}/f_build_template.sh
 source ${script_dir}/f_build_runner_alignement.sh
 source ${script_dir}/f_build_runner_BQSR.sh
-source ${script_dir}/f_build_runner_VarCall.sh
+source ${script_dir}/f_build_runner_varcall.sh
 source ${script_dir}/f_build_runner_GDBIMP.sh
 source ${script_dir}/f_build_runner_VQSR.sh
 source ${script_dir}/f_build_runner_LastSSel.sh
