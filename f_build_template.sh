@@ -111,7 +111,6 @@ vdb_interval=\${sorgILhg38Chr}
 #step 16
 
 #step 17-18
-variantdb=$1                #db name
 raw="\${variantdb}_raw.vcf"
 HF="\${variantdb}_rawHF.vcf"
 SO="\${variantdb}_rawHFSO.vcf"
