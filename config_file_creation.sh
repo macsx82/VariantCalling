@@ -44,24 +44,24 @@ metfile="\${SM}_dupmetrics.txt"      #metrics file
 fBAM="\${SM}_fixed.bam"          #sorted and fixed file
 fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 
-#step 6
-f1=$1                   #interval contings
-f2=$2                   #interval qsubID
-c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
+# #step 6
+# f1=$1                   #interval contings
+# f2=$2                   #interval qsubID
+# c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
 
-#step 7-8
-f1=$2                   #interval contings
-f2=$3                   #interval qsubID
-fBAM="\${SM}_fixed.bam"          #sorted and fixed file
-c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
-bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
-applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+# #step 7-8
+# f1=$2                   #interval contings
+# f2=$3                   #interval qsubID
+# fBAM="\${SM}_fixed.bam"          #sorted and fixed file
+# c_bqsrrd="\${SM}_\${f2}_recaldata.csv"    #conting recalibration report
+# bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
+# applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 
-#step 9
-f1=$1                   #interval file
-f2=$2                   #interval file
-applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
-c_gv="\${SM}_\${f2}_g.vcf.gz"     #conting gVCF file
+# #step 9
+# f1=$1                   #interval file
+# f2=$2                   #interval file
+# applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+# c_gv="\${SM}_\${f2}_g.vcf.gz"     #conting gVCF file
 
 #step 10-11 (chr-wgs)
 gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
