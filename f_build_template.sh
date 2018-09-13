@@ -174,7 +174,7 @@ mail=$3
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
 sge_q=all
-sge_m=10G
+sge_m=15G #this mem requirement will work with java mem selection till 10G, set it at higher levels if working with other thresholds
 sge_m_dbi=15G #mem requirement to work with geneticDB import (it has to be a little higher than the correspondig mem assigned to the jvm in this step)
 sge_pe=orte
 
