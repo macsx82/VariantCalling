@@ -64,7 +64,7 @@ sam_stats ${fol1}/${fBAM}
 echo
 # cd ${fol1}/
 echo "> Sort BAM file"
-${SAMTOOLS} sort ${fol1}/${fBAM} -o ${fol2}/${fBAMs} -@ 4
+${SAMTOOLS} sort ${fol1}/${fBAM} -o ${fol2}/${fBAMs}
 echo "- END -"
 
 #Cov - counting 0 -
