@@ -30,7 +30,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:abvpgql" opt ${@}; do
+while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
