@@ -276,7 +276,7 @@ cat << EOF
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
-dt1=$(date '+%Y/%m/%d %H:%M:%S')
+dt1=\$(date '+%Y/%m/%d %H:%M:%S')
 echo "\$dt1"
 echo
 
@@ -299,13 +299,13 @@ echo
 #pipe step 1
 #IN val OUT uBAM /// FastqToSam, ValidateSamFile, flagsta, view
 
-echo "bash \${hs}/0101.GATK4_step0101.sh ${SM}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/g0101_\${SM}.log -e \${lg}/g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0101.GATK4_step0101.sh ${SM}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 2
 #IN uBAM OUT bBAM /// SamToFastq, ValidateSamFile, flagstat, view
 
-echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/g0202_\${SM}.log -e ${lg}/g0202_\${SM}.error -m a -M ${mail} -q \${sge_q}
+echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e ${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M ${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 3-5
@@ -313,7 +313,7 @@ echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l
 #IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 #IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-echo "bash \${hs}/0305.GATK4_step0305.sh ${SM}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid G4s0202_\${SM} -o \${lg}/g0305_\${SM}.log -e \${lg}/g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+echo "bash \${hs}/0305.GATK4_step0305.sh ${SM}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 echo
 echo " --- END PIPELINE ---"
@@ -393,10 +393,10 @@ build_template ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/VarCall_${
 if [[ ${runner_mode} -eq 1 ]]; then
   #statements
   # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_alignment ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
+  build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
 else
   # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_all ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
+  build_runner_all ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
 fi
 
 echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
