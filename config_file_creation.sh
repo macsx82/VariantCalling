@@ -142,6 +142,7 @@ mail=$3
 #########SET UP SGE PARAMETERS HERE ##########
 sge_q=all
 seq_m=10G
+sge_pe=orte
 #########SET UP SGE PARAMETERS HERE ##########
 
 ###########################################################
@@ -267,7 +268,7 @@ EOF
 
 }
 
-function build_runner_alignemt(){
+function build_runner_alignment(){
   param_file=$1
 
 cat << EOF
@@ -304,7 +305,7 @@ echo "bash \${hs}/0101.GATK4_step0101.sh ${SM}" | qsub -N G4s0101_\${SM} -cwd -l
 #pipe step 2
 #IN uBAM OUT bBAM /// SamToFastq, ValidateSamFile, flagstat, view
 
-echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe orte \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/g0202_\${SM}.log -e ${lg}/g0202_\${SM}.error -m a -M ${mail} -q \${sge_q}
+echo "bash \${hs}/0202.GATK4_step0202.sh ${SM}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${seq_m} -pe \${sge_pe} \${thr} -hold_jid G4s0101_\${SM} -o \${lg}/g0202_\${SM}.log -e ${lg}/g0202_\${SM}.error -m a -M ${mail} -q \${sge_q}
 
 #Pre-processing
 #pipe step 3-5
@@ -342,7 +343,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:f" opt ${@}; do
+while getopts ":t:o:s:h:m:i:a" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -368,9 +369,9 @@ while getopts ":t:o:s:h:m:i:f" opt ${@}; do
       echo ${OPTARG}
       input_file_folder=${OPTARG}
     ;;
-    f)
-      echo "Fastq formatted data"
-      fastq_mode=1
+    a)
+      echo "Alignment only"
+      runner_mode=1
       ;;  
     m)
     echo ${OPTARG}
@@ -387,16 +388,16 @@ mkdir -p ${out_dir}
 mkdir -p ${template_dir}
 
 
-if [[ ${fastq_mode} -eq 1 ]]; then
+build_template ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/VarCall_${suffix}.conf
+
+if [[ ${runner_mode} -eq 1 ]]; then
   #statements
   # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_fastq ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  build_runner_alignment ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
 else
   # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
-  build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_all ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  build_runner_all ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/VarCallRunner_${suffix}.sh
 fi
 
-echo "Template file ${template_dir}/DataPrep_${suffix}.conf created. You can edit it to modify any non default parameter."
-echo "Runner file ${template_dir}/DataPrepRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
+echo "Runner file ${template_dir}/VarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
