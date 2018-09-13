@@ -58,31 +58,31 @@ while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
     ;;
     a)
       echo "Alignment only"
-      runner_mode=1
+      runner_mode="A"
       ;;  
     b)
       echo "BQSR only"
-      runner_mode=2
+      runner_mode="B"
     ;;
     v)
       echo "Variant calling only"
-      runner_mode=3
+      runner_mode="C"
     ;;
     p)
       echo "Post Var calling only"
-      runner_mode=4
+      runner_mode="D"
     ;;
     g)
       echo "Gdb Import only"
-      runner_mode=5
+      runner_mode="E"
     ;;
     q)
       echo "VQSR step only"
-      runner_mode=6
+      runner_mode="F"
     ;;
     l)
       echo "Last step only"
-      runner_mode=7
+      runner_mode="G"
     ;;
     m)
       echo ${OPTARG}
@@ -90,7 +90,7 @@ while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
     ;;
     w)
       echo "Generate all config and runner files at once"
-      runner_mode=8
+      runner_mode="H"
     ;;
     *)
       echo $opt
@@ -107,47 +107,53 @@ build_template ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/VarCall_${
 echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
 
 case ${runner_mode} in
-  1 )
+  A )
     build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_AlignRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_AlignRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  2 )
+  B )
     build_runner_BQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_BQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_BQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  3 )
+  C )
     build_runner_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VarCallRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  4 )
+  D )
     build_runner_post_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  5 )
+  E )
     build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  6 )
+  F )
     build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  7 )
+  G )
     build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
-  8 )
+  H )
     build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_AlignRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_AlignRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_BQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_BQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_BQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VarCallRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_post_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_VQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+    
     build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
