@@ -10,8 +10,6 @@ echo
 ### - VARIABILI FISSE - ###
 f1=$1					#interval contings
 f2=$2					#interval qsubID
-SM=$3					#sample name
-fBAM="${SM}_fixed.bam"			#sorted and fixed file
 c_bqsrrd="${SM}_${f2}_recaldata.csv"	#conting recalibration report
 
 ### - SOURCEs - ###

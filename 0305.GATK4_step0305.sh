@@ -7,16 +7,6 @@ dt1=$(date '+%Y/%m/%d %H:%M:%S');
 echo "$dt1"
 echo
 
-### - VARIABILI FISSE - ###
-SM=$1					#sample name
-uBAM="${SM}_unmapped.bam"		#unmapped bam
-bBAM="${SM}_bwa.bam"			#mapped bam
-mBAM="${SM}_merged.bam"			#merge unmapped bam and mapped bam
-mdBAM="${SM}_markdup.bam"		#mark dupplicates of the merged bam
-metfile="${SM}_dupmetrics.txt"		#metrics file
-fBAM="${SM}_fixed.bam"			#sorted and fixed file
-fBAMs="${SM}_fixedsort.bam"		#fixed sorted bam
-
 ### - SOURCEs - ###
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1

@@ -35,10 +35,15 @@ case ${read_mode} in
         java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SamToFastq INPUT=${fol1}/${uBAM} FASTQ=/dev/stdout INTERLEAVE=true NON_PF=true TMP_DIR=${tmp}/ | ${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 100000000 -p -v 3 -t ${thr} -Y ${GNMhg38} /dev/stdin | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
     ;;
     short )
-        echo "> Read unmapped BAM, convert on-the-fly to FASTQ and stream to BWA MEM for alignment"
-        java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SamToFastq INPUT=${fol1}/${uBAM} FASTQ=/dev/stdout INTERLEAVE=true NON_PF=true TMP_DIR=${tmp}/ | ${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 100000000 -p -v 3 -t ${thr} -Y ${GNMhg38} /dev/stdin | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
+        echo "> Align short reads with bwa-backtrack starting from FASTQ"
+        # bwa aln ref.fa -b1 reads.bam > 1.sa
+        # bwa aln ref.fa -b2 reads.bam > 2.sai
+        # bwa sampe ref.fa 1.sai 2.sai reads.bam reads.bam > aln.sam 
+        bwa aln -t ${thr} ${GNMhg38} -b1 ${fol1}/${uBAM} > ${fol1}/${uBAM}_1.sai
+        bwa aln -t ${thr} ${GNMhg38} -b2 ${fol1}/${uBAM} > ${fol1}/${uBAM}_2.sai
+        bwa sampe -r "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" ${GNMhg38} ${fol1}/${uBAM}_1.sai ${fol1}/${uBAM}_2.sai ${fol1}/${uBAM} | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
     ;;
-    *)
+    * )
     echo "The read mode selected ${read_mode} is not one of the allowed options: specify long or short read alignment method to be used"
     exit 1
     ;;
