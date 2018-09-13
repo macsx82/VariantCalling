@@ -41,13 +41,13 @@ echo "bash \${hs}/1313.GATK4_step1313.sh \${param_file}" | qsub -N G4s1313_\${va
 #pipe step 14, job-array
 #IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
 
-a_size=`wc -l \${vdb_interval} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+a_size=\`wc -l \${vdb_interval} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -d \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 
 #GenotypeGVCFs
 #pipe step 15, job-array
 #IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
-a_size=`wc -l \${vdb_interval} | cut -f 1 -d " "`; echo "\${hs}/runner_job_array.sh -d \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb} -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+a_size=\`wc -l \${vdb_interval} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -d \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb} -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 
 #GenotypeGVCFs
