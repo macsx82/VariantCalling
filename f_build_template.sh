@@ -127,6 +127,8 @@ trs="\${variantdb}_snp.tranches"
 mode_S=SNP
 
 #step 21
+vqsr_thr_s="....."  #select vqsr threshold for SNPs
+vqsr_thr_i="....."  #select vqsr threshold for INDELs
 final="\${variantdb}_VQSR_output.vcf"    # -O
 inout="\${variantdb}_tmp.indel.recalibrated.vcf"
 
@@ -141,7 +143,7 @@ mail=$3
 #########SET UP SGE PARAMETERS HERE ##########
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
-exec_host=apollo1 #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
+exec_host=apollo1.lan10gb #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
 sge_q=all #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m=15G #this mem requirement will work with java mem selection 2

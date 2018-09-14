@@ -19,14 +19,14 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol8}/${variantdb}/
 echo "> indel Apply VQSR"
-${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${SO} --recal-file ${fol8}/${variantdb}/{iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_I}
+${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${SO} --recal-file ${fol8}/${variantdb}/{iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level ${vqsr_thr_i} --create-output-variant-index true -mode ${mode_I}
 echo "- END -"
 
 #21b
 echo
 # cd ${fol8}/${variantdb}/
 echo "> snp Apply VQSR"
-${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${fol8}/${variantdb}/${inout} --recal-file ${fol8}/${variantdb}/${sVR} --tranches-file ${fol8}/${variantdb}/${trs} --truth-sensitivity-filter-level 99.7 --create-output-variant-index true -mode ${mode_S}
+${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${fol8}/${variantdb}/${inout} --recal-file ${fol8}/${variantdb}/${sVR} --tranches-file ${fol8}/${variantdb}/${trs} --truth-sensitivity-filter-level ${vqsr_thr_s} --create-output-variant-index true -mode ${mode_S}
 echo "- END -"
 
 #del

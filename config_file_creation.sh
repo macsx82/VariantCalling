@@ -16,6 +16,8 @@ echo "Loading templete GDBIMP function"
 source ${script_dir}/f_build_runner_GDBIMP.sh
 echo "Loading templete VQSR function"
 source ${script_dir}/f_build_runner_VQSR.sh
+echo "Loading templete Apply VQSR function"
+source ${script_dir}/f_build_runner_applyVQSR.sh
 echo "Loading templete LastSSel function"
 source ${script_dir}/f_build_runner_LastSSel.sh
 
@@ -99,6 +101,10 @@ while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
       echo "Generate all config and runner files at once"
       runner_mode="H"
     ;;
+    k)
+      echo "ApplyVQSR step only"
+      runner_mode="I"
+    ;;
     *)
       echo $opt
     ;;
@@ -142,6 +148,10 @@ case ${runner_mode} in
     build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;
+  I)
+    build_runner_applyVQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
+    echo "Runner file ${template_dir}/VarCall_ApplyVQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+  ;;
   H )
     build_runner_alignment ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/01_VarCall_AlignRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_AlignRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
@@ -161,6 +171,9 @@ case ${runner_mode} in
     build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_VQSRRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
     
+    build_runner_applyVQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
+    echo "Runner file ${template_dir}/VarCall_ApplyVQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
+
     build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
     echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
   ;;

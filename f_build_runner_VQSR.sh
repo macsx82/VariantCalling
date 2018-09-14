@@ -50,13 +50,6 @@ echo "bash \${hs}/1919.GATK4_step1919.sh \${param_file}" | qsub -N G4s1919_\${va
 
 echo "bash \${hs}/2020.GATK4_step2020.sh \${param_file}" | qsub -N G4s2020_\${variantdb} -hold_jid G4s1718_\${variantdb} -o \${lg}/\${variantdb}/g2020_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2020_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m_j4} -q \${sge_q} 
 
-#VQSR
-#pipe step 21
-#IN Site cohort Site Only raw-VCF, tranche file, recal file OUT cohort VQSR vcf /// ApplyVQSR
-
-echo "bash \${hs}/2121.GATK4_step2121.sh \${param_file}" | qsub -N G4s2121_\${variantdb} -hold_jid G4s1919_\${variantdb} -hold_jid G4s2020_\${variantdb} -o \${lg}/\${variantdb}/g2121_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2121_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m_j1} -q \${sge_q} 
-
-echo
 echo " --- END PIPELINE ---"
 
 exit
