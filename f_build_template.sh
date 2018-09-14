@@ -141,7 +141,8 @@ mail=$3
 #########SET UP SGE PARAMETERS HERE ##########
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
-sge_q=all
+exec_host=apollo1 #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
+sge_q=all #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m=15G #this mem requirement will work with java mem selection 2
 sge_m_j3=30G #this mem requirement will work with java mem selection 3 
@@ -185,7 +186,12 @@ fol1=\${base_out}/germlineVariants/1.BAM
 fol2=\${base_out}/germlineVariants/1.BAM/infostorage
 fol3=\${base_out}/germlineVariants/1.BAM/processing
 fol4=\${base_out}/germlineVariants/1.BAM/storage
+#########################setup to exploit the temp folder on var calling###############
+fol5_tmp=/tmp/\${base_out}/germlineVariants/2.gVCF/processing
+fol5_host=\${base_out}/germlineVariants/2.gVCF
 fol5=\${base_out}/germlineVariants/2.gVCF/processing
+#########################setup to exploit the temp folder on var calling###############
+
 fol6=\${base_out}/germlineVariants/2.gVCF/storage
 fol7=\${base_out}/germlineVariants/3.genomicsDB
 fol8=\${base_out}/germlineVariants/4.VCF/processing
