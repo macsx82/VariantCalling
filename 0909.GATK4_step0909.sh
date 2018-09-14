@@ -25,7 +25,7 @@ echo
 # cd ${fol4}/
 echo "> HaplotypeCaller"
 # ${GATK4} --java-options ${java_opt2x} ${java_XX1} ${java_XX2} HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF
-${GATK4} --java-options ${java_opt2x} HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF
+${GATK4} --java-options ${java_opt2x} HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF
 echo "- END -"
 
 #qdel

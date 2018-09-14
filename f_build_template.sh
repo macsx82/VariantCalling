@@ -187,6 +187,7 @@ fol2=\${base_out}/germlineVariants/1.BAM/infostorage
 fol3=\${base_out}/germlineVariants/1.BAM/processing
 fol4=\${base_out}/germlineVariants/1.BAM/storage
 #########################setup to exploit the temp folder on var calling###############
+fol4_tmp=/tmp/\${base_out}/germlineVariants/1.BAM/storage
 fol5_tmp=/tmp/\${base_out}/germlineVariants/2.gVCF/processing
 fol5_host=\${base_out}/germlineVariants/2.gVCF
 fol5=\${base_out}/germlineVariants/2.gVCF/processing
