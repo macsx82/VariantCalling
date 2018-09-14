@@ -30,12 +30,12 @@ ${GATK4} --java-options ${java_opt1x} ApplyVQSR -O ${fol9}/${variantdb}/${final}
 echo "- END -"
 
 #del
-echo
-rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO.vcf*
-rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO-iVR.vcf*
-rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO-sVR.vcf*
-rm -v ${fol8}/${variantdb}/${variantdb}_*.tranches
-rm -v ${fol8}/${variantdb}/${variantdb}_tmp.indel.recalibrated.vcf*
+# echo
+# rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO.vcf*
+# rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO-iVR.vcf*
+# rm -v ${fol8}/${variantdb}/${variantdb}_rawHFSO-sVR.vcf*
+# rm -v ${fol8}/${variantdb}/${variantdb}_*.tranches
+# rm -v ${fol8}/${variantdb}/${variantdb}_tmp.indel.recalibrated.vcf*
 
 touc step21.done
 

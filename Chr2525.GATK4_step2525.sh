@@ -52,6 +52,6 @@ echo "- END -"
 
 #del
 echo
-rm -v ${fol9}/${variantdb}/"${variantdb}_g2525_sample.list"
+# rm -v ${fol9}/${variantdb}/"${variantdb}_g2525_sample.list"
 
 touch step25.done

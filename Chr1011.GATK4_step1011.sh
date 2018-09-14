@@ -52,9 +52,9 @@ echo "- END -"
 
 #qdel
 echo
-rm -v ${fol5}/${SM}_*_g.vcf.gz
-rm -v ${fol5}/${SM}_*_g.vcf.gz.tbi
-rm -v ${fol5}/"${SM}.list"
+# rm -v ${fol5}/${SM}_*_g.vcf.gz
+# rm -v ${fol5}/${SM}_*_g.vcf.gz.tbi
+# rm -v ${fol5}/"${SM}.list"
 
 touch step1011.done
 

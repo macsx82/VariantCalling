@@ -58,9 +58,9 @@ echo "- END -"
 
 #del
 echo
-rm -v ${fol8}/${variantdb}/"${variantdb}_sample.list"
-rm -v ${fol8}/${variantdb}/"${variantdb}_pass.list"
-rm -v -r ${fol8}/${variantdb}
+# rm -v ${fol8}/${variantdb}/"${variantdb}_sample.list"
+# rm -v ${fol8}/${variantdb}/"${variantdb}_pass.list"
+# rm -v -r ${fol8}/${variantdb}
 
 touch step2224.done
 

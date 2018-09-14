@@ -30,8 +30,8 @@ echo "- END -"
 
 #qdel
 echo
-rm -v ${fol4}/"${SM}_bqsr.bam"
-rm -v ${fol4}/"${SM}_bqsr.bai"
-rm -v ${fol4}/"${SM}_bqsr.bam.md5"
+# rm -v ${fol4}/"${SM}_bqsr.bam"
+# rm -v ${fol4}/"${SM}_bqsr.bai"
+# rm -v ${fol4}/"${SM}_bqsr.bam.md5"
 
 touch step09.done
