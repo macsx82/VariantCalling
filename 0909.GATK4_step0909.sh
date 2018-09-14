@@ -34,6 +34,6 @@ echo
 # rm -v ${fol4}/"${SM}_bqsr.bai"
 # rm -v ${fol4}/"${SM}_bqsr.bam.md5"
 #in this step to massimize parallelization we are working on temp folders, so we need to copy all the results back to the correct host
-rsync -av -u -P ${fol5} ${USER}@${exec_host}:${fol5_host}/.
+rsync -av -u -P ${fol5_tmp} ${USER}@${exec_host}:${fol5_host}/.
 
 touch step09.done
