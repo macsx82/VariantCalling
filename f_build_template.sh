@@ -25,8 +25,8 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 ######## UNCOMMENT the desired interval set for the calling step ############################
 #24 contings: Chr contings (1-22,X,Y)
-sorgILhg38Chr=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_ID.intervals
-sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID.intervals
+sorgILhg38Chr=/home/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
+sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
 
 #21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
 #sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_ID.intervals
@@ -34,9 +34,9 @@ sorgILhg38ChrCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38Chr_noID
 #sorgILhg38wgenesINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
-sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
-sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
-sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+# sorgILhg38exons5Plus=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
+# sorgILhg38exons5PlusCHECK=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
+# sorgILhg38exons5PlusINTERVALS=/home/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
 sorgILhg38wgenes=/home/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
@@ -192,7 +192,7 @@ fol8=\${base_out}/germlineVariants/4.VCF/processing
 fol9=\${base_out}/germlineVariants/4.VCF/storage
 
 ### - Path / Log / Tmp - ###
-hs=\${base_out}/0.pipe
+hs=/home/${USER}/scripts/pipelines/VariantCalling
 lg=\${base_out}/Log
 tmp=/home/${USER}/localtemp
 EOF
