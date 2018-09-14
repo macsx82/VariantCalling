@@ -19,7 +19,8 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol3}/
 echo "> BQSRReports ID data"
-BRs=`find ${fol3}/${SM}_*_recaldata.csv -type f -printf "%f\n" | awk '{print " -I "$1}' | tr "\n" "\t" | sed 's/\t / /g'`
+# BRs=`find ${fol3}/${SM}_*_recaldata.csv -type f -printf "%f\n" | awk '{print " -I "$1}' | tr "\n" "\t" | sed 's/\t / /g'`
+BRs=`find ${fol3}/${SM}_*_recaldata.csv -type f | awk '{print " -I "$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 echo "- END -"
 
 #7b
