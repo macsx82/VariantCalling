@@ -19,7 +19,7 @@ f1=$1                   #interval file
 f2=$2                   #interval file
 c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
 ### - CODE - ###
-mkdir -p ${fol5_host} ${fol5_tmp}
+mkdir -p ${fol5_tmp}
 #loop-9
 echo
 # cd ${fol4}/
