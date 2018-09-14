@@ -55,7 +55,7 @@ echo
 rm -r ${fol3}/${SM}_*_recaldata.csv
 rm -r ${fol3}/"${SM}_recal_data.csv"
 rm -r ${fol1}/"${SM}_fixed.bam"
-rm -r ${fol1}/"${SM}_fixed.bam.bai"
+rm -r ${fol1}/"${SM}_fixed.bai"
 rm -r ${fol1}/"${SM}_fixed.bam.md5"
 exit
 
