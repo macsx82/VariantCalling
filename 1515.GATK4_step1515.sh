@@ -16,15 +16,31 @@ source ${own_folder}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 f1=$1					#interval file
 f2=$2					#interval file
-int_vcf="${variantdb}_${f2}.vcf"	#interval vcf
+int_vcf="${variantdb}_${f2}.vcf.gz"	#interval vcf
 ### - CODE - ###
 
-#15
-echo
-cd ${fol7}/
-echo "> GenotypeGVCFs"
-${GATK4} --java-options ${java_opt2x} GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V gendb://${variantdb}/${f2} -L "${f1}"
-echo "- END -"
+
+case ${joint_mode} in
+    DB )
+        #15
+        echo
+        cd ${fol7}/
+        echo "> GenotypeGVCFs"
+        ${GATK4} --java-options ${java_opt2x} GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V gendb://${variantdb}/${f2} -L "${f1}"
+        echo "- END -"
+
+    ;;
+    GENO )
+        #15
+        echo
+        cd ${fol7}/
+        echo "> GenotypeGVCFs"
+        ${GATK4} --java-options ${java_opt2x} GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V ${fol7}/${variantdb}/${f2}_g.vcf.gz -L "${f1}"
+        echo "- END -"
+    ;;
+esac
+
+
 
 touch step15.done
 
