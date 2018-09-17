@@ -22,10 +22,7 @@ mkdir -p \${lg}
 
 ### - mkdir FOLDER / make FILE - ###
 mkdir \${lg}/\${variantdb}
-mkdir \${fol7}/\${variantdb}
-mkdir \${fol8}/\${variantdb}
-mkdir \${fol9}/\${variantdb}
-mkdir \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
+
 ### - CODE - ###
 
 echo " --- START PIPELINE ---"
