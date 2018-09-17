@@ -33,7 +33,7 @@ case ${joint_mode} in
         # cd ${fol7}/${variantdb}/
         samples_list=`find ${fol6}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder=${fol6} '{print "-V "base_folder"/"$1}'| tr "\n" " "`
         echo "> CombineGVCFs"
-        ${GATK4} --java-options ${java_opt2x} CombineGVCFs -O ${fol7}/${variantdb}/${f2}_g.vcf.gz -R ${GNMhg38} -L "${f1}" -V ${samples_list}
+        ${GATK4} --java-options ${java_opt2x} CombineGVCFs -O ${fol7}/${variantdb}/${f2}_g.vcf.gz -R ${GNMhg38} -L "${f1}" ${samples_list}
         echo "- END -"
     ;;
 esac
