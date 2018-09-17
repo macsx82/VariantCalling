@@ -14,10 +14,10 @@ source ${param_file}
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
-mkdir \${fol7}/\${variantdb}
-mkdir \${fol8}/\${variantdb}
-mkdir \${fol9}/\${variantdb}
-mkdir \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
+mkdir ${fol7}/${variantdb}
+mkdir ${fol8}/${variantdb}
+mkdir ${fol9}/${variantdb}
+mkdir ${fol9}/${variantdb}/xSamplePassedVariantsVCFs
 #13
 echo
 # cd ${fol6}/
