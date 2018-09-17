@@ -104,6 +104,7 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged
 variantdb="VcalledDB"                #db name
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
+joint_mode="DB"  #Specify "GENO" if not using the GenomicDBimport feature
 vdb_interval=\${sorgILhg38Chr}
 
 #step 14 - 15 are job array based, working with intervals from the previous step

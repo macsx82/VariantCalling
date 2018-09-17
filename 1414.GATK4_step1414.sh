@@ -18,12 +18,24 @@ f1=$1					#interval file
 f2=$2					#interval file
 ### - CODE - ###
 
-#14
-echo
-cd ${fol7}/${variantdb}/
-echo "> GenomicsDBImport"
-${GATK4} --java-options ${java_opt2x} GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2}
-echo "- END -"
+case ${joint_mode} in
+    DB )
+        #14
+        echo
+        cd ${fol7}/${variantdb}/
+        echo "> GenomicsDBImport"
+        ${GATK4} --java-options ${java_opt2x} GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2}
+        echo "- END -"
+    ;;
+    GENO )
+        echo
+        # cd ${fol7}/${variantdb}/
+        samples_list=`find ${fol6}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder=${fol6} '{print base_folder"/"$1}'| tr "\n" " "`
+        echo "> CombineGVCFs"
+        ${GATK4} --java-options ${java_opt2x} CombineGVCFs -O ${fol7}/${variantdb}/${f2} -R ${GNMhg38} -L "${f1}" -V ${samples_list}
+        echo "- END -"
+    ;;
+esac
 
 touch step14.done
 
