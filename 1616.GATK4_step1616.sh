@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol8}/${variantdb}/
 echo "> Raw VCFs ID data"
-wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f -printf "%f\n" | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
+wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 echo "- END -"
 
 #16b
