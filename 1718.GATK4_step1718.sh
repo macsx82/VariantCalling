@@ -31,7 +31,7 @@ echo "- END -"
 
 #del
 echo
-rm -v ${fol8}/${variantdb}/${variantdb}_rawHF.vcf*
+# rm -v ${fol8}/${variantdb}/${variantdb}_rawHF.vcf*
 
 touch step1718.done
 
