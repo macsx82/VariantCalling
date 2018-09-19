@@ -51,13 +51,13 @@ echo
 sam_stats ${fol4}/${applybqsr}
 
 #del
-echo
-rm -r ${fol3}/${SM}_*_recaldata.csv
-rm -r ${fol3}/"${SM}_recal_data.csv"
-rm -r ${fol1}/"${SM}_fixed.bam"
-rm -r ${fol1}/"${SM}_fixed.bai"
-rm -r ${fol1}/"${SM}_fixed.bam.md5"
-exit
+# echo
+# rm -r ${fol3}/${SM}_*_recaldata.csv
+# rm -r ${fol3}/"${SM}_recal_data.csv"
+# rm -r ${fol1}/"${SM}_fixed.bam"
+# rm -r ${fol1}/"${SM}_fixed.bai"
+# rm -r ${fol1}/"${SM}_fixed.bam.md5"
+# exit
 
 
 touch step0708.done

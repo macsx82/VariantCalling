@@ -35,7 +35,7 @@ case ${joint_mode} in
         echo
         cd ${fol7}/
         echo "> GenotypeGVCFs"
-        ${GATK4} --java-options ${java_opt2x} GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V ${fol7}/${variantdb}/${f2}_g.vcf.gz -L "${f1}"
+        ${GATK4} --java-options ${java_opt2x} GenotypeGVCFs --dbsnp  -R ${GNMhg38} -O ${fol8}/${variantdb}/${int_vcf} -G StandardAnnotation --only-output-calls-starting-in-intervals --use-new-qual-calculator -V ${fol7}/${variantdb}/${f2}_g.vcf.gz -L "${f1}"
         echo "- END -"
     ;;
 esac

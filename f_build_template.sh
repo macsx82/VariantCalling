@@ -81,6 +81,8 @@ fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for BQSR #######
 # step 6 -> select one of the intervals in the INTERVALS section above
 bqsr_intervals=\${sorgILhg38Chr}
+#here we can select if we want to submit the interval file as it is or as a job array
+whole_genome=1 #1:use the bed file as a single input, 0:use the bed file as a source to run job arrays
 ##############################################################################
 
 # #step 7-8
@@ -90,6 +92,8 @@ applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
 vcall_interval=\${sorgILhg38wgenes}
+split_intervals=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
+                    # the number selected will be the splitting line number for the interval file
 ##############################################################################
 
 #step 10-11 (chr-wgs)
