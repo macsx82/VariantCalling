@@ -94,6 +94,7 @@ applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 vcall_interval=\${sorgILhg38wgenes}
 split_intervals=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
                     # the number selected will be the splitting line number for the interval file
+job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval) or just use the interval file as it is for job submission
 ##############################################################################
 
 #step 10-11 (chr-wgs)

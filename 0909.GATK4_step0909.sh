@@ -15,9 +15,16 @@ own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 
 ### - VARIABILI FISSE - ###
-f1=$1                   #interval file
-f2=$2                   #interval file
-c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
+if [[ ${job_a} -eq 0 ]]; then
+    f1=$2                   #interval contings
+    fi_name=`basename ${f1}`
+    c_gv="${SM}_${f1_name}_g.vcf.gz"     #conting gVCF file
+else
+    f1=$1                   ##interval contings
+    f2=$2                   #interval index
+    c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
+fi
+
 ### - CODE - ###
 mkdir -p ${fol5_tmp}
 #loop-9
