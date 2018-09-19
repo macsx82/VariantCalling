@@ -92,7 +92,7 @@ applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
 vcall_interval=\${sorgILhg38wgenes}
-split_intervals=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
+split_interval=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
                     # the number selected will be the splitting line number for the interval file
 job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval) or just use the interval file as it is for job submission
 ##############################################################################
@@ -151,6 +151,7 @@ mail=$3
 # they are also added to the corresponding runner file.
 exec_host=apollo1.lan10gb #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
 sge_q=all #in var caller tmp mode, here we should need only the queue name, without host spec
+sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m=15G #this mem requirement will work with java mem selection 2
 sge_m_j3=30G #this mem requirement will work with java mem selection 3 

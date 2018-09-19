@@ -17,7 +17,7 @@ source ${own_folder}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 if [[ ${job_a} -eq 0 ]]; then
     f1=$2                   #interval contings
-    fi_name=`basename ${f1}`
+    f1_name=`basename ${f1}`
     c_gv="${SM}_${f1_name}_g.vcf.gz"     #conting gVCF file
 else
     f1=$1                   ##interval contings
