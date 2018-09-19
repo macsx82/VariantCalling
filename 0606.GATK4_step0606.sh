@@ -16,31 +16,19 @@ own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 #Here we need an option to work on the whole genome dataset, instead of downsampling with the -L option
-if [[ ${whole_genome} -eq 1 ]]; then
-c_bqsrrd="${SM}_wg_recaldata.csv"    #conting recalibration report
 ### - CODE - ###
-#loop-6
-echo
-# cd ${fol1}/
-
-echo "> BaseRecalibrator"
-${GATK4} --java-options ${java_opt2x} BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels}
-echo "- END -"
-    #statements
+if [[ ${whole_genome} -eq 1 ]]; then
+    c_bqsrrd="${SM}_wg_recaldata.csv"    #conting recalibration report
+    f1=$2                   #interval contings
 else
     f1=$1                   #interval contings
     f2=$2                   #interval qsubID
     c_bqsrrd="${SM}_${f2}_recaldata.csv"    #conting recalibration report
-    ### - CODE - ###
-    #loop-6
-    echo
-    # cd ${fol1}/
-
-    echo "> BaseRecalibrator"
-    ${GATK4} --java-options ${java_opt2x} BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -L ${f1}
-    echo "- END -"
 fi
 
+echo "> BaseRecalibrator"
+${GATK4} --java-options ${java_opt2x} BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
+echo "- END -"
 
 #generate a file that will tell us if the step is completed
 touch step0606.done
