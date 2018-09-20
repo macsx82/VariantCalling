@@ -53,6 +53,7 @@ else
     done
 fi
 
+cd \`dirname $0\`
 
 echo
 echo " --- END PIPELINE ---"
@@ -96,7 +97,7 @@ echo
 #IN conting-bqsrrd OUT gVCF /// MergeVcfs
 #IN gVCF OUT fixed gVCF /// bcftools
 
-echo "bash \${hs}/Chr1011.GATK4_step1011.sh \${param_file}" | qsub -N G4s1011_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0909_\${SM} -o \${lg}/g1011_\\\$JOB_ID_\${SM}.log -e \${lg}/g1011_\\\$JOB_ID_\${SM}.error -m ae -M \${mail} -q \${sge_q_vcall}
+echo "bash \${hs}/Chr1011.GATK4_step1011.sh \${param_file}" | qsub -N G4s1011_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0909_\${SM}* -o \${lg}/g1011_\\\$JOB_ID_\${SM}.log -e \${lg}/g1011_\\\$JOB_ID_\${SM}.error -m ae -M \${mail} -q \${sge_q_vcall}
 
 #gVCF check
 #pipe step 12

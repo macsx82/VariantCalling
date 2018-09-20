@@ -28,7 +28,7 @@ echo
 echo "> MergeVcfs"
 # ${GATK4} --java-options ${java_opt2x} MergeVcfs -I "${fol5}/${SM}.list" -O ${fol6}/${gVCF}
 #use the bcftools option: faster and without java (which is a drag!!)
-${BCFTOOLS} concat -f ${fol5}/${SM}.list -O z -o ${fol6}/${gVCF}
+${BCFTOOLS} concat -a -f ${fol5}/${SM}.list | ${BCFTOOLS} sort -O z -o ${fol6}/${gVCF}
 
 echo "- END -"
 
