@@ -35,7 +35,6 @@ Finally the implementation of GATK4 best practices for variant calling
 **Example:**
 
 ```shellscript
-$ bash <path>SNParrayQC_prep.sh <data_GS> <data_name> <w_dir> <ex_rm> <chip_file> <zcall_path> <exome_list> <chip_stat>
 ```
 
 ---------------------------------------------------------------------------
