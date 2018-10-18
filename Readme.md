@@ -9,7 +9,7 @@ Then a pre-calling step with some preprocessing of raw data (fastq and bam files
 Finally the implementation of GATK4 best practices for variant calling
 
 ---------------------------------------------------------------------------
-##Steps:
+## Steps:
 
 0. Config files template generation
 1. Align
@@ -39,29 +39,29 @@ $ bash <path>SNParrayQC_prep.sh <data_GS> <data_name> <w_dir> <ex_rm> <chip_file
 ```
 
 ---------------------------------------------------------------------------
-##Align
+## Align
 
 ---------------------------------------------------------------------------
-##BQSR
+## BQSR
 
 ---------------------------------------------------------------------------
-##VarCall
+## VarCall
 
 ---------------------------------------------------------------------------
-##PostVarCall
+## PostVarCall
 
 ---------------------------------------------------------------------------
-##GDBIMP
+## GDBIMP
 
 ---------------------------------------------------------------------------
-##VQSR
+## VQSR
 
 ---------------------------------------------------------------------------
-##LastSSel
+## LastSSel
 
 
 ---------------------------------------------------------------------------
-##Sample command
+## Sample command
 
 ```bash
 
