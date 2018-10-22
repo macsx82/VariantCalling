@@ -37,11 +37,11 @@ echo "- END -"
 
 #del
 echo
-rm -v ${fol1}/"${SM}.bam"
-rm -v ${fol1}/"${SM}.bam.bai"
-rm -v ${fol2}/"${SM}_unmap.bam"
-rm -v ${fol3}/"${SM}_1_fastqc.zip"
-rm -v ${fol3}/"${SM}_2_fastqc.zip"
+# rm -v ${fol1}/"${SM}.bam"
+# rm -v ${fol1}/"${SM}.bam.bai"
+# rm -v ${fol2}/"${SM}_unmap.bam"
+# rm -v ${fol3}/"${SM}_1_fastqc.zip"
+# rm -v ${fol3}/"${SM}_2_fastqc.zip"
 
 touch data_prep03.done
 

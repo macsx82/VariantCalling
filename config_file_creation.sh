@@ -27,7 +27,17 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
+    echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] "
+    echo "Execution options: -a: alignement only "
+    echo "                   -b: BQSR only "
+    echo "                   -v: Variant calling only "
+    echo "                   -p: Post variant calling only"
+    echo "                   -g: GDBImport/CombineGVCFs only "
+    echo "                   -q: VQSR step only "
+    echo "                   -k: Apply VQSR step only "
+    echo "                   -l: last step only "
+    echo "                   -v: Generate all config and runner files at once "
+    echo "                   -h: this help message "
     echo "#########################"
     exit 1
 fi
@@ -54,13 +64,23 @@ while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
       sample_name=${OPTARG}
       ;;
     h)
-        echo "#########################"
-        echo "WRONG argument number!"
-        echo "Usage:"
-        echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
-        echo "#########################"
-        exit 1
-        ;;
+      echo "#########################"
+      echo "WRONG argument number!"
+      echo "Usage:"
+      echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] "
+      echo "Execution options: -a: alignement only "
+      echo "                   -b: BQSR only "
+      echo "                   -v: Variant calling only "
+      echo "                   -p: Post variant calling only"
+      echo "                   -g: GDBImport/CombineGVCFs only "
+      echo "                   -q: VQSR step only "
+      echo "                   -k: Apply VQSR step only "
+      echo "                   -l: last step only "
+      echo "                   -v: Generate all config and runner files at once "
+      echo "                   -h: this help message "
+      echo "#########################"
+      exit 1
+      ;;
     i)
       echo ${OPTARG}
       input_file_folder=${OPTARG}

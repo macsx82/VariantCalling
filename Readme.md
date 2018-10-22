@@ -4,9 +4,13 @@ GitHub repo: https://github.com/macsx82/VariantCalling
 
 This pipeline is adapted to run variant calling on WES data using GATK4
 
+The complete pipeline is structured as follow:
 There is a pre-pipeline step, which involves the creation of a config files with variables and informations useful to the pipeline
+
 Then a pre-calling step with some preprocessing of raw data (fastq and bam files)
-Finally the implementation of GATK4 best practices for variant calling
+Finally the implementation of GATK4 best practices for variant calling.
+Alternative calling option will involve samtools as the main caller.
+
 
 ---------------------------------------------------------------------------
 ## Steps:
@@ -34,7 +38,17 @@ Finally the implementation of GATK4 best practices for variant calling
 
 **Example:**
 
-```shellscript
+```bash
+
+    for sample in CHW CHX CHY
+    do 
+
+    base_template=/home/cocca/analyses/hearing/F_call/19092018/${sample}
+    base_out=/scratch1/cocca/analyses/hearing/F_call/pipe_run
+    bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -v -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
+
+    done
+
 ```
 
 ---------------------------------------------------------------------------
@@ -48,7 +62,6 @@ Finally the implementation of GATK4 best practices for variant calling
 
 ---------------------------------------------------------------------------
 ## PostVarCall
-
 ---------------------------------------------------------------------------
 ## GDBIMP
 

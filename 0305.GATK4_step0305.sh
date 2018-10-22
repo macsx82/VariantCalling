@@ -120,13 +120,13 @@ echo "- END -"
 
 #del
 echo
-rm -v ${fol1}/"${SM}_bwa.bam"
-rm -v ${fol1}/"${SM}_dupmetrics.txt"
-rm -v ${fol1}/"${SM}_markdup.bam"
-rm -v ${fol1}/"${SM}_markdup.bam.md5"
-rm -v ${fol1}/"${SM}_merged.bam"
-rm -v ${fol1}/"${SM}_unmapped.bam"
-rm -v ${fol2}/"${SM}_fixedsort.bam"
+# rm -v ${fol1}/"${SM}_bwa.bam"
+# rm -v ${fol1}/"${SM}_dupmetrics.txt"
+# rm -v ${fol1}/"${SM}_markdup.bam"
+# rm -v ${fol1}/"${SM}_markdup.bam.md5"
+# rm -v ${fol1}/"${SM}_merged.bam"
+# rm -v ${fol1}/"${SM}_unmapped.bam"
+# rm -v ${fol2}/"${SM}_fixedsort.bam"
 
 #generate a file that will tell us if the step is completed
 touch step0305.done
