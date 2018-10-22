@@ -189,7 +189,7 @@ echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cw
 echo " --- END PIPELINE ---"
 
 EOF
-
+  
 }
 
 
