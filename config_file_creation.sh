@@ -36,7 +36,7 @@ then
     echo "                   -q: VQSR step only "
     echo "                   -k: Apply VQSR step only "
     echo "                   -l: last step only "
-    echo "                   -v: Generate all config and runner files at once "
+    echo "                   -w: Generate all config and runner files at once "
     echo "                   -h: this help message "
     echo "#########################"
     exit 1
@@ -76,7 +76,7 @@ while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
       echo "                   -q: VQSR step only "
       echo "                   -k: Apply VQSR step only "
       echo "                   -l: last step only "
-      echo "                   -v: Generate all config and runner files at once "
+      echo "                   -w: Generate all config and runner files at once "
       echo "                   -h: this help message "
       echo "#########################"
       exit 1
