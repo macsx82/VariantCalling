@@ -189,12 +189,14 @@ GATK4=/share/apps/bio/gatk-4.0.8.1/gatk     # v4.0.8.1
 BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
 
 ### - PATH FOLDERs - ###
+# To use the  
 base_out=$1
-fol0=\${base_out}/preAnalysis/4.fastq_post
+fol0=$4
 fol1=\${base_out}/germlineVariants/1.BAM
 fol2=\${base_out}/germlineVariants/1.BAM/infostorage
 fol3=\${base_out}/germlineVariants/1.BAM/processing
 fol4=\${base_out}/germlineVariants/1.BAM/storage
+
 #########################setup to exploit the temp folder on var calling###############
 fol4_tmp=/tmp/\${base_out}/germlineVariants/1.BAM/storage
 fol5_tmp=/tmp/\${base_out}/germlineVariants/2.gVCF/processing
@@ -203,7 +205,14 @@ fol5=\${base_out}/germlineVariants/2.gVCF/processing
 #########################setup to exploit the temp folder on var calling###############
 
 fol6=\${base_out}/germlineVariants/2.gVCF/storage
+
+
+######################### DBImport/CombineGVCF folder###############
+#To generate a combined gvcf, we need to have 
 fol7=\${base_out}/germlineVariants/3.genomicsDB
+
+######################### DBImport/CombineGVCF folder###############
+
 fol8=\${base_out}/germlineVariants/4.VCF/processing
 fol9=\${base_out}/germlineVariants/4.VCF/storage
 

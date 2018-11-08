@@ -136,7 +136,7 @@ mkdir -p ${out_dir}
 mkdir -p ${template_dir}
 
 
-build_template ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/VarCall_${suffix}.conf
+build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/VarCall_${suffix}.conf
 echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
 
 case ${runner_mode} in

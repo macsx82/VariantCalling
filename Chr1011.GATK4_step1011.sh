@@ -43,7 +43,8 @@ echo "- END -"
 echo
 # cd ${fol6}/
 echo "> Move files"
-mv -v ${fol6}/${fixgVCF} ${fol6}/${gVCF}
+# mv -v ${fol6}/${fixgVCF} ${fol6}/${gVCF}
+rsync -au -Pv ${fol6}/${fixgVCF} ${fol6}/${gVCF}
 echo "- END -"
 
 #11c
