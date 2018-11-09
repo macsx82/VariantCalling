@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 #####################################
 #This script is going to be used to create param file with custom variables and path that will be used by all the pipeline scripts
 

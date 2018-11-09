@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+
 
 echo
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
