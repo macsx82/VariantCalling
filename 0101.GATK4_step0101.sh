@@ -9,7 +9,7 @@
 #                                                   #
 #                                                   #
 #####################################################
-set -euo pipefail
+set -eo pipefail
 
 echo "> pipeline: Η Σκύλλα και η Χάρυβδη"
 dt1=$(date '+%Y/%m/%d %H:%M:%S');
