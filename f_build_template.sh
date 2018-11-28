@@ -29,22 +29,18 @@ sorgILhg38Chr=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
 sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
 
 #21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
-#sorgILhg38wgenes=/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_ID.intervals
 #sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
 #sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
-# sorgILhg38exons5Plus=/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_ID.intervals
 # sorgILhg38exons5PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 # sorgILhg38exons5PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38wgenes=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
 sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38exons12Plus=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_ID.intervals
 sorgILhg38exons12PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
@@ -109,7 +105,7 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged
 variantdb="VcalledDB"                #db name
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
-joint_mode="DB"  #Specify "GENO" if not using the GenomicDBimport feature
+joint_mode="DB"  #Specify "GENO" if not using the GenomicDBimport feature but the CombineGvcf feature
 vdb_interval=\${sorgILhg38Chr}
 
 #step 14 - 15 are job array based, working with intervals from the previous step
@@ -150,7 +146,7 @@ mail=$3
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
 exec_host=apollo1.lan10gb #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
-sge_q=all #in var caller tmp mode, here we should need only the queue name, without host spec
+sge_q=all.q #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m=15G #this mem requirement will work with java mem selection 2
@@ -197,13 +193,21 @@ fol2=\${base_out}/germlineVariants/1.BAM/infostorage
 fol3=\${base_out}/germlineVariants/1.BAM/processing
 fol4=\${base_out}/germlineVariants/1.BAM/storage
 
-#########################setup to exploit the temp folder on var calling###############
-fol4_tmp=/tmp/\${base_out}/germlineVariants/1.BAM/storage
-fol5_tmp=/tmp/\${base_out}/germlineVariants/2.gVCF/processing
-fol5_host=\${base_out}/germlineVariants/2.gVCF
-fol5=\${base_out}/germlineVariants/2.gVCF/processing
-#########################setup to exploit the temp folder on var calling###############
+#########################SETUP TO EXPLOIT THE TEMP FOLDER ON VAR CALLING###############
+#tmp setup imply that all the input files in fol4 are duplicated for each node in the fol4_tmp folder
+#the data will be then processed and output will be written in the fol5_tmp folder in each node
+#at the end of each job task the results will be moved to the fol5_host folder
+#this setup is needed if we want to exploit the maximum CPU number
+# Uncomment the lines below only if using the tmp setup!
+#
+# fol4_tmp=/tmp/\${base_out}/germlineVariants/1.BAM/storage
+# fol5_tmp=/tmp/\${base_out}/germlineVariants/2.gVCF/processing
+# fol5_host=\${base_out}/germlineVariants/2.gVCF
+#########################SETUP TO EXPLOIT THE TEMP FOLDER ON VAR CALLING###############
 
+fol5=\${base_out}/germlineVariants/2.gVCF/processing
+
+#This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
 fol6=\${base_out}/germlineVariants/2.gVCF/storage
 
 

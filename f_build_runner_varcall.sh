@@ -18,7 +18,7 @@ source ${param_file}
 source \${hs}/pipeline_functions.sh
 
 #log folders creation
-mkdir -p \${lg} \${fol5_host}
+mkdir -p \${lg}
 
 ### - CODE - ###
 
