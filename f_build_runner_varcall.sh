@@ -42,6 +42,9 @@ else
     mkdir -p \${tmp}/call_int
     cd \${tmp}/call_int
     split -a 3 --additional-suffix call.intervals -d -l \${split_interval} \${vcall_interval}
+
+    rsync -av -u -P R \${tmp}/call_int ${USER}@${exec_host}:/.
+
     for int_file in \${tmp}/call_int/x*call.intervals
     do
         if [[ \${job_a} -eq 1 ]]; then
