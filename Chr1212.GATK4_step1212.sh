@@ -24,6 +24,10 @@ do
     ${GATK4} --java-options ${java_opt1x} ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
 
 done < ${sorgILhg38ChrCHECK}
+
+#after the merging and validating, we need to generate a link to the file in the collective folder
+ln -s ${fol6_link}/${gVCF} ${fol6}/${gVCF}
+
 echo "- END -"
 
 touch step12.done

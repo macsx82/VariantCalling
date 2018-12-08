@@ -206,24 +206,31 @@ fol4=\${base_out}/germlineVariants/1.BAM/storage
 #########################SETUP TO EXPLOIT THE TEMP FOLDER ON VAR CALLING###############
 
 fol5=\${base_out}/germlineVariants/2.gVCF/processing
+fol6=\${base_out}/germlineVariants/all_samples/2.gVCF/storage
 
-#This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
-fol6=\${base_out}/germlineVariants/2.gVCF/storage
+###########################################################################################
+# This last section is meant to set path for the gvcf merging step, which should happen once, after all calling is done
+# We need to create a folder with links to all the generated splitted steps data.
+# This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
+# and should be created right after the merging step for the single vcf files
+common_base_out="...set the desired base folder"
+fol6_link=\${common_base_out}/germlineVariants/all_samples/2.gVCF/storage
 
 
 ######################### DBImport/CombineGVCF folder###############
 #To generate a combined gvcf, we need to have 
-fol7=\${base_out}/germlineVariants/3.genomicsDB
+fol7=\${common_base_out}/germlineVariants/3.genomicsDB
 
 ######################### DBImport/CombineGVCF folder###############
 
-fol8=\${base_out}/germlineVariants/4.VCF/processing
-fol9=\${base_out}/germlineVariants/4.VCF/storage
+fol8=\${common_base_out}/germlineVariants/4.VCF/processing
+fol9=\${common_base_out}/germlineVariants/4.VCF/storage
+###########################################################################################
 
 ### - Path / Log / Tmp - ###
 hs=/home/${USER}/scripts/pipelines/VariantCalling
 lg=\${base_out}/Log
-rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head 1\`
+rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
 tmp=/tmp/${USER}/\${rnd_tmp}
 EOF
 }
