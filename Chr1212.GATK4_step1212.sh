@@ -14,7 +14,8 @@ source ${param_file}
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 ### - CODE - ###
-
+#generate the common folders needed for the following steps
+mkdir -p ${fol7} ${fol8} ${fol9}
 #12
 echo
 # cd ${fol6}/
