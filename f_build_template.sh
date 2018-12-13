@@ -15,6 +15,7 @@ hg=hg38         #hg version     # 05
 #---#
 ip1=100         #interval_padding (bp)  # HaplotypeCaller
 maa=2           #max alternate alleles  # HaplotypeCaller
+java_opt_all='-XX:ParallelGCThreads=1'       # All GATK steps
 java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
 java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
 bs=1            #batch size     # GenomicsDBImport

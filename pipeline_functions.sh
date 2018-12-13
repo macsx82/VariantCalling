@@ -18,6 +18,6 @@ function sam_stats(){
 #validate the bam file
 function sam_validate(){
     in_bam=$1
-    java -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY TMP_DIR=${tmp}/
+    java -XX:ParallelGCThreads=1 -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY TMP_DIR=${tmp}/
     echo "- END -"
 }

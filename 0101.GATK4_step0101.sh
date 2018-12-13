@@ -48,7 +48,7 @@ echo "- END -"
 echo
 # cd ${fol1}/
 echo "> Create uBAM starting from fastq trimmed files"
-java -jar ${PICARD} FastqToSam F1=${fol0}/${val1} F2=${fol0}/${val2} O=${fol1}/${uBAM} SO=queryname RG="${PU1}.${PU2}" SM=${SM} LB=${LB} PL=${PL} TMP_DIR=${tmp}/
+java -XX:ParallelGCThreads=1 -jar ${PICARD} FastqToSam F1=${fol0}/${val1} F2=${fol0}/${val2} O=${fol1}/${uBAM} SO=queryname RG="${PU1}.${PU2}" SM=${SM} LB=${LB} PL=${PL} TMP_DIR=${tmp}/
 echo "- END -"
 
 #Validation
