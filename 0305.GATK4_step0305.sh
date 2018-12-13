@@ -21,7 +21,7 @@ mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} #${fol7} ${fol8} ${fol9
 echo
 # cd ${fol1}/
 echo "> Merge original input uBAM file with BWA-aligned BAM file"
-java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:ParallelGCThreads=1 -jar ${PICARD} MergeBamAlignment VALIDATION_STRINGENCY=SILENT ORIENTATIONS=FR ATTRIBUTES_TO_RETAIN=X0 UNMAPPED=${fol1}/${uBAM} ALIGNED=${fol1}/${bBAM} O=${fol1}/${mBAM} R=${GNMhg38} PE=true SO=unsorted IS_BISULFITE_SEQUENCE=false ALIGNED_READS_ONLY=false CLIP_ADAPTERS=false MAX_RECORDS_IN_RAM=2000000 MC=true MAX_GAPS=-1 PRIMARY_ALIGNMENT_STRATEGY=MostDistant UNMAPPED_READ_STRATEGY=COPY_TO_TAG ALIGNER_PROPER_PAIR_FLAGS=true UNMAP_CONTAM=true TMP_DIR=${tmp}/
+java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MergeBamAlignment VALIDATION_STRINGENCY=SILENT ORIENTATIONS=FR ATTRIBUTES_TO_RETAIN=X0 UNMAPPED=${fol1}/${uBAM} ALIGNED=${fol1}/${bBAM} O=${fol1}/${mBAM} R=${GNMhg38} PE=true SO=unsorted IS_BISULFITE_SEQUENCE=false ALIGNED_READS_ONLY=false CLIP_ADAPTERS=false MAX_RECORDS_IN_RAM=2000000 MC=true MAX_GAPS=-1 PRIMARY_ALIGNMENT_STRATEGY=MostDistant UNMAPPED_READ_STRATEGY=COPY_TO_TAG ALIGNER_PROPER_PAIR_FLAGS=true UNMAP_CONTAM=true TMP_DIR=${tmp}/
 echo "- END -"
 
 #Stat
@@ -33,7 +33,7 @@ sam_stats ${fol1}/${mBAM}
 echo
 # cd ${fol1}/
 echo "> Mark duplicate reads to avoid counting non-independent observations"
-java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:ParallelGCThreads=1 -jar ${PICARD} MarkDuplicates INPUT=${fol1}/${mBAM} OUTPUT=${fol1}/${mdBAM} METRICS_FILE=${fol1}/${metfile} VALIDATION_STRINGENCY=SILENT OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 ASSUME_SORT_ORDER=queryname CREATE_MD5_FILE=true TMP_DIR=${tmp}/
+java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MarkDuplicates INPUT=${fol1}/${mBAM} OUTPUT=${fol1}/${mdBAM} METRICS_FILE=${fol1}/${metfile} VALIDATION_STRINGENCY=SILENT OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 ASSUME_SORT_ORDER=queryname CREATE_MD5_FILE=true TMP_DIR=${tmp}/
 echo "- END -"
 
 #Stat
@@ -45,7 +45,7 @@ sam_stats ${fol1}/${mdBAM}
 echo
 # cd ${fol1}/
 echo "> Sort BAM file by coordinate order and fix tag values for NM, MD and UQ"
-java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:ParallelGCThreads=1 -jar ${PICARD} SortSam INPUT=${fol1}/${mdBAM} O=/dev/stdout SORT_ORDER=coordinate CREATE_INDEX=false CREATE_MD5_FILE=false TMP_DIR=${tmp}/ | java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SetNmMdAndUqTags R=${GNMhg38} INPUT=/dev/stdin O=${fol1}/${fBAM} CREATE_INDEX=true CREATE_MD5_FILE=true TMP_DIR=${tmp}/
+java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} SortSam INPUT=${fol1}/${mdBAM} O=/dev/stdout SORT_ORDER=coordinate CREATE_INDEX=false CREATE_MD5_FILE=false TMP_DIR=${tmp}/ | java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SetNmMdAndUqTags R=${GNMhg38} INPUT=/dev/stdin O=${fol1}/${fBAM} CREATE_INDEX=true CREATE_MD5_FILE=true TMP_DIR=${tmp}/
 echo "- END -"
 
 #Validation
