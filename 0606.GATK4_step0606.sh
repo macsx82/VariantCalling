@@ -27,7 +27,7 @@ else
 fi
 
 echo "> BaseRecalibrator"
-${GATK4} --java-options ${java_opt2x} -XX:+UseSerialGC BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
+${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP138} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
 echo "- END -"
 
 #generate a file that will tell us if the step is completed

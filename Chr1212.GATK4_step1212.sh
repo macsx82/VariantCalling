@@ -22,7 +22,7 @@ echo
 echo "> Check gVCF"
 while read -r f1
 do
-    ${GATK4} --java-options ${java_opt1x} -XX:+UseSerialGC ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
+    ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
 
 done < ${sorgILhg38ChrCHECK}
 
