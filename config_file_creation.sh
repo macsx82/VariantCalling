@@ -50,7 +50,7 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:abvpgqlw" opt ${@}; do
+while getopts ":t:o:s:h:m:i:c:abvpgqlwk" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -141,7 +141,9 @@ done
 mkdir -p ${out_dir}
 mkdir -p ${template_dir}
 
-echo ${runner_gen[@]}
+echo ${runner_mode[@]}
+echo ${conf_file_path}
+
 
 if [[ -z "${conf_file_path}" ]]; then
   build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/VarCall_${suffix}.conf
