@@ -33,7 +33,7 @@ echo
 if [[ \${split_interval} -eq 0 ]]; then
     if [[ \${job_a} -eq 1 ]]; then
         #Normal job array
-        a_size=\`wc -l \${vcall_interval} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -d \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -q \${sge_q_vcall}
+        a_size=\`wc -l \${vcall_interval} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -q \${sge_q_vcall}
     else
         echo "\${hs}/0909.GATK4_step0909.sh whole_interval \${vcall_interval} \${param_file}" | qsub -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.error -q \${sge_q_vcall}
     fi
@@ -49,7 +49,7 @@ else
     do
         if [[ \${job_a} -eq 1 ]]; then
             #Normal job array
-            a_size=\`wc -l \${int_file} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -d \${hs}/0909.GATK4_step0909.sh \${int_file} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -q \${sge_q_vcall}
+            a_size=\`wc -l \${int_file} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/0909.GATK4_step0909.sh \${int_file} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -q \${sge_q_vcall}
         else
             echo "\${hs}/0909.GATK4_step0909.sh whole_interval \${int_file} \${param_file}" | qsub -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.error -q \${sge_q_vcall}
         fi

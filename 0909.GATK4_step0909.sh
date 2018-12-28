@@ -8,21 +8,23 @@ echo "$dt1"
 echo
 
 ### - SOURCEs - ###
-param_file=$3
-source ${param_file}
 #source functions file
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 
 ### - VARIABILI FISSE - ###
 if [[ ${job_a} -eq 0 ]]; then
+	param_file=$3
+	source ${param_file}
     f1=$2                   #interval contings
     f1_name=`basename ${f1}`
     c_gv="${SM}_${f1_name}_g.vcf.gz"     #conting gVCF file
 else
     f1=$1                   ##interval contings
-    f2=$2                   #interval index
-    c_gv="${SM}_${f2}_g.vcf.gz"     #conting gVCF file
+	param_file=$2
+	source ${param_file}
+    # f2=$2                   #interval index
+    c_gv="${SM}_${f1}_g.vcf.gz"     #conting gVCF file
 fi
 
 if [[ -z "${fol4_tmp}" || -z "${fol5_tmp}" || -z "${fol5_host}" ]];then
