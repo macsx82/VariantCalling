@@ -214,7 +214,7 @@ else
   echo "Template file already present: ${conf_file_path}. You can edit it to modify any non default parameter."
   for runner_gen in ${runner_mode[@]}; do
     echo ${runner_gen}
-    case ${runner_mode} in
+    case ${runner_gen} in
       A )
         build_runner_alignment ${conf_file_path} > ${template_dir}/01_VarCall_AlignRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_AlignRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
