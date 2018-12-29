@@ -26,17 +26,17 @@ echo "- END -"
 echo
 # cd ${fol5}/
 echo "> MergeVcfs"
-# ${GATK4} --java-options ${java_opt2x} MergeVcfs -I "${fol5}/${SM}.list" -O ${fol6}/${gVCF}
+${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MergeVcfs -I "${fol5}/${SM}.list" -O ${fol6}/${gVCF}
 #use the bcftools option: faster and without java (which is a drag!!)
-${BCFTOOLS} concat -a -f ${fol6}/${SM}.list | ${BCFTOOLS} sort -O z -o ${fol6}/${gVCF}
+# ${BCFTOOLS} concat -a -f ${fol6}/${SM}.list | ${BCFTOOLS} sort -O z -o ${fol6}/${gVCF}
 
 echo "- END -"
 
 #11a
 echo
 # cd ${fol6}/
-echo "> Merge variants"
-${BCFTOOLS} norm -m +any -Oz -o ${fol6}/${fixgVCF} ${fol6}/${gVCF}
+echo ">Normalize indels and Merge variants"
+${BCFTOOLS} norm -f ${GNMhg38} ${fol6}/${gVCF} | ${BCFTOOLS} norm -m +any -Oz -o ${fol6}/${fixgVCF}
 echo "- END -"
 
 #11b
