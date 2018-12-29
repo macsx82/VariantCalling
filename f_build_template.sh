@@ -209,7 +209,7 @@ fol4=\${base_out}/germlineVariants/1.BAM/storage
 #########################SETUP TO EXPLOIT THE TEMP FOLDER ON VAR CALLING###############
 
 fol5=\${base_out}/germlineVariants/2.gVCF/processing
-fol6=\${base_out}/germlineVariants/all_samples/2.gVCF/storage
+fol6=\${base_out}/germlineVariants/2.gVCF/storage
 
 ###########################################################################################
 # This last section is meant to set path for the gvcf merging step, which should happen once, after all calling is done
