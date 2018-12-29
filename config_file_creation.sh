@@ -155,7 +155,7 @@ echo ${conf_file_path}
 
 if [[ -z "${conf_file_path}" ]]; then
 
-  if [[ -z "${r1_fq_file}" ]]; then
+  if [[ ! -z "${r1_fq_file}" ]]; then
     echo "User selected fastq files names used in conf file... "
   else
     echo "Standard fastq files name used in conf file... "

@@ -63,8 +63,8 @@ done
 case ${work_mode} in
     A)
     #generate only single sample steps for each sample
-    mkdir -p ${out_dir}
-    mkdir -p ${template_dir}
+    # mkdir -p ${out_dir}/
+    # mkdir -p ${template_dir}/
 
     #get all samples
     sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
@@ -91,11 +91,12 @@ case ${work_mode} in
 
         #now, get the fastq folder
         fastq_input_folder=$(dirname ${r1_fq})
-
+        r1_fq_names=$(basename ${r1_fq})
+        r2_fq_names=$(basename ${r2_fq})
         echo ${fastq_input_folder}
         
         #now we can start creating templates for each sample
-        ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq} -2 ${r2_fq} -m ${mail_to} -a -b -v -p
+        ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p
     done
     ;;
     B)
