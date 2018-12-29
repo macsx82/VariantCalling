@@ -56,8 +56,10 @@ EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCu
 ### - VARIABLEs to be used in each pipeline step - ###
 #step 1
 SM=$2                   #sample name
-val1="\${SM}_R1_val_1.fq.gz"      #fastq 1 after trimming
-val2="\${SM}_R2_val_2.fq.gz"      #fastq 2 after trimming
+
+val1="$5"      #fastq 1 after trimming
+val2="$6"      #fastq 2 after trimming
+
 uBAM="\${SM}_unmapped.bam"       #unmapped bam
 
 #step 2

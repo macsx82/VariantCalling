@@ -50,7 +50,7 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:c:abvpgqlwk" opt ${@}; do
+while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -131,6 +131,14 @@ while getopts ":t:o:s:h:m:i:c:abvpgqlwk" opt ${@}; do
       conf_file_path=${OPTARG}
       echo "Use specified conf file: ${conf_file_path}"
     ;;
+    1)
+      r1_fq_file=${OPTARG}
+      echo "Use specified fastq file name: ${r1_fq_file}"
+    ;;
+    2)
+      r2_fq_file=${OPTARG}
+      echo "Use specified fastq file name: ${r2_fq_file}"
+    ;;
     *)
       echo $opt
     ;;
@@ -146,7 +154,17 @@ echo ${conf_file_path}
 
 
 if [[ -z "${conf_file_path}" ]]; then
-  build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/VarCall_${suffix}.conf
+
+  if [[ -z "${r1_fq_file}" ]]; then
+    echo "User selected fastq files names used in conf file... "
+  else
+    echo "Standard fastq files name used in conf file... "
+    r1_fq_file=${sample_name}_R1_val_1.fq.gz
+    r2_fq_file=${sample_name}_R2_val_2.fq.gz
+  fi
+ 
+  build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} > ${template_dir}/VarCall_${suffix}.conf
+
   echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
   
   for runner_gen in ${runner_mode[@]}; do
