@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 #Wrapper to generate runners for different steps of the variant calling pipeline.
 #
 #Input: 
@@ -68,65 +68,63 @@ while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
 
 done
 
-case ${work_mode} in
-    A)
-    #generate only single sample steps for each sample
-    # mkdir -p ${out_dir}/
-    # mkdir -p ${template_dir}/
 
-    #get all samples
-    sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
-    samples_count=$(cut -f 1 -d " " ${input_file_list} |sort| uniq| wc -l)
-    fastq_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
-    double_sample=$((${samples_count} + ${samples_count}))
+#get all samples
+sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
+samples_count=$(cut -f 1 -d " " ${input_file_list} |sort| uniq| wc -l)
+fastq_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
+double_sample=$((${samples_count} + ${samples_count}))
 
-    #check if we have samples and files in the correct number
-    echo -e "Samples detected: ${samples_count}.\nFastq files detected: ${fastq_count}"
-    if [[ ${double_sample} -eq ${fastq_count} ]]; then
-        echo -e "Samples and fastq files are coherent in numbers, we can proceed...."
-    else
-        echo 'ERROR!!Mismatch between samples and fastq files. Exiting'
-        exit 1
+#check if we have samples and files in the correct number
+echo -e "Samples detected: ${samples_count}.\nFastq files detected: ${fastq_count}"
+if [[ ${double_sample} -eq ${fastq_count} ]]; then
+    echo -e "Samples and fastq files are coherent in numbers, we can proceed...."
+else
+    echo 'ERROR!!Mismatch between samples and fastq files. Exiting'
+    exit 1
+fi
+
+# if we're still here, we are clear and can go on
+#now, for each sample, get the name and related files
+for sample_name in ${sample_names}
+do
+    #get the fastq files path
+    r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | head -1)
+    r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | tail -1)
+
+    #now, get the fastq folder
+    fastq_input_folder=$(dirname ${r1_fq})
+    r1_fq_names=$(basename ${r1_fq})
+    r2_fq_names=$(basename ${r2_fq})
+    echo ${fastq_input_folder}
+    
+    #add additional optional parameters
+    optional_pars=()
+    if [[ ! -z ${exec_host} ]]; then
+        optional_pars+="-n ${exec_host} "
     fi
-
-    # if we're still here, we are clear and can go on
-    #now, for each sample, get the name and related files
-    for sample_name in ${sample_names}
-    do
-        #get the fastq files path
-        r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | head -1)
-        r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | tail -1)
-
-        #now, get the fastq folder
-        fastq_input_folder=$(dirname ${r1_fq})
-        r1_fq_names=$(basename ${r1_fq})
-        r2_fq_names=$(basename ${r2_fq})
-        echo ${fastq_input_folder}
-        
-        #add additional optional parameters
-        optional_pars=()
-        if [[ ! -z ${exec_host} ]]; then
-            optional_pars+="-n ${exec_host} "
-        fi
-        if [[ ! -z ${exec_queue} ]]; then
-            optional_pars+="-j ${exec_queue} "
-        fi
-        #now we can start creating templates for each sample
+    if [[ ! -z ${exec_queue} ]]; then
+        optional_pars+="-j ${exec_queue} "
+    fi
+    #now we can start creating templates for each sample
+    case ${work_mode} in
+        A)
+        #First section to generate runners for the SINGLE SAMPLE steps: at the moment, only the GATK implementation is in production.
+        #
+        # mkdir -p ${out_dir}/
+        # mkdir -p ${template_dir}/
         # echo "${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p ${optional_pars[@]}"
         ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir}/${sample_name} -o ${out_dir}/${sample_name} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p "${optional_pars[@]}"
-    done
-    ;;
-    B)
-    #generate only multi sample steps
-    #ideally, here we should have a list of sample names and paths, processed bams for the samtools implementation
-    #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
+        ;;
+        B)
+        #Second section used to generate runner for the MULTI SAMPLES steps
+        #
+        #ideally, here we should have a list of sample names and paths, processed bams for the samtools implementation
+        #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
 
-    ;;
-esac
+        ;;
+    esac
+done
 
-#First section to generate runners for the SINGLE SAMPLE steps: at the moment, only the GATK implementation is in production.
-#
 
-#Second section used to generate runner for the MULTI SAMPLES steps
-#
 
