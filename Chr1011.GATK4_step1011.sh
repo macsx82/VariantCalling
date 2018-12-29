@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol5}/
 echo "> gVCF list"
-ls ${fol5}/${SM}_*_g.vcf.gz > "${fol5}/${SM}.list"
+ls ${fol5}/${SM}_*_g.vcf.gz > "${fol6}/${SM}.list"
 echo "- END -"
 
 #10b
@@ -28,7 +28,7 @@ echo
 echo "> MergeVcfs"
 # ${GATK4} --java-options ${java_opt2x} MergeVcfs -I "${fol5}/${SM}.list" -O ${fol6}/${gVCF}
 #use the bcftools option: faster and without java (which is a drag!!)
-${BCFTOOLS} concat -a -f ${fol5}/${SM}.list | ${BCFTOOLS} sort -O z -o ${fol6}/${gVCF}
+${BCFTOOLS} concat -a -f ${fol6}/${SM}.list | ${BCFTOOLS} sort -O z -o ${fol6}/${gVCF}
 
 echo "- END -"
 
