@@ -16,6 +16,8 @@ while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
 	  ;;
     i)
       echo ${OPTARG}
+      #in pooled mode, this is the common path for input files
+      #in sample mode, this is the path to the file list
       input_file_list=${OPTARG}
       ;;
 	t)
@@ -123,7 +125,9 @@ case ${work_mode} in
     #
     #ideally, here we should have a list of sample names and paths, processed bams for the samtools implementation
     #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
-    ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -m ${mail_to} -z -g -q -k -l "${optional_pars[@]}"
+    input_common_folder=${input_file_list}
+
+    ${config_file_creator} -i ${input_common_folder} -t ${template_dir} -m ${mail_to} -z -g -q -k -l "${optional_pars[@]}"
 
     ;;
 esac

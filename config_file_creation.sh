@@ -50,8 +50,11 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:z" opt ${@}; do
+while getopts ":t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
   case $opt in
+    d)
+    common_out_dir=${OPTARG}
+    ;;
     z)
     pooled_mode="ON"
     ;;
@@ -89,6 +92,7 @@ while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:z" opt ${@}; do
       echo "                   -k: Apply VQSR step only "
       echo "                   -l: last step only "
       echo "                   -w: Generate all config and runner files at once "
+      echo "                   -d: Specify common out dir for all steps after variant calling."
       echo "                   -c: Provide a path for an existing config file."
       echo "                   -1: Provide fastq file name for R1."
       echo "                   -2: Provide fastq file name for R2."
@@ -181,24 +185,33 @@ if [[ -z "${conf_file_path}" ]]; then
   fi
   #check existence of execution host name
   if [[ ! -z ${exec_host} ]]; then
-    echo "User selcted execution host: ${exec_host}"
+    echo "User selected execution host: ${exec_host}"
   else
     exec_host="apollo1.lan10gb"
     echo "general execution host set to: ${exec_host}"
   fi
   #check existence of execution queue name
   if [[ ! -z ${exec_queue} ]]; then
-    echo "User selcted execution host: ${exec_queue}"
+    echo "User selected execution host: ${exec_queue}"
   else
     exec_queue="all.q"
     echo "general execution queue set to: ${exec_queue}"
   fi
+  #check existence of the common_out_dir specification
+  if [[ ! -z ${common_out_dir} ]]; then
+    #this need to be specified in the sample mode
+    echo "User selected common folder : ${common_out_dir}"
+  else
+    #we use the same out_dir for the pooled mode or if we don't need it
+    common_out_dir=${out_dir}
+    echo "general common folder set to: ${common_out_dir}"
+  fi
 
   if [[ -z ${pooled_mode} ]]; then
-    build_template_sample ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_${suffix}.conf
+    build_template_sample ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} ${common_out_dir} > ${template_dir}/VarCall_${suffix}.conf
     echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
   else
-    build_template_pooled ${out_dir} ${mail_to} ${input_file_folder} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_pooled_${suffix}.conf
+    build_template_pooled ${input_file_folder} ${mail_to} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_pooled_${suffix}.conf
     echo "Template file ${template_dir}/VarCall_pooled_${suffix}.conf created. You can edit it to modify any non default parameter."
     
   fi

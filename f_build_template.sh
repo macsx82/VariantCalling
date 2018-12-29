@@ -216,7 +216,7 @@ fol6=\${base_out}/germlineVariants/2.gVCF/storage
 # We need to create a folder with links to all the generated splitted steps data.
 # This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
 # and should be created right after the merging step for the single vcf files
-common_base_out="...set the desired base folder"
+common_base_out=$9
 fol6_link=\${common_base_out}/germlineVariants/all_samples/2.gVCF/storage
 
 
