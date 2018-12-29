@@ -50,8 +50,16 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:" opt ${@}; do
+while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:" opt ${@}; do
   case $opt in
+    n)
+    # specify execution node
+    exec_host=${OPTARG}
+    ;;
+    j)
+    #specify queue name, also in the form queue@exec_host
+    exec_queue=${OPTARG}
+    ;;
     t)
       echo ${OPTARG}
       template_dir=${OPTARG}
@@ -79,6 +87,10 @@ while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:" opt ${@}; do
       echo "                   -l: last step only "
       echo "                   -w: Generate all config and runner files at once "
       echo "                   -c: Provide a path for an existing config file."
+      echo "                   -1: Provide fastq file name for R1."
+      echo "                   -2: Provide fastq file name for R2."
+      echo "                   -n: Execution host full name"
+      echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
       echo "                   -h: this help message "
       echo "#########################"
       exit 1
@@ -155,6 +167,7 @@ echo ${conf_file_path}
 
 if [[ -z "${conf_file_path}" ]]; then
 
+  #check existence of fastq file names
   if [[ ! -z "${r1_fq_file}" ]]; then
     echo "User selected fastq files names used in conf file... "
   else
@@ -162,8 +175,23 @@ if [[ -z "${conf_file_path}" ]]; then
     r1_fq_file=${sample_name}_R1_val_1.fq.gz
     r2_fq_file=${sample_name}_R2_val_2.fq.gz
   fi
- 
-  build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} > ${template_dir}/VarCall_${suffix}.conf
+  #check existence of execution host name
+  if [[ ! -z ${exec_host} ]]; then
+    echo "User selcted execution host: ${exec_host}"
+  else
+    exec_host="apollo1.lan10gb"
+    echo "general execution host set to: ${exec_host}"
+  fi
+  #check existence of execution queue name
+  if [[ ! -z ${exec_queue} ]]; then
+    echo "User selcted execution host: ${exec_queue}"
+  else
+    exec_queue="all.q"
+    echo "general execution queue set to: ${exec_queue}"
+  fi
+
+
+  build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_${suffix}.conf
 
   echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
   

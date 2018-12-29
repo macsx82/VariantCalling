@@ -148,8 +148,8 @@ mail=$3
 #########SET UP SGE PARAMETERS HERE ##########
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
-exec_host=apollo1.lan10gb #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
-sge_q=all.q #in var caller tmp mode, here we should need only the queue name, without host spec
+exec_host=$7 #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
+sge_q=$8 #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m=15G #this mem requirement will work with java mem selection 2

@@ -8,7 +8,7 @@
 #	- some options for the runner generators
 
 # while getopts ":t:o:s:m:i:c:abvpgqlwkh" opt ${@}; do
-while getopts ":i:t:o:m:c:l:abh" opt ${@}; do
+while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
 	case $opt in
 	l)
 	  echo ${OPTARG}
@@ -34,6 +34,12 @@ while getopts ":i:t:o:m:c:l:abh" opt ${@}; do
       echo ${OPTARG}
       mail_to=${OPTARG}
     ;;
+    n)
+      exec_host=${OPTARG}
+    ;;
+    j)
+      exec_queue=${OPTARG}
+    ;;
   	a)
 	#generate only single sample steps for each sample
         work_mode="A"
@@ -51,6 +57,8 @@ while getopts ":i:t:o:m:c:l:abh" opt ${@}; do
       echo "Execution options: -a: single sample steps only "
       echo "                   -b: multi sample steps only"
       echo "                   -c: Provide a path for an existing config file."
+      echo "                   -n: Execution host full name"
+      echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
       echo "                   -h: this help message "
       echo "#########################"
       exit 1
@@ -95,8 +103,16 @@ case ${work_mode} in
         r2_fq_names=$(basename ${r2_fq})
         echo ${fastq_input_folder}
         
+        #add additional optional parameters
+        optional_pars=()
+        if [[ ! -z ${exec_host} ]]; then
+            optional_pars+="-n ${exec_host}"
+        fi
+        if [[ ! -z ${exec_queue} ]]; then
+            optional_pars+="-n ${exec_queue}"
+        fi
         #now we can start creating templates for each sample
-        ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p
+        echo "${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p ${optional_pars[@]}"
     done
     ;;
     B)
