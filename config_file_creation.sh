@@ -201,6 +201,7 @@ if [[ -z "${conf_file_path}" ]]; then
   if [[ ! -z ${common_out_dir} ]]; then
     #this need to be specified in the sample mode
     echo "User selected common folder : ${common_out_dir}"
+    mkdir -p ${common_out_dir}
   else
     #we use the same out_dir for the pooled mode or if we don't need it
     common_out_dir=${out_dir}
