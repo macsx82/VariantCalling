@@ -27,7 +27,7 @@ do
 done < ${sorgILhg38ChrCHECK}
 
 #after the merging and validating, we need to generate a link to the file in the collective folder
-ln -s ${fol6_link}/${gVCF} ${fol6}/${gVCF}
+ln -f -s ${fol6_link}/${gVCF} ${fol6}/${gVCF}
 
 echo "- END -"
 
