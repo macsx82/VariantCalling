@@ -101,6 +101,7 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
 fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
 
 #step 12 (chr-wgs)
+#validate_interval=\${sorgILhg38exons12PlusINTERVALS}
 gVCF="\${SM}_g.vcf.gz"           #final_merged 
 
 ########### Set the variant db name for GenomicDB import #######

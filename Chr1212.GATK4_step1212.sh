@@ -20,11 +20,12 @@ mkdir -p ${fol7} ${fol8} ${fol9}
 echo
 # cd ${fol6}/
 echo "> Check gVCF"
-while read -r f1
-do
-    ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
+# while read -r f1
+# do
+    # ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
+    ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -gvcf -Xtype ALLELES
 
-done < ${sorgILhg38ChrCHECK}
+# done < ${validate_interval}
 
 #after the merging and validating, we need to generate a link to the file in the collective folder
 ln -f -s ${fol6_link}/${gVCF} ${fol6}/${gVCF}
