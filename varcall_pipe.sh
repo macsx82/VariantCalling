@@ -109,7 +109,7 @@ case ${work_mode} in
             optional_pars+="-n ${exec_host}"
         fi
         if [[ ! -z ${exec_queue} ]]; then
-            optional_pars+="-n ${exec_queue}"
+            optional_pars+=" -j ${exec_queue}"
         fi
         #now we can start creating templates for each sample
         echo "${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p ${optional_pars[@]}"
