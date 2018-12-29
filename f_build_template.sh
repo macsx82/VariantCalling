@@ -79,7 +79,7 @@ fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for BQSR #######
 # step 6 -> select one of the intervals in the INTERVALS section above
-bqsr_intervals=\${sorgILhg38Chr}
+bqsr_intervals=\${sorgILhg38exons12PlusINTERVALS}
 #here we can select if we want to submit the interval file as it is or as a job array
 whole_genome=1 #1:use the bed file as a single input, 0:use the bed file as a source to run job arrays
 ##############################################################################
@@ -90,7 +90,7 @@ applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
-vcall_interval=\${sorgILhg38wgenes}
+vcall_interval=\${bqsr_intervals}
 split_interval=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
                     # the number selected will be the splitting line number for the interval file
 job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval) or just use the interval file as it is for job submission
@@ -101,7 +101,7 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
 fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
 
 #step 12 (chr-wgs)
-validate_interval=\${sorgILhg38exons12PlusINTERVALS}
+validate_interval=\${vcall_interval}
 gVCF="\${SM}_g.vcf.gz"           #final_merged 
 
 ########### Set the variant db name for GenomicDB import #######
