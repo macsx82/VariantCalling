@@ -8,8 +8,12 @@ set -e
 #	- some options for the runner generators
 
 # while getopts ":t:o:s:m:i:c:abvpgqlwkh" opt ${@}; do
-while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
+while getopts ":i:t:o:m:c:l:n:j:d:abh" opt ${@}; do
 	case $opt in
+    d)
+      echo ${OPTARG}
+      common_out_path=${OPTARG}
+      ;;
 	l)
 	  echo ${OPTARG}
       config_file_creator=${OPTARG}
@@ -61,6 +65,7 @@ while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
       echo "                   -b: multi sample steps only"
       echo "                         -i: input format should be the base output folder path for multisample processing."
       echo "                   -c: Provide a path for an existing config file."
+      echo "                   -d: Provide a path for a common out dir in single sample mode"
       echo "                   -n: Execution host full name"
       echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
       echo "                   -h: this help message "
@@ -98,7 +103,9 @@ fi
 if [[ ! -z ${exec_queue} ]]; then
     optional_pars+="-j ${exec_queue} "
 fi
-
+if [[ ! -z ${common_out_path} ]]; then
+    optional_pars+="-d ${common_out_path} "
+fi
 # if we're still here, we are clear and can go on
 case ${work_mode} in
     A)
