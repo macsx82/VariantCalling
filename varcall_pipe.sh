@@ -60,7 +60,7 @@ while getopts ":i:t:o:m:c:l:abh" opt ${@}; do
 
 done
 
-case work_mode in
+case ${work_mode} in
     A)
     #generate only single sample steps for each sample
     mkdir -p ${out_dir}
