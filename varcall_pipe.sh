@@ -84,47 +84,49 @@ else
     exit 1
 fi
 
-# if we're still here, we are clear and can go on
-#now, for each sample, get the name and related files
-for sample_name in ${sample_names}
-do
-    #get the fastq files path
-    r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | head -1)
-    r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | tail -1)
+#add additional optional parameters
+optional_pars=()
+if [[ ! -z ${exec_host} ]]; then
+    optional_pars+="-n ${exec_host} "
+fi
+if [[ ! -z ${exec_queue} ]]; then
+    optional_pars+="-j ${exec_queue} "
+fi
 
-    #now, get the fastq folder
-    fastq_input_folder=$(dirname ${r1_fq})
-    r1_fq_names=$(basename ${r1_fq})
-    r2_fq_names=$(basename ${r2_fq})
-    echo ${fastq_input_folder}
-    
-    #add additional optional parameters
-    optional_pars=()
-    if [[ ! -z ${exec_host} ]]; then
-        optional_pars+="-n ${exec_host} "
-    fi
-    if [[ ! -z ${exec_queue} ]]; then
-        optional_pars+="-j ${exec_queue} "
-    fi
-    #now we can start creating templates for each sample
-    case ${work_mode} in
-        A)
-        #First section to generate runners for the SINGLE SAMPLE steps: at the moment, only the GATK implementation is in production.
-        #
-        # mkdir -p ${out_dir}/
-        # mkdir -p ${template_dir}/
+# if we're still here, we are clear and can go on
+case ${work_mode} in
+    A)
+    #First section to generate runners for the SINGLE SAMPLE steps: at the moment, only the GATK implementation is in production.
+    #
+    # mkdir -p ${out_dir}/
+    # mkdir -p ${template_dir}/
+    #now, for each sample, get the name and related files
+    for sample_name in ${sample_names}
+    do
+        #get the fastq files path
+        r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | head -1)
+        r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | tail -1)
+
+        #now, get the fastq folder
+        fastq_input_folder=$(dirname ${r1_fq})
+        r1_fq_names=$(basename ${r1_fq})
+        r2_fq_names=$(basename ${r2_fq})
+        echo ${fastq_input_folder}
+        
+        #now we can start creating templates for each sample
         # echo "${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p ${optional_pars[@]}"
         ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir}/${sample_name} -o ${out_dir}/${sample_name} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p "${optional_pars[@]}"
-        ;;
-        B)
-        #Second section used to generate runner for the MULTI SAMPLES steps
-        #
-        #ideally, here we should have a list of sample names and paths, processed bams for the samtools implementation
-        #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
+    done
+    ;;
+    B)
+    #Second section used to generate runner for the MULTI SAMPLES steps
+    #
+    #ideally, here we should have a list of sample names and paths, processed bams for the samtools implementation
+    #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
+    ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -m ${mail_to} -z -g -q -k -l "${optional_pars[@]}"
 
-        ;;
-    esac
-done
+    ;;
+esac
 
 
 

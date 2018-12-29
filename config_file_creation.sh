@@ -50,8 +50,11 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:" opt ${@}; do
+while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:z" opt ${@}; do
   case $opt in
+    z)
+    pooled_mode="ON"
+    ;;
     n)
     # specify execution node
     exec_host=${OPTARG}
@@ -91,6 +94,7 @@ while getopts ":t:o:s:m:i:c:abvpgqlwkh1:2:n:j:" opt ${@}; do
       echo "                   -2: Provide fastq file name for R2."
       echo "                   -n: Execution host full name"
       echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
+      echo "                   -z: Activate POOLED mode: generation of pooled templates and pooled configuration file."
       echo "                   -h: this help message "
       echo "#########################"
       exit 1
@@ -190,10 +194,15 @@ if [[ -z "${conf_file_path}" ]]; then
     echo "general execution queue set to: ${exec_queue}"
   fi
 
+  if [[ -z ${pooled_mode} ]]; then
+    build_template_sample ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_${suffix}.conf
+    echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
+  else
+    build_template_pooled ${out_dir} ${mail_to} ${input_file_folder} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_pooled_${suffix}.conf
+    echo "Template file ${template_dir}/VarCall_pooled_${suffix}.conf created. You can edit it to modify any non default parameter."
+    
+  fi
 
-  build_template ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_${suffix}.conf
-
-  echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
   
   for runner_gen in ${runner_mode[@]}; do
     case ${runner_gen} in
@@ -214,19 +223,19 @@ if [[ -z "${conf_file_path}" ]]; then
         echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
       E )
-        build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/05_VarCall_GDBIMPRunner_${suffix}.sh
+        build_runner_GDBIMP ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/05_VarCall_GDBIMPRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
       F )
-        build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_VQSRRunner_${suffix}.sh
+        build_runner_VQSR ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/06_VarCall_VQSRRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
       G )
-        build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
+        build_runner_LastSSel ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
       I)
-        build_runner_applyVQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
+        build_runner_applyVQSR ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_ApplyVQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
       H )
@@ -242,16 +251,16 @@ if [[ -z "${conf_file_path}" ]]; then
         build_runner_post_VarCall ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/04_VarCall_PostVarCallRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_PostVarCallRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
         
-        build_runner_GDBIMP ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/05_VarCall_GDBIMPRunner_${suffix}.sh
+        build_runner_GDBIMP ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/05_VarCall_GDBIMPRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_GDBIMPRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
         
-        build_runner_VQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_VQSRRunner_${suffix}.sh
+        build_runner_VQSR ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/06_VarCall_VQSRRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_VQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
         
-        build_runner_applyVQSR ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
+        build_runner_applyVQSR ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/06_VarCall_ApplyVQSRRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_ApplyVQSRRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
 
-        build_runner_LastSSel ${template_dir}/VarCall_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
+        build_runner_LastSSel ${template_dir}/VarCall_pooled_${suffix}.conf > ${template_dir}/07_VarCall_LastSSelRunner_${suffix}.sh
         echo "Runner file ${template_dir}/VarCall_LastSSelRunner_${suffix}.sh created. You can edit it to modify any non default parameter."
       ;;
     esac
