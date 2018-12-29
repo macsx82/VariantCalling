@@ -57,7 +57,9 @@ while getopts ":i:t:o:m:c:l:n:j:abh" opt ${@}; do
       echo "Usage:"
       echo "varcall_pipe.sh -l <launcher_script> -i <input_file_list> -t <template_folder> -o <output_folder> [-m <mail_address>] "
       echo "Execution options: -a: single sample steps only "
+      echo "                         -i: input file list format should be <sample_name> <fastq_1_path> <fastq_2_path>"
       echo "                   -b: multi sample steps only"
+      echo "                         -i: input format should be the base output folder path for multisample processing."
       echo "                   -c: Provide a path for an existing config file."
       echo "                   -n: Execution host full name"
       echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
@@ -74,8 +76,10 @@ done
 #get all samples
 sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
 samples_count=$(cut -f 1 -d " " ${input_file_list} |sort| uniq| wc -l)
-fastq_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
+fastq_1_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
+fastq_2_count=$(cut -f 3 -d " " ${input_file_list} | wc -l)
 double_sample=$((${samples_count} + ${samples_count}))
+fastq_count=$((${fastq_1_count} + ${fastq_2_count}))
 
 #check if we have samples and files in the correct number
 echo -e "Samples detected: ${samples_count}.\nFastq files detected: ${fastq_count}"
@@ -106,8 +110,8 @@ case ${work_mode} in
     for sample_name in ${sample_names}
     do
         #get the fastq files path
-        r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | head -1)
-        r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list} | tail -1)
+        r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list})
+        r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $3}' ${input_file_list})
 
         #now, get the fastq folder
         fastq_input_folder=$(dirname ${r1_fq})
