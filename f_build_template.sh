@@ -235,7 +235,7 @@ fol9=\${common_base_out}/germlineVariants/4.VCF/storage
 hs=/home/${USER}/scripts/pipelines/VariantCalling
 lg=\${base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=/tmp/${USER}/\${rnd_tmp}
+tmp=/home/${USER}/localtemp/\${rnd_tmp}
 EOF
 }
 
