@@ -31,7 +31,7 @@ case ${joint_mode} in
     GENO )
         echo
         # cd ${fol7}/${variantdb}/
-        samples_list=`find ${fol6}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder=${fol6} '{print "-V "base_folder"/"$1}'| tr "\n" " "`
+        samples_list=`find ${fol6_link}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder=${fol6_link} '{print "-V "base_folder"/"$1}'| tr "\n" " "`
         echo "> CombineGVCFs"
         ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" CombineGVCFs -O ${fol7}/${variantdb}/${f2}_g.vcf.gz -R ${GNMhg38} -L "${f1}" ${samples_list}
         echo "- END -"

@@ -88,7 +88,7 @@ source ${param_file}
 source \${hs}/pipeline_functions.sh
 
 #log folders creation
-mkdir -p \${lg} ${fol6_link}
+mkdir -p \${lg} \${fol6_link}
 
 ### - CODE - ###
 
