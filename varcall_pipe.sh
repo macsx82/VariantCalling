@@ -78,22 +78,6 @@ while getopts ":i:t:o:m:c:l:n:j:d:abh" opt ${@}; do
 done
 
 
-#get all samples
-sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
-samples_count=$(cut -f 1 -d " " ${input_file_list} |sort| uniq| wc -l)
-fastq_1_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
-fastq_2_count=$(cut -f 3 -d " " ${input_file_list} | wc -l)
-double_sample=$((${samples_count} + ${samples_count}))
-fastq_count=$((${fastq_1_count} + ${fastq_2_count}))
-
-#check if we have samples and files in the correct number
-echo -e "Samples detected: ${samples_count}.\nFastq files detected: ${fastq_count}"
-if [[ ${double_sample} -eq ${fastq_count} ]]; then
-    echo -e "Samples and fastq files are coherent in numbers, we can proceed...."
-else
-    echo 'ERROR!!Mismatch between samples and fastq files. Exiting'
-    exit 1
-fi
 
 #add additional optional parameters
 optional_pars=()
@@ -109,6 +93,22 @@ fi
 # if we're still here, we are clear and can go on
 case ${work_mode} in
     A)
+    #get all samples
+    sample_names=$(cut -f 1 -d " " ${input_file_list} |sort| uniq)
+    samples_count=$(cut -f 1 -d " " ${input_file_list} |sort| uniq| wc -l)
+    fastq_1_count=$(cut -f 2 -d " " ${input_file_list} | wc -l)
+    fastq_2_count=$(cut -f 3 -d " " ${input_file_list} | wc -l)
+    double_sample=$((${samples_count} + ${samples_count}))
+    fastq_count=$((${fastq_1_count} + ${fastq_2_count}))
+
+    #check if we have samples and files in the correct number
+    echo -e "Samples detected: ${samples_count}.\nFastq files detected: ${fastq_count}"
+    if [[ ${double_sample} -eq ${fastq_count} ]]; then
+        echo -e "Samples and fastq files are coherent in numbers, we can proceed...."
+    else
+        echo 'ERROR!!Mismatch between samples and fastq files. Exiting'
+        exit 1
+    fi
     #First section to generate runners for the SINGLE SAMPLE steps: at the moment, only the GATK implementation is in production.
     #
     # mkdir -p ${out_dir}/

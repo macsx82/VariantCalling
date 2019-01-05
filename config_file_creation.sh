@@ -192,13 +192,16 @@ echo ${conf_file_path}
 
 if [[ -z "${conf_file_path}" ]]; then
 
-  #check existence of fastq file names
-  if [[ ! -z "${r1_fq_file}" ]]; then
-    echo "User selected fastq files names used in conf file... "
-  else
-    echo "Standard fastq files name used in conf file... "
-    r1_fq_file=${sample_name}_R1_val_1.fq.gz
-    r2_fq_file=${sample_name}_R2_val_2.fq.gz
+  if [[ -z ${pooled_mode} ]]; then
+
+    #check existence of fastq file names
+    if [[ ! -z "${r1_fq_file}" ]]; then
+      echo "User selected fastq files names used in conf file... "
+    else
+      echo "Standard fastq files name used in conf file... "
+      r1_fq_file=${sample_name}_R1_val_1.fq.gz
+      r2_fq_file=${sample_name}_R2_val_2.fq.gz
+    fi
   fi
   #check existence of execution host name
   if [[ ! -z ${exec_host} ]]; then
