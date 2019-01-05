@@ -6,19 +6,19 @@ set -e
 script_dir=`dirname $0`
 echo "Loading template function"
 source ${script_dir}/f_build_template.sh
-echo "Loading templete alignment function"
+echo "Loading template alignment function"
 source ${script_dir}/f_build_runner_alignment.sh
-echo "Loading templete BQSR function"
+echo "Loading template BQSR function"
 source ${script_dir}/f_build_runner_BQSR.sh
-echo "Loading templete Varcall function"
+echo "Loading template Varcall function"
 source ${script_dir}/f_build_runner_varcall.sh
-echo "Loading templete GDBIMP function"
+echo "Loading template GDBIMP function"
 source ${script_dir}/f_build_runner_GDBIMP.sh
-echo "Loading templete VQSR function"
+echo "Loading template VQSR function"
 source ${script_dir}/f_build_runner_VQSR.sh
-echo "Loading templete Apply VQSR function"
+echo "Loading template Apply VQSR function"
 source ${script_dir}/f_build_runner_applyVQSR.sh
-echo "Loading templete LastSSel function"
+echo "Loading template LastSSel function"
 source ${script_dir}/f_build_runner_LastSSel.sh
 
 
