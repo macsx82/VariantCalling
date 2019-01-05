@@ -37,6 +37,13 @@ then
     echo "                   -k: Apply VQSR step only "
     echo "                   -l: last step only "
     echo "                   -w: Generate all config and runner files at once "
+    echo "                   -d: Specify common out dir for all steps after variant calling."
+    echo "                   -c: Provide a path for an existing config file."
+    echo "                   -1: Provide fastq file name for R1."
+    echo "                   -2: Provide fastq file name for R2."
+    echo "                   -n: Execution host full name"
+    echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
+    echo "                   -z: Activate POOLED mode: generation of pooled templates and pooled configuration file."
     echo "                   -h: this help message "
     echo "#########################"
     exit 1
@@ -80,7 +87,6 @@ while getopts ":t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
       ;;
     h)
       echo "#########################"
-      echo "WRONG argument number!"
       echo "Usage:"
       echo "config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] "
       echo "Execution options: -a: alignement only "
@@ -166,7 +172,18 @@ while getopts ":t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
 
 done
 
-mkdir -p ${out_dir}
+
+if [[ -z ${out_dir} ]]; then
+  if [[ -z ${pooled_mode} ]]; then
+    echo "Error. Out folder not specified, but POOLED mode not selected (-z option). Exiting..."
+    exit 1
+  else
+    echo "Out folder not specified. Pooled mode detected. "
+  fi
+else
+  mkdir -p ${out_dir}
+fi
+
 mkdir -p ${template_dir}
 
 echo ${runner_mode[@]}
