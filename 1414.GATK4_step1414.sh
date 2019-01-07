@@ -28,7 +28,7 @@ case ${joint_mode} in
         # cd ${fol7}/${variantdb}/
         echo "> GenomicsDBImport"
         bs=`wc -l ${fol7}/${variantdb}/gVCF.list| cut -f 1 -d " "`
-        ${GATK4} --gatk-config-file /home/cocca/scripts/GATKConfig.EXAMPLE.properties --java-options "${java_opt2x} -XX:+UseSerialGC -Dsamjdk.use_async_io_write_samtools=false -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/dbImport_${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
+        ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -Dsamjdk.use_async_io_write_samtools=false -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/dbImport_${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
         echo "- END -"
     ;;
     GENO )
