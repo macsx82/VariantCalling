@@ -29,6 +29,8 @@ echo "> Check gVCF"
 
 #after the merging and validating, we need to copy the file in the collective folder
 rsync -au -Pv ${fol6}/${gVCF} ${fol6_link}/${gVCF}
+# and index them
+bcftools index -t ${fol6_link}/${gVCF}
 
 echo "- END -"
 
