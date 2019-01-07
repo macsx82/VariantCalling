@@ -27,8 +27,8 @@ echo "> Check gVCF"
 
 # done < ${validate_interval}
 
-#after the merging and validating, we need to generate a link to the file in the collective folder
-ln -f -s ${fol6}/${gVCF} ${fol6_link}/${gVCF}
+#after the merging and validating, we need to copy the file in the collective folder
+rsync -au -Pv ${fol6}/${gVCF} ${fol6_link}/${gVCF}
 
 echo "- END -"
 
