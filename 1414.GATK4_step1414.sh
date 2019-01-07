@@ -10,6 +10,7 @@ echo
 ### - SOURCEs - ###
 param_file=$3
 source ${param_file}
+mkdir -p ${tmp}
 #source functions file
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
