@@ -21,7 +21,7 @@ source \${hs}/pipeline_functions.sh
 mkdir -p \${lg}
 
 ### - mkdir FOLDER / make FILE - ###
-mkdir \${lg}/\${variantdb}
+mkdir -p \${lg}/\${variantdb}
 
 ### - CODE - ###
 
@@ -47,16 +47,16 @@ split -a 4 --additional-suffix dbImp.intervals -d -l 100 \${vdb_interval}
 
 ls \${tmp}/db_imp_int/x*dbImp.intervals > \${tmp}/db_imp_int/ALL_dbImp.intervals
 
-rsync -av -u -P R \${tmp}/db_imp_int ${USER}@${exec_host}:/.
+# rsync -av -u -P R \${tmp}/db_imp_int ${USER}@${exec_host}:/.
 
 
-a_size=\`wc -l \${tmp}/db_imp_int/ALL_dbImp.intervals | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+a_size=\`wc -l \${tmp}/db_imp_int/ALL_dbImp.intervals | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 32 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 
 #GenotypeGVCFs
 #pipe step 15, job-array
 #IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
-a_size=\`wc -l \${tmp}/db_imp_int/ALL_dbImp.intervals | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+a_size=\`wc -l \${tmp}/db_imp_int/ALL_dbImp.intervals | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 32 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 
 #GenotypeGVCFs
