@@ -26,7 +26,8 @@ echo "- END -"
 echo
 # cd ${fol8}/${variantdb}/
 echo "> Merge VCFs"
-java -XX:+UseSerialGC -jar ${PICARD} GatherVcfs ${wVCF} O=${fol9}/${variantdb}/${raw}
+${BCFTOOLS} concat -a ${wVCF} | ${BCFTOOLS} sort -T ${tmp} -O z -o ${fol9}/${variantdb}/${raw}
+# java -XX:+UseSerialGC -jar ${PICARD} GatherVcfs ${wVCF} O=${fol9}/${variantdb}/${raw}
 echo "- END -"
 
 #del
