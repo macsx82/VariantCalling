@@ -20,14 +20,14 @@ echo
 # cd ${fol8}/${variantdb}/
 echo "> Raw VCFs ID data"
 # wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
-wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | tr "\n" " "`
+find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f > ${fol8}/${variantdb}/${variantdb}_all_vcf.list
 echo "- END -"
 
 #16b
 echo
 # cd ${fol8}/${variantdb}/
 echo "> Merge VCFs"
-${BCFTOOLS} concat -a ${wVCF} | ${BCFTOOLS} sort -T ${tmp} -O z -o ${fol9}/${variantdb}/${raw}
+${BCFTOOLS} concat -a -f ${fol8}/${variantdb}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} -O z -o ${fol9}/${variantdb}/${raw}
 # java -XX:+UseSerialGC -jar ${PICARD} GatherVcfs ${wVCF} O=${fol9}/${variantdb}/${raw}
 echo "- END -"
 
