@@ -41,20 +41,23 @@ echo "- END -"
 #23
 echo
 # cd ${fol9}/${variantdb}/
-echo "> Extract from the raw cohort vcf only the PASS variants by the VQSR steps"
-${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" SelectVariants -R ${GNMhg38} -V ${fol9}/${variantdb}/${raw} -O ${fol9}/${variantdb}/${passed} -L ${fol8}/${variantdb}/"${variantdb}_pass.list"
+echo "> Extract from the cohort vcf only the PASS variants by the VQSR steps"
+# ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" SelectVariants -R ${GNMhg38} -V ${fol9}/${variantdb}/${raw} -O ${fol9}/${variantdb}/${passed} -L ${fol8}/${variantdb}/"${variantdb}_pass.list"
+${BCFTOOLS} view -i "FILTER=='PASS'" ${fol9}/${variantdb}/${variantdb}_VQSR_output.vcf -O z -o ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
+tabix -p vcf -f ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
+
 echo "- END -"
 
 #24
 echo
 # cd ${fol9}/${variantdb}/
-echo "> Create per sample only the PASS variants vcf"
-while read -r SM 
-do
-    ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" SelectVariants -R ${GNMhg38} -V ${fol9}/${variantdb}/${passed} -O ${fol9}/${variantdb}/xSamplePassedVariantsVCFs/"${variantdb}_${SM}_SampleOnlyPASS_Variants_PostVQSR.vcf" --exclude-non-variants -sn ${SM}
+# echo "> Create per sample only the PASS variants vcf"
+# while read -r SM 
+# do
+#     ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" SelectVariants -R ${GNMhg38} -V ${fol9}/${variantdb}/${passed} -O ${fol9}/${variantdb}/xSamplePassedVariantsVCFs/"${variantdb}_${SM}_SampleOnlyPASS_Variants_PostVQSR.vcf" --exclude-non-variants -sn ${SM}
 
-done < ${fol8}/${variantdb}/"${variantdb}_sample.list"
-echo "- END -"
+# done < ${fol8}/${variantdb}/"${variantdb}_sample.list"
+# echo "- END -"
 
 #del
 echo
