@@ -26,7 +26,7 @@ echo "- END -"
 echo
 # cd ${fol8}/${variantdb}/
 echo "> Site Only pre-VQSR"
-${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MakeSitesOnlyVcf -I ${fol9}/${variantdb}/${HF} -O ${fol8}/${variantdb}/${SO}
+${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MakeSitesOnlyVcf -I ${fol8}/${variantdb}/${HF} -O ${fol8}/${variantdb}/${SO}
 echo "- END -"
 
 #del
