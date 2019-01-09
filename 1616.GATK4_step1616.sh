@@ -37,7 +37,8 @@ done
 
 pVCF=$(find ${fol9}/${variantdb}/${variantdb}_*_all_vcf.list.vcf.gz -type f)
 
-${BCFTOOLS} concat -a ${pVCF} | ${BCFTOOLS} sort -T ${tmp} -O z -o ${fol9}/${variantdb}/${raw}.gz
+# concat , sort and normalize indels 
+${BCFTOOLS} concat -a ${pVCF} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
 tabix -f -p vcf ${fol9}/${variantdb}/${raw}.gz
 
 #add reference tag in vcf

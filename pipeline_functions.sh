@@ -27,7 +27,7 @@ function sam_validate(){
 function vcf_stats(){
     in_vcf=$1
     out_file=$2
-    ${BCFTOOLS} stats -s - -d 0,10000,10 -F ${GNMhg38} ${in_vcf} > ${out_file}
+    ${BCFTOOLS} stats -s - -d 0,1000,10 -F ${GNMhg38} ${in_vcf} > ${out_file}
 
     stats_plots=`dirname ${out_file}`
 
