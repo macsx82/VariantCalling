@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol8}/${variantdb}/
 echo "> indel Apply VQSR"
-${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${SO} --recal-file ${fol8}/${variantdb}/{iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level ${vqsr_thr_i} --create-output-variant-index true -mode ${mode_I}
+${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${SO} --recal-file ${fol8}/${variantdb}/${iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level ${vqsr_thr_i} --create-output-variant-index true -mode ${mode_I}
 echo "- END -"
 
 #21b
