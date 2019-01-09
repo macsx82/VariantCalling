@@ -21,3 +21,16 @@ function sam_validate(){
     java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY TMP_DIR=${tmp}/
     echo "- END -"
 }
+
+
+#validate the bam file
+function vcf_stats(){
+    in_vcf=$1
+    out_file=$2
+    ${BCFTOOLS} stats -s - -d 0,10,10000 -F ${GNMhg38} ${in_vcf} > ${out_file}
+
+    stats_plots=`dirname ${out_file}`
+
+    /share/apps/bio/bin/plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
+    echo "- END -"
+}
