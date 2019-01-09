@@ -21,11 +21,11 @@ source \${hs}/pipeline_functions.sh
 mkdir -p \${lg}
 
 ### - mkdir FOLDER / make FILE - ###
-mkdir \${lg}/\${variantdb}
-mkdir \${fol7}/\${variantdb}
-mkdir \${fol8}/\${variantdb}
-mkdir \${fol9}/\${variantdb}
-mkdir \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
+mkdir -p \${lg}/\${variantdb}
+mkdir -p \${fol7}/\${variantdb}
+mkdir -p \${fol8}/\${variantdb}
+mkdir -p \${fol9}/\${variantdb}
+mkdir -p \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
 ### - CODE - ###
 
 echo " --- START PIPELINE ---"

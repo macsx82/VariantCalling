@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol9}/${variantdb}/
 echo "> Hard Filtering pre-VQSR"
-${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" VariantFiltration --filter-expression 'ExcessHet > 54.69' --filter-name 'ExcessHet' -V ${fol9}/${variantdb}/${raw} -O ${fol8}/${variantdb}/${HF}
+${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" VariantFiltration --filter-expression 'ExcessHet > 54.69' --filter-name 'ExcessHet' -V ${fol9}/${variantdb}/${raw}.gz -O ${fol8}/${variantdb}/${HF}
 echo "- END -"
 
 #18
