@@ -43,8 +43,8 @@ echo "bash \${hs}/2224.GATK4_step2224.sh \${param_file}" | qsub -N G4s2224_\${va
 #pipe step 25
 #IN sample-PASS-variants postVQSR, interval list OUT sample-Interval-Filtered-PASS-variants postVQSR ***Whole Genes /// SelectVariants
 #IN sample-PASS-variants postVQSR, interval list OUT sample-Interval-Filtered-PASS-variants postVQSR ***Whole Exons + 12bp each side /// SelectVariants
-
-echo "bash \${hs}/Chr2525.GATK4_step2525.sh \${param_file}" | qsub -N G4s2525_\${variantdb} -hold_jid G4s2224_\${variantdb} -o \${lg}/\${variantdb}/g2525_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2525_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} 
+# No strict need for this
+#echo "bash \${hs}/Chr2525.GATK4_step2525.sh \${param_file}" | qsub -N G4s2525_\${variantdb} -hold_jid G4s2224_\${variantdb} -o \${lg}/\${variantdb}/g2525_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2525_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} 
 
 
 echo

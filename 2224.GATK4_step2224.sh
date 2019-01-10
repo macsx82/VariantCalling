@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol9}/${variantdb}/
 echo "> Sample list"
-grep "CHROM" ${fol9}/${variantdb}/${raw} | sed 's/\t/\n/g' | tail -n +10 > ${fol8}/${variantdb}/"${variantdb}_sample.list"
+grep "CHROM" ${fol9}/${variantdb}/${final} | sed 's/\t/\n/g' | tail -n +10 > ${fol8}/${variantdb}/"${variantdb}_sample.list"
 echo "- END -"
 
 #22b
@@ -34,8 +34,8 @@ echo
 # cd ${fol8}/${variantdb}/
 echo "> Count Samples and Variants"
 echo -n "samples n. = "; wc -l "${fol8}/${variantdb}/${variantdb}_sample.list" | awk '{print $1}'
-echo -n "PASS variants n. in "pass list"   = "; wc -l "${fol8}/${variantdb}/${variantdb}_pass.list" | awk '{print $1}'
-echo -n "PASS variants n. in "VQSR output" = "; grep "PASS" ${fol9}/${variantdb}/"${variantdb}_VQSR_output.vcf" | tail -n +2 | wc -l 
+echo -n "PASS variants n. in pass list   = "; wc -l "${fol8}/${variantdb}/${variantdb}_pass.list" | awk '{print $1}'
+echo -n "PASS variants n. in VQSR output = "; grep "PASS" ${fol9}/${variantdb}/"${variantdb}_VQSR_output.vcf" | tail -n +2 | wc -l 
 echo "- END -"
 
 #23
@@ -46,10 +46,12 @@ echo "> Extract from the cohort vcf only the PASS variants by the VQSR steps"
 ${BCFTOOLS} view -i "FILTER=='PASS'" ${fol9}/${variantdb}/${variantdb}_VQSR_output.vcf -O z -o ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
 tabix -p vcf -f ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
 
+echo "> Calculate stats for the VQSR passed sites"
+vcf_stats ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vchk
 echo "- END -"
 
 #24
-echo
+
 # cd ${fol9}/${variantdb}/
 # echo "> Create per sample only the PASS variants vcf"
 # while read -r SM 
