@@ -19,7 +19,7 @@ source ${own_folder}/pipeline_functions.sh
 echo
 # cd ${fol9}/${variantdb}/
 echo "> Sample list"
-grep "CHROM" ${fol9}/${variantdb}/${final} | sed 's/\t/\n/g' | tail -n +10 > ${fol8}/${variantdb}/"${variantdb}_sample.list"
+${BCFTOOLS} view -h ${fol9}/${variantdb}/${final}| tail -n 1 |cut -f 10-| tr "\t" "\n" > ${fol8}/${variantdb}/"${variantdb}_sample.list"
 echo "- END -"
 
 #22b
