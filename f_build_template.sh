@@ -173,6 +173,7 @@ java_opt4x='-Xmx100g -XX:ParallelGCThreads=1'   #memoria java       # 20
 ################### Known resources ###################
 GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
 DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
+DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
 INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
 OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
 AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
@@ -363,6 +364,7 @@ java_opt4x='-Xmx100g -XX:ParallelGCThreads=1'   #memoria java       # 20
 ################### Known resources ###################
 GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
 DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
+DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
 INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
 OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
 AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz

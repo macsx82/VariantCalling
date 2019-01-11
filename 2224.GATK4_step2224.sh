@@ -51,7 +51,9 @@ vcf_stats ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz ${fol9}/${variant
 echo "- END -"
 
 #24
-
+echo e "\nAdd rsID annotations from dbSNP and some other useful fields"
+${BCFTOOLS} annotate -a ${DBSNP_latest} -c ID ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz | ${BCFTOOLS} +fill-tags -O z -o ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED_rsID.vcf.gz
+tabix -p vcf -f ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED_rsID.vcf.gz
 # cd ${fol9}/${variantdb}/
 # echo "> Create per sample only the PASS variants vcf"
 # while read -r SM 
