@@ -71,16 +71,16 @@ echo "- END -"
 echo
 echo "> Coverage - counting also the base coverage at 0 "
 ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | gzip -c > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz
-(for chr in {1..22} X Y
-do
-    echo "-- chr$chr --";
-    bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | wc -l)`;
-    echo "EXONS target length=${bases}";
-    cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum}')`;
-    echo "sum EXONS bases coverage WITH 0x=$cov";
-    avercov=$((${cov}/${bases}));
-    echo "EXONS average coverage=${avercov}";
-done ) | gzip -c > ${fol2}/${SM}_${hg}_WITH_0x_EXONScovstats.txt.gz
+# (for chr in {1..22} X Y M
+# do
+#     echo "-- chr$chr --";
+#     # bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | wc -l)`;
+#     # echo "EXONS target length=${bases}";
+#     cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum/NR}')`;
+#     echo "sum EXONS bases coverage WITH 0x=$cov";
+#     avercov=$((${cov}/${bases}));
+#     echo "EXONS average coverage=${avercov}";
+# done ) | gzip -c > ${fol2}/${SM}_${hg}_WITH_0x_EXONScovstats.txt.gz
 
 echo "- END -"
 
@@ -88,17 +88,17 @@ echo "- END -"
 echo
 echo "> Coverage - without counting the base coverage at 0"
 ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| gzip -c > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz
-(for chr in {1..22} X Y;
-do
-    echo "-- chr$chr --"
-    bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | wc -l)`
-    echo "EXONS target length=$bases"
-    cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum}')`
-    echo "sum EXONS bases coverage WITHOUT 0x=$cov"
-    avercov=$(($cov/$bases))
-    echo "EXONS average coverage=$avercov"
+# (for chr in {1..22} X Y M
+# do
+#     echo "-- chr$chr --"
+#     # bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | wc -l)`
+#     # echo "EXONS target length=$bases"
+#     cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum/NR}')`
+#     echo "sum EXONS bases coverage WITHOUT 0x=$cov"
+#     avercov=$(($cov/$bases))
+#     echo "EXONS average coverage=$avercov"
 
-done ) | gzip -c > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONScovstats.txt.gz
+# done ) | gzip -c > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONScovstats.txt.gz
 echo "- END -"
 
 #del
