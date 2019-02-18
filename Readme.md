@@ -2,7 +2,7 @@
 
 GitHub repo: https://github.com/macsx82/VariantCalling
 
-This pipeline is adapted to run variant calling on WES data using GATK4
+This pipeline is adapted to run variant calling on WES data using GATK4 and WGS data using GATK4 and samtools/bcftools in order to limit the java footprint on the cluster
 
 The complete pipeline is structured as follow:
 There is a pre-pipeline step, which involves the creation of a config files with variables and informations useful to the pipeline

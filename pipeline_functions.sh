@@ -23,7 +23,7 @@ function sam_validate(){
 }
 
 
-#validate the bam file
+#extract stats from the vcf file
 function vcf_stats(){
     in_vcf=$1
     out_file=$2

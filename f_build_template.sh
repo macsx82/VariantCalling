@@ -163,10 +163,10 @@ sge_pe=orte
 
 ###########################################################
 #---#
-java_opt1x='-Xmx5g -XX:ParallelGCThreads=1' #memoria java       # Chr12,Wg12,21x2
-java_opt2x='-Xmx10g -XX:ParallelGCThreads=1'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
-java_opt3x='-Xmx25g -XX:ParallelGCThreads=1'    #memoria java       # 19
-java_opt4x='-Xmx100g -XX:ParallelGCThreads=1'   #memoria java       # 20
+java_opt1x='-Xmx5g -XX:+UseSerialGC' #memoria java       # Chr12,Wg12,21x2
+java_opt2x='-Xmx10g -XX:+UseSerialGC'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
+java_opt3x='-Xmx25g -XX:+UseSerialGC'    #memoria java       # 19
+java_opt4x='-Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 
 ### - PATH FILEs - ###
 
@@ -354,10 +354,10 @@ sge_pe=orte
 
 ###########################################################
 #---#
-java_opt1x='-Xmx5g -XX:ParallelGCThreads=1' #memoria java       # Chr12,Wg12,21x2
-java_opt2x='-Xmx10g -XX:ParallelGCThreads=1'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
-java_opt3x='-Xmx25g -XX:ParallelGCThreads=1'    #memoria java       # 19
-java_opt4x='-Xmx100g -XX:ParallelGCThreads=1'   #memoria java       # 20
+java_opt1x='-Xmx5g -XX:+UseSerialGC' #memoria java       # Chr12,Wg12,21x2
+java_opt2x='-Xmx10g -XX:+UseSerialGC'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
+java_opt3x='-Xmx25g -XX:+UseSerialGC'    #memoria java       # 19
+java_opt4x='-Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 
 ### - PATH FILEs - ###
 
