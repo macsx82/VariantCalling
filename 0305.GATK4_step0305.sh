@@ -16,7 +16,7 @@ own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh
 
 ### - CODE - ###
-mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} #${fol7} ${fol8} ${fol9}
+mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} ${tmp} #${fol7} ${fol8} ${fol9}
 #3
 echo
 # cd ${fol1}/
@@ -46,7 +46,7 @@ echo
 # cd ${fol1}/
 echo "> Sort BAM file by coordinate order and fix tag values for NM, MD and UQ"
 
-${SAMTOOLS} calmd -r ${fol1}/${mdBAM} -u | ${SAMTOOLS} sort -o ${fol1}/${fBAM}
+${SAMTOOLS} calmd -r ${fol1}/${mdBAM} -u | ${SAMTOOLS} sort -T ${tmp} -o ${fol1}/${fBAM}
 
 fBAM_idx=${fBAM%.*}
 ${SAMTOOLS} index ${fol1}/${fBAM} ${fol1}/${fBAM_idx}.bai
@@ -73,9 +73,9 @@ sam_stats ${fol1}/${fBAM}
 #Sort BAM
 echo
 # cd ${fol1}/
-echo "> Sort BAM file"
-${SAMTOOLS} sort ${fol1}/${fBAM} -o ${fol2}/${fBAMs}
-echo "- END -"
+# echo "> Sort BAM file"
+# ${SAMTOOLS} sort ${fol1}/${fBAM} -o ${fol2}/${fBAMs}
+# echo "- END -"
 
 #Cov - counting 0 -
 echo
