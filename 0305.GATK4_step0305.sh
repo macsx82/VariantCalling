@@ -46,7 +46,7 @@ echo
 # cd ${fol1}/
 echo "> Sort BAM file by coordinate order and fix tag values for NM, MD and UQ"
 
-${SAMTOOLS} calmd -r ${fol1}/${mdBAM} -u | ${SAMTOOLS} sort -T ${tmp}/ -o ${fol1}/${fBAM}
+${SAMTOOLS} calmd -r -u ${fol1}/${mdBAM} ${GNMhg38} | ${SAMTOOLS} sort -T ${tmp}/ -o ${fol1}/${fBAM}
 
 fBAM_idx=${fBAM%.*}
 ${SAMTOOLS} index ${fol1}/${fBAM} ${fol1}/${fBAM_idx}.bai
