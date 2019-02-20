@@ -22,9 +22,11 @@ mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} #${fol7} ${fol8} ${fol9
 echo
 # cd ${fol1}/
 echo "> RGI ID data"
-zcat ${fol0}/${val1} | head -n1 | sed 's/ /:/g' | sed 's/@//g' > "${fol1}/${SM}_header"; cat "${fol1}/${SM}_header"
-PU1=$(cat "${fol1}/${SM}_header" | cut -d":" -f1); echo ${PU1}
-PU2=$(cat "${fol1}/${SM}_header" | cut -d":" -f2); echo ${PU2}
+zcat ${fol0}/${val1} | head -n1 | sed 's/ /:/g' | sed 's/@//g'
+PU1=$(zcat ${fol0}/${val1} | head -n1 | sed 's/ /:/g' | sed 's/@//g'| cut -d":" -f1)
+PU2=$(zcat ${fol0}/${val1} | head -n1 | sed 's/ /:/g' | sed 's/@//g'| cut -d":" -f2)
+echo ${PU1}
+echo ${PU2}
 
 echo "- END -"
 
@@ -69,10 +71,6 @@ sam_validate ${fol1}/${bBAM}
 echo
 # call the sam_stats function
 sam_stats ${fol1}/${bBAM}
-
-#del
-echo
-rm -v ${fol1}/"${SM}_header"
 
 #generate a file that will tell us if the step is completed
 touch step0202.done

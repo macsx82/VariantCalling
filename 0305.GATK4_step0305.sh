@@ -113,13 +113,19 @@ echo "- END -"
 
 #del
 echo "Cleaning some files..."
-# rm -v ${fol1}/"${SM}_bwa.bam"
-# rm -v ${fol1}/"${SM}_dupmetrics.txt"
-# rm -v ${fol1}/"${SM}_markdup.bam"
-# rm -v ${fol1}/"${SM}_markdup.bam.md5"
-rm -v ${fol1}/"${SM}_merged.bam"
+#Remove unmapped bam
 # rm -v ${fol1}/"${SM}_unmapped.bam"
-rm -v ${fol2}/"${SM}_fixedsort.bam"
+rm -v ${fol1}/${uBAM}
+# rm -v ${fol1}/${bBAM}
+#Remove merged bam
+# rm -v ${fol1}/"${SM}_merged.bam"
+rm -v ${fol1}/${mBAM}
+# rm -v ${fol1}/"${SM}_dupmetrics.txt"
+#Remove dup marked bam
+# rm -v ${fol1}/"${SM}_markdup.bam"
+rm -v ${fol1}/${mdBAM}
+# rm -v ${fol1}/"${SM}_markdup.bam.md5"
+# rm -v ${fol2}/"${SM}_fixedsort.bam"
 
 #generate a file that will tell us if the step is completed
 touch step0305.done
