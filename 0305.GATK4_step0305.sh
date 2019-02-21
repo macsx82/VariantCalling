@@ -21,7 +21,9 @@ mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} ${tmp} #${fol7} ${fol8}
 echo
 # cd ${fol1}/
 echo "> Merge original input uBAM file with BWA-aligned BAM file"
-java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MergeBamAlignment VALIDATION_STRINGENCY=SILENT ORIENTATIONS=FR ATTRIBUTES_TO_RETAIN=X0 UNMAPPED=${fol1}/${uBAM} ALIGNED=${fol1}/${bBAM} O=${fol1}/${mBAM} R=${GNMhg38} PE=true SO=unsorted IS_BISULFITE_SEQUENCE=false ALIGNED_READS_ONLY=false CLIP_ADAPTERS=false MAX_RECORDS_IN_RAM=2000000 MC=true MAX_GAPS=-1 PRIMARY_ALIGNMENT_STRATEGY=MostDistant UNMAPPED_READ_STRATEGY=COPY_TO_TAG ALIGNER_PROPER_PAIR_FLAGS=true UNMAP_CONTAM=true TMP_DIR=${tmp}/
+echo "> Generating a sorted BAM file by coordinate order, so values for NM, MD and UQ tags are calculated"
+# java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MergeBamAlignment VALIDATION_STRINGENCY=SILENT ORIENTATIONS=FR ATTRIBUTES_TO_RETAIN=X0 UNMAPPED=${fol1}/${uBAM} ALIGNED=${fol1}/${bBAM} O=${fol1}/${mBAM} R=${GNMhg38} PE=true SO=unsorted IS_BISULFITE_SEQUENCE=false ALIGNED_READS_ONLY=false CLIP_ADAPTERS=false MAX_RECORDS_IN_RAM=2000000 MC=true MAX_GAPS=-1 PRIMARY_ALIGNMENT_STRATEGY=MostDistant UNMAPPED_READ_STRATEGY=COPY_TO_TAG ALIGNER_PROPER_PAIR_FLAGS=true UNMAP_CONTAM=true TMP_DIR=${tmp}/
+java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MergeBamAlignment VALIDATION_STRINGENCY=SILENT ORIENTATIONS=FR ATTRIBUTES_TO_RETAIN=X0 UNMAPPED=${fol1}/${uBAM} ALIGNED=${fol1}/${bBAM} O=${fol1}/${mBAM} R=${GNMhg38} PE=true SO=coordinate IS_BISULFITE_SEQUENCE=false ALIGNED_READS_ONLY=false CLIP_ADAPTERS=false MAX_RECORDS_IN_RAM=2000000 MC=true MAX_GAPS=-1 PRIMARY_ALIGNMENT_STRATEGY=MostDistant UNMAPPED_READ_STRATEGY=COPY_TO_TAG ALIGNER_PROPER_PAIR_FLAGS=true UNMAP_CONTAM=true TMP_DIR=${tmp}/
 echo "- END -"
 
 #Stat
@@ -44,7 +46,7 @@ sam_stats ${fol1}/${mdBAM}
 #5
 echo
 # cd ${fol1}/
-echo "> Sort BAM file by coordinate order and fix tag values for NM, MD and UQ"
+echo "> Sort BAM file by coordinate order and fix tag values for NM, MD"
 
 ${SAMTOOLS} calmd -r -u ${fol1}/${mdBAM} ${GNMhg38} | ${SAMTOOLS} sort -T ${tmp}/ -o ${fol1}/${fBAM}
 
