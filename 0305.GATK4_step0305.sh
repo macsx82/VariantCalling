@@ -55,8 +55,6 @@ ${SAMTOOLS} index ${fol1}/${fBAM} ${fol1}/${fBAM_idx}.bai
 
 md5sum ${fol1}/${fBAM} > ${fol1}/${fBAM}.md5
 
-# CREATE_INDEX=true CREATE_MD5_FILE=true TMP_DIR=${tmp}/
-
 # java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} SortSam INPUT=${fol1}/${mdBAM} O=/dev/stdout SORT_ORDER=coordinate CREATE_INDEX=false CREATE_MD5_FILE=false TMP_DIR=${tmp}/ | java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SetNmMdAndUqTags R=${GNMhg38} INPUT=/dev/stdin O=${fol1}/${fBAM} CREATE_INDEX=true CREATE_MD5_FILE=true TMP_DIR=${tmp}/
 echo "- END -"
 
