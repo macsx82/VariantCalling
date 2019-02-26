@@ -186,7 +186,7 @@ OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf
 PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
 BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
 SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
-GATK4=/share/apps/bio/gatk-4.0.11.0/gatk     # v4.0.11.0
+GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
 BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
 
 ### - PATH FOLDERs - ###
@@ -377,7 +377,7 @@ OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf
 PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
 BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
 SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
-GATK4=/share/apps/bio/gatk-4.0.11.0/gatk     # v4.0.11.0
+GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
 BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
 
 ### - PATH FOLDERs - ###
