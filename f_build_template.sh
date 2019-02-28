@@ -74,8 +74,9 @@ read_mode=long
 mBAM="\${SM}_merged.bam"         #merge unmapped bam and mapped bam
 mdBAM="\${SM}_markdup.bam"       #mark dupplicates of the merged bam
 metfile="\${SM}_dupmetrics.txt"      #metrics file
-fBAM="\${SM}_fixed.bam"          #sorted and fixed file
-fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
+# fBAM="\${SM}_fixed.bam"          #sorted and fixed file
+fCRAM="\${SM}_fixed.cram"          #sorted and fixed file
+# fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for BQSR #######
 # step 6 -> select one of the intervals in the INTERVALS section above
@@ -86,7 +87,8 @@ whole_genome=1 #1:use the bed file as a single input, 0:use the bed file as a so
 
 # #step 7-8
 bqsrrd="\${SM}_recal_data.csv"       #final_merged recalibration report
-applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+# applybqsr="\${SM}_bqsr.bam"      #final_merged apply recalibration report in bam
+applybqsr="\${SM}_bqsr.cram"      #final_merged apply recalibration report in cram
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
@@ -163,10 +165,10 @@ sge_pe=orte
 
 ###########################################################
 #---#
-java_opt1x='-Xmx5g -XX:+UseSerialGC' #memoria java       # Chr12,Wg12,21x2
-java_opt2x='-Xmx10g -XX:+UseSerialGC'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
-java_opt3x='-Xmx25g -XX:+UseSerialGC'    #memoria java       # 19
-java_opt4x='-Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
+java_opt1x='-Xms5g -Xmx5g -XX:+UseSerialGC' #memoria java       # Chr12,Wg12,21x2
+java_opt2x='-Xms10g -Xmx10g -XX:+UseSerialGC'    #memoria java       # 02,03,04,05x2,06,07,08,09,Chr10,Wg10x3,14,15,17,18,23,24,Chr25,Chr26
+java_opt3x='-Xms25g -Xmx25g -XX:+UseSerialGC'    #memoria java       # 19
+java_opt4x='-Xms100g -Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 
 ### - PATH FILEs - ###
 

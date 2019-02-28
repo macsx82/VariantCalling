@@ -18,7 +18,7 @@ function sam_stats(){
 #validate the bam file
 function sam_validate(){
     in_bam=$1
-    java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY TMP_DIR=${tmp}/
+    java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY R=${GNMhg38} TMP_DIR=${tmp}/
     echo "- END -"
 }
 
@@ -34,3 +34,4 @@ function vcf_stats(){
     /share/apps/bio/bin/plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
     echo "- END -"
 }
+

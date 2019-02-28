@@ -49,12 +49,12 @@ echo
 # cd ${fol1}/
 echo "> Sort BAM file by coordinate order and fix tag values for NM, MD and generate the final CRAM format file"
 
-${SAMTOOLS} calmd -r -u ${fol1}/${mdBAM} ${GNMhg38} | ${SAMTOOLS} sort -T ${tmp}/ -o ${fol1}/${fBAM}
+${SAMTOOLS} calmd -r -u ${fol1}/${mdBAM} ${GNMhg38} | ${SAMTOOLS} sort -T ${tmp}/ | ${SAMTOOLS} view -h -T ${GNMhg38} -C -o ${fol1}/${fCRAM}
 
-fBAM_idx=${fBAM%.*}
-${SAMTOOLS} index ${fol1}/${fBAM} ${fol1}/${fBAM_idx}.bai
+fCRAM_idx=${fCRAM%.*}
+${SAMTOOLS} index ${fol1}/${fCRAM} ${fol1}/${fCRAM_idx}.bai
 
-md5sum ${fol1}/${fBAM} > ${fol1}/${fBAM}.md5
+md5sum ${fol1}/${fCRAM} > ${fol1}/${fCRAM}.md5
 
 # java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} SortSam INPUT=${fol1}/${mdBAM} O=/dev/stdout SORT_ORDER=coordinate CREATE_INDEX=false CREATE_MD5_FILE=false TMP_DIR=${tmp}/ | java -Dsamjdk.compression_level=${cl} ${java_opt2x} -jar ${PICARD} SetNmMdAndUqTags R=${GNMhg38} INPUT=/dev/stdin O=${fol1}/${fBAM} CREATE_INDEX=true CREATE_MD5_FILE=true TMP_DIR=${tmp}/
 echo "- END -"
