@@ -64,12 +64,14 @@ echo
 # cd ${fol1}/
 # call the sam_validate function
 echo "> Validation fBAM"
-sam_validate ${fol1}/${fBAM}
+# sam_validate ${fol1}/${fBAM}
+sam_validate ${fol1}/${fCRAM}
 
 #Stat
 echo
 # call the sam_stats function
-sam_stats ${fol1}/${fBAM}
+# sam_stats ${fol1}/${fBAM}
+sam_stats ${fol1}/${fCRAM}
 
 #Sort BAM
 echo
@@ -82,7 +84,8 @@ echo
 echo
 echo "> Coverage - counting also the base coverage at 0 "
 # ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
 # (for chr in {1..22} X Y M
 # do
 #     echo "-- chr$chr --";
@@ -100,7 +103,8 @@ echo "- END -"
 echo
 echo "> Coverage - without counting the base coverage at 0"
 # ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
 # (for chr in {1..22} X Y M
 # do
 #     echo "-- chr$chr --"
