@@ -124,7 +124,7 @@ seq_m=10G
 
 ### - PATH FILE - ###
 base_out=$1
-tmp=/home/${USER}/localtemp
+tmp=${HOME}/localtemp
 
 ### - PATH FOLDER - ###
 fol1=\${base_out}/1.bam
