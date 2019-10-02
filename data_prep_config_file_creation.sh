@@ -103,8 +103,15 @@ fastq1="${r1_fq_file}"      #fastq 1
 fastq2="${r2_fq_file}"      #fastq 2
 
 #step6
-val1="\${SM}_1_val_1.fq.gz"    
-val2="\${SM}_2_val_2.fq.gz"  
+filename_fq1=$(basename ${r1_fq_file})
+filename_fq2=$(basename ${r2_fq_file})
+
+fq1_prefix=$(echo ${filename_fq1%%.*})
+fq2_prefix=$(echo ${filename_fq1%%.*})
+
+val1="\${fq1_prefix}_trimmed.fq.gz"    
+val2="\${fq2_prefix}_trimmed.fq.gz"  
+
 
 ### - Pipeline parameters - ###
 # MODIFY THESE VALUES TO WORK WITH NON DEFAULT PARAMETERS
@@ -269,20 +276,20 @@ mkdir -p \${lg}
 #step 4
 #IN fastq OUT fastqc /// fastqc
 # echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${sge_q}
-# jid_step_4_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=96:00:00 -e \${lg}/%j_pG04_\${SM}.error -o \${lg}/%j_pG04_\${SM}.log --mem=\${seq_m} -J "pGs04_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/04.preGATK4_step4.sh ${param_file})
+# jid_step_4_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_pG04_\${SM}.error -o \${lg}/%j_pG04_\${SM}.log --mem=\${seq_m} -J "pGs04_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/04.preGATK4_step4.sh ${param_file})
 # jid_step_4=\$(echo \${jid_step_4_m}| cut -f 4 -d " ")
 
 #step 5
 #IN fastq OUT val /// trim_galore
 # echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
 # jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --dependency=afterok:\${jid_step_4} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
-jid_step_5_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=96:00:00 -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
+jid_step_5_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
 jid_step_5=\$(echo \${jid_step_5_m}| cut -f 4 -d " ")
 
 #step 6
 #IN val OUT fastqc /// fastqc
 # echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs05_\${SM} -o \${lg}/\\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${sge_q}
-jid_step_6_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=96:00:00 -e \${lg}/%j_pG06_\${SM}.error -o \${lg}/%j_pG06_\${SM}.log --mem=\${seq_m} -J "pGs06_\${SM}" --dependency=afterok:\${jid_step_5} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/06.preGATK4_step6.sh ${param_file})
+jid_step_6_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_pG06_\${SM}.error -o \${lg}/%j_pG06_\${SM}.log --mem=\${seq_m} -J "pGs06_\${SM}" --dependency=afterok:\${jid_step_5} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/06.preGATK4_step6.sh ${param_file})
 
 
 echo " --- END PIPELINE ---"
