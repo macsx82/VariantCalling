@@ -48,14 +48,14 @@ mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
 #######SET UP SGE/QUEUE MANAGER PARAMETERS HERE ############
-cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
+cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 sge_q=all
 seq_m=10G
 #######SET UP SGE/QUEUE MANAGER PARAMETERS HERE ############
 
 ### - PATH FILE - ###
 base_out=$1
-tmp=/home/${USER}/localtemp
+tmp=${WORK}/localtemp
 
 ### - PATH FOLDER - ###
 fol1=\${base_out}/1.bam
@@ -64,12 +64,18 @@ fol3=\${base_out}/3.fastqc
 fol4=\${base_out}/4.fastq_post
 fol5=\${base_out}/Storage
 
-### - PATH TOOL - ###
-PICARD=/share/apps/bio/picard-2.17.3/picard.jar    #
-SAMTOOLS=/share/apps/bio/samtools/samtools     #
+# ### - PATH TOOL - ###
+# PICARD=/share/apps/bio/picard-2.17.3/picard.jar    #
+# SAMTOOLS=/share/apps/bio/samtools/samtools     #
+# ph3=/share/apps/bio/bin/bedtools      #
+# ph4=/share/apps/bio/miniconda2/bin/fastqc   #
+# ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
+### - PATH TOOL - CINECA SLURM version - ###
+PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
 ph3=/share/apps/bio/bin/bedtools      #
-ph4=/share/apps/bio/miniconda2/bin/fastqc   #
-ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
+ph4=/cineca/prod/opt/applications/fastqc/0.11.5/jre--1.8.0_111--binary/bin/fastqc
+ph5=/galileo/home/userexternal/mcocca00/bin/trim_galore 
 
 ### - PATH SCRIPT / Log - ###
 lg=\${base_out}/Log
@@ -117,7 +123,7 @@ mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
-cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
+cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 sge_q=${exec_queue}
 seq_m=10G
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
@@ -134,11 +140,19 @@ fol4=\${base_out}/4.fastq_post
 fol5=\${base_out}/Storage
 
 ### - PATH TOOL - ###
-PICARD=/share/apps/bio/picard-2.17.3/picard.jar    #
-SAMTOOLS=/share/apps/bio/samtools/samtools     #
+# PICARD=/share/apps/bio/picard-2.17.3/picard.jar    #
+# SAMTOOLS=/share/apps/bio/samtools/samtools     #
+# ph3=/share/apps/bio/bin/bedtools      #
+# ph4=/share/apps/bio/miniconda2/bin/fastqc   #
+# ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
+### - PATH TOOL - CINECA SLURM version - ###
+PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
 ph3=/share/apps/bio/bin/bedtools      #
-ph4=/share/apps/bio/miniconda2/bin/fastqc   #
-ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
+ph4=/cineca/prod/opt/applications/fastqc/0.11.5/jre--1.8.0_111--binary/bin/fastqc
+ph5=/galileo/home/userexternal/mcocca00/bin/trim_galore 
+
+
 
 ### - PATH SCRIPT / Log - ###
 lg=\${base_out}/Log
