@@ -4,7 +4,8 @@
 if [[ ${cluster_man}=="CINECA" ]]; then
     source ${HOME}/.startup_modules 
     # conda init bash
-    conda activate py37
+    # conda activate py37
+    source activate py37
 fi
 #extract stats from the file
 function sam_stats(){
