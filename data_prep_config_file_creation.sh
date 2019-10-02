@@ -7,7 +7,7 @@ set -e
 function build_template_all(){
 
 cat << EOF
-### - VARIABILI FISSE - ###
+### - FIXED PARAMETERS - ###
 #step1
 SM=$2         #sample name
 #input_path=$4 #input file path
@@ -85,7 +85,7 @@ function build_template_fastq(){
 cat << EOF
 ############################################
 #Template to pre-process fastq files
-### - VARIABILI FISSE - ###
+### - FIXED PARAMETERS - ###
 #step4
 SM=$2         #sample name
 #input_path=$4 #input file path
