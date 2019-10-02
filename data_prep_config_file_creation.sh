@@ -73,7 +73,7 @@ ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
 
 ### - PATH SCRIPT / Log - ###
 lg=\${base_out}/Log
-hs=\${HOME}/scripts/pipelines/VariantCalling
+hs=${HOME}/scripts/pipelines/VariantCalling
 
 EOF
 
@@ -142,7 +142,7 @@ ph5=/share/apps/bio/miniconda2/bin/trim_galore    #
 
 ### - PATH SCRIPT / Log - ###
 lg=\${base_out}/Log
-hs=\${HOME}/scripts/pipelines/VariantCalling
+hs=${HOME}/scripts/pipelines/VariantCalling
 
 EOF
 
