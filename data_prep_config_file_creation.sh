@@ -93,8 +93,8 @@ SM=$2         #sample name
 #Template to pre-process fastq files
 # MODIFY FASTQ PATH HERE
 #
-fastq1="\${r1_fq_file}"      #fastq 1
-fastq2="\${r2_fq_file}"      #fastq 2
+fastq1="${r1_fq_file}"      #fastq 1
+fastq2="${r2_fq_file}"      #fastq 2
 
 #step6
 val1="\${SM}_1_val_1.fq.gz"    
@@ -118,7 +118,7 @@ mail=$3
 
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
-sge_q=\${exec_queue}
+sge_q=${exec_queue}
 seq_m=10G
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
