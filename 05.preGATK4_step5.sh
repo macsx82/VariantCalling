@@ -15,6 +15,9 @@ echo
 #We will provide a different param file for each user, with variables and softwares paths as needed
 param_file=$1
 source ${param_file}
+if [[ ${cluster_man}=="CINECA" ]]; then
+    conda activate py37
+fi
 #source functions file
 own_folder=`dirname $0`
 source ${own_folder}/pipeline_functions.sh

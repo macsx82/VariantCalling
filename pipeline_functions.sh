@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 #function file for the pipeline, to include in the header, after the CONFIG FILE
-
+if [[ ${cluster_man}=="CINECA" ]]; then
+    source ${HOME}/.startup_modules 
+    conda activate py37
+fi
 #extract stats from the file
 function sam_stats(){
     infile=$1

@@ -31,11 +31,29 @@ echo
 # cd ${fol1}/
 echo "> RGI ID data"
 zcat ${fol0}/${val1} | head -n1 | sed 's/ /:/g' | sed 's/@//g' > ${fol1}/${SM}_header; cat ${fol1}/${SM}_header
+
+# @ST-E00233:168:HMKNCCCXX:7:1101:6593:1344 1:N:0:NGTACG
+# @ST-E00233:168:HMKNCCCXX:8:1101:6370:1379 1:N:0:NAGTGG
+
+# @ST-E00233 	the unique instrument name
+# 168 	the run id
+# HMKNCCCXX 	the flowcell id
+# 7 	flowcell lane
+# 1101 	tile number within the flowcell lane
+# 6593 	'x'-coordinate of the cluster within the tile
+# 1344 	'y'-coordinate of the cluster within the tile
+# 1 	the member of a pair, 1 or 2 (paired-end or mate-pair reads only)
+# N 	Y if the read is filtered, N otherwise
+# 0 	0 when none of the control bits are on, otherwise it is an even number
+# NGTACG 	index sequence 
+
 PU1=$(cat "${fol1}/${SM}_header" | cut -d":" -f1); echo ${PU1}
 PU2=$(cat "${fol1}/${SM}_header" | cut -d":" -f2); echo ${PU2}
+
 ID1=$(cat "${fol1}/${SM}_header" | cut -d":" -f3); echo ${ID1}
 FL=$(cat "${fol1}/${SM}_header" | cut -d":" -f4); echo ${FL}
 TNFL=$(cat "${fol1}/${SM}_header" | cut -d":" -f5); echo ${TNFL}
+
 XX=$(cat "${fol1}/${SM}_header" | cut -d":" -f6); echo ${XX}
 YY=$(cat "${fol1}/${SM}_header" | cut -d":" -f7); echo ${YY}
 PAIR=$(cat "${fol1}/${SM}_header" | cut -d":" -f8); echo ${PAIR}

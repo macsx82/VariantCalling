@@ -47,10 +47,11 @@ java_opt1x=-Xmx5g    #java memory requirement
 mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
-#######SET UP SGE PARAMETERS HERE ############
+#######SET UP SGE/QUEUE MANAGER PARAMETERS HERE ############
+cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
 sge_q=all
 seq_m=10G
-#######SET UP SGE PARAMETERS HERE ############
+#######SET UP SGE/QUEUE MANAGER PARAMETERS HERE ############
 
 ### - PATH FILE - ###
 base_out=$1
@@ -115,10 +116,11 @@ java_opt1x=-Xmx5g    #java memory requirement
 mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
-#########SET UP SGE PARAMETERS HERE ##########
+#########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
+cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
 sge_q=all
 seq_m=10G
-#########SET UP SGE PARAMETERS HERE ##########
+#########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
 ### - PATH FILE - ###
 base_out=$1
@@ -231,12 +233,56 @@ EOF
 }
 
 
+function build_runner_fastq_cineca(){
+
+#this runner is to use when we start from unaligned fastq files
+param_file=$1
+
+cat << EOF
+#!/usr/bin/env bash
+#
+
+#Runner for the data preparation pipeline with default parameter file and default steps
+source ${param_file}
+#source functions file
+source \${hs}/pipeline_functions.sh
+
+#log folders creation
+mkdir -p \${lg}
+
+#Since we work with fast files, we will skip steps 1 to 4
+
+#step 4
+#IN fastq OUT fastqc /// fastqc
+# echo "bash \${hs}/04.preGATK4_step4.sh ${param_file}" | qsub -N pGs04_\${SM} -cwd -l h_vmem=\${seq_m} -o \${lg}/\\\$JOB_ID_pG04_\${SM}.log -e \${lg}/\\\$JOB_ID_pG04_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+jid_step_4_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG04_\${SM}.error -o \${lg}/%j_pG04_\${SM}.log --mem=\${seq_m} -J "pGs04_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/04.preGATK4_step4.sh ${param_file})
+jid_step_4=\$(echo \${jid_step_4_m}| cut -f 4 -d " ")
+
+#step 5
+#IN fastq OUT val /// trim_galore
+# echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
+jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --dependency=afterok:\${jid_step_4} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
+jid_step_5=\$(echo \${jid_step_5_m}| cut -f 4 -d " ")
+
+#step 6
+#IN val OUT fastqc /// fastqc
+# echo "bash \${hs}/06.preGATK4_step6.sh ${param_file}" | qsub -N pGs06_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs05_\${SM} -o \${lg}/\\\$JOB_ID_pG06_\${SM}.log -e \${lg}/\\\$JOB_ID_pG06_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+jid_step_6_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG06_\${SM}.error -o \${lg}/%j_pG06_\${SM}.log --mem=\${seq_m} -J "pGs06_\${SM}" --dependency=afterok:\${jid_step_5} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/06.preGATK4_step6.sh ${param_file})
+
+
+echo " --- END PIPELINE ---"
+
+EOF
+
+}
+
+
 if [ $# -lt 1 ]
 then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
+    echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)] [-c (toggle cineca mode - SLURM cluster)]"
     echo "#########################"
     exit 1
 fi
@@ -248,7 +294,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:f" opt ${@}; do
+while getopts ":t:o:s:h:m:i:cf" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -266,7 +312,7 @@ while getopts ":t:o:s:h:m:i:f" opt ${@}; do
         echo "#########################"
         echo "WRONG argument number!"
         echo "Usage:"
-        echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)]"
+        echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline) -c (toggle CINECA SLURM pipeline builder functions)]"
         echo "#########################"
         exit 1
         ;;
@@ -277,6 +323,10 @@ while getopts ":t:o:s:h:m:i:f" opt ${@}; do
     f)
       echo "Fastq formatted data"
       fastq_mode=1
+      ;;  
+    c)
+      echo "Working on CINECA SLURM cluster"
+      cineca_mode=1
       ;;  
     m)
     echo ${OPTARG}
@@ -297,7 +347,11 @@ if [[ ${fastq_mode} -eq 1 ]]; then
   #statements
   # build_template_fastq ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_template_fastq ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
-  build_runner_fastq ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  if [[ ${cineca_mode} -eq 1 ]]; then
+    build_runner_fastq_cineca ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  else
+    build_runner_fastq ${template_dir}/DataPrep_${suffix}.conf > ${template_dir}/DataPrepRunner_${suffix}.sh
+  fi
 else
   # build_template_all ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} > ${template_dir}/DataPrep_${suffix}.conf
   build_template_all ${out_dir} ${sample_name} ${mail_to} > ${template_dir}/DataPrep_${suffix}.conf
