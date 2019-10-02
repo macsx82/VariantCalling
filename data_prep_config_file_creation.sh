@@ -93,8 +93,8 @@ SM=$2         #sample name
 #Template to pre-process fastq files
 # MODIFY FASTQ PATH HERE
 #
-fastq1=\".......\"      #fastq 1
-fastq2=\".......\"      #fastq 2
+fastq1="\${r1_fq_file}"      #fastq 1
+fastq2="\${r2_fq_file}"      #fastq 2
 
 #step6
 val1="\${SM}_1_val_1.fq.gz"    
@@ -118,7 +118,7 @@ mail=$3
 
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 cluster_man=\"...\" #Specify the cluster manager:BURLO or CINECA
-sge_q=all
+sge_q=\${exec_queue}
 seq_m=10G
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
@@ -283,7 +283,17 @@ then
     echo "#########################"
     echo "WRONG argument number!"
     echo "Usage:"
-    echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline)] [-c (toggle cineca mode - SLURM cluster)]"
+    echo "data_prep_config_file_creation.sh -i <input_file_folder> "
+    echo "                   -t <template_folder> "
+    echo "                   -o <output_folder> "
+    echo "                   -s <sample_name> "
+    echo "                   -1: Provide fastq file name for R1."
+    echo "                   -2: Provide fastq file name for R2."
+    echo "                   -n: Execution host full name"
+    echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution.(In SGE mode only)"
+    echo "                  [-m <mail_address>] "
+    echo "                  [-f (toggle fastq format only pipeline)]"
+    echo "                  [-c (toggle CINECA SLURM pipeline builder functions)]"
     echo "#########################"
     exit 1
 fi
@@ -295,7 +305,7 @@ fi
 suffix=`date +"%d%m%Y%H%M%S"`
 
 echo "${@}"
-while getopts ":t:o:s:h:m:i:cf" opt ${@}; do
+while getopts ":t:o:s:h:m:i:n:j:1:2:cf" opt ${@}; do
   case $opt in
     t)
       echo ${OPTARG}
@@ -313,7 +323,17 @@ while getopts ":t:o:s:h:m:i:cf" opt ${@}; do
         echo "#########################"
         echo "WRONG argument number!"
         echo "Usage:"
-        echo "data_prep_config_file_creation.sh -i <input_file_folder> -t <template_folder> -o <output_folder> -s <sample_name> [-m <mail_address>] [-f (toggle fastq format only pipeline) -c (toggle CINECA SLURM pipeline builder functions)]"
+        echo "data_prep_config_file_creation.sh -i <input_file_folder> "
+        echo "                   -t <template_folder> "
+        echo "                   -o <output_folder> "
+        echo "                   -s <sample_name> "
+        echo "                   -1: Provide fastq file name for R1."
+        echo "                   -2: Provide fastq file name for R2."
+        echo "                   -n: Execution host full name"
+        echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution.(In SGE mode only)"
+        echo "                  [-m <mail_address>] "
+        echo "                  [-f (toggle fastq format only pipeline)]"
+        echo "                  [-c (toggle CINECA SLURM pipeline builder functions)]"
         echo "#########################"
         exit 1
         ;;
@@ -332,6 +352,22 @@ while getopts ":t:o:s:h:m:i:cf" opt ${@}; do
     m)
     echo ${OPTARG}
     mail_to=${OPTARG}
+    ;;
+    1)
+      r1_fq_file=${OPTARG}
+      echo "Use specified fastq file name: ${r1_fq_file}"
+    ;;
+    2)
+      r2_fq_file=${OPTARG}
+      echo "Use specified fastq file name: ${r2_fq_file}"
+    ;;
+    n)
+    # specify execution node
+    exec_host=${OPTARG}
+    ;;
+    j)
+    #specify queue name, also in the form queue@exec_host
+    exec_queue=${OPTARG}
     ;;
     *)
       echo $opt
