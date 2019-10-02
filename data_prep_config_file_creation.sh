@@ -261,7 +261,8 @@ jid_step_4=\$(echo \${jid_step_4_m}| cut -f 4 -d " ")
 #step 5
 #IN fastq OUT val /// trim_galore
 # echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
-jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --dependency=afterok:\${jid_step_4} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
+# jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --dependency=afterok:\${jid_step_4} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
+jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
 jid_step_5=\$(echo \${jid_step_5_m}| cut -f 4 -d " ")
 
 #step 6
