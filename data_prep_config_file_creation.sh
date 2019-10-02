@@ -35,11 +35,11 @@ val2=\${SM}_2_val_2.fq.gz
 # Modify these values to work with non default parameters
 q=20        #quality
 e=0.1       #error rate
-cR1=14        #cut 5'
-cR2=14        #cut 5'
-tpcR1=3       #cut 3'
-tpcR2=3       #cut 3'
-stringency=1  #stringency parameter for adapter trimming
+cR1=0        #cut 5'
+cR2=0        #cut 5'
+tpcR1=0       #cut 3'
+tpcR2=0       #cut 3'
+stringency=7  #stringency parameter for adapter trimming [default is 1]
 #-#-#
 java_opt1x=-Xmx5g    #java memory requirement
 
@@ -104,11 +104,11 @@ val2="\${SM}_2_val_2.fq.gz"
 # MODIFY THESE VALUES TO WORK WITH NON DEFAULT PARAMETERS
 q=20        #quality
 e=0.1       #error rate
-cR1=14        #cut 5'
-cR2=14        #cut 5'
-tpcR1=3       #cut 3'
-tpcR2=3       #cut 3'
-stringency=1  #stringency parameter for adapter trimming
+cR1=0        #cut 5'
+cR2=0        #cut 5'
+tpcR1=0       #cut 3'
+tpcR2=0       #cut 3'
+stringency=7  #stringency parameter for adapter trimming [default is 1]
 #-#-#
 java_opt1x=-Xmx5g    #java memory requirement
 
