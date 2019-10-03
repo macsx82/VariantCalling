@@ -104,11 +104,11 @@ fastq1="${r1_fq_file}"      #fastq 1
 fastq2="${r2_fq_file}"      #fastq 2
 
 #step6
-filename_fq1=$(basename ${r1_fq_file})
-filename_fq2=$(basename ${r2_fq_file})
+filename_fq1=\$(basename \${r1_fq_file})
+filename_fq2=\$(basename \${r2_fq_file})
 
-fq1_prefix=$(echo ${filename_fq1%%.*})
-fq2_prefix=$(echo ${filename_fq1%%.*})
+fq1_prefix=\$(echo |${filename_fq1%%.*})
+fq2_prefix=\$(echo \${filename_fq1%%.*})
 
 val1="\${fq1_prefix}_trimmed.fq.gz"    
 val2="\${fq2_prefix}_trimmed.fq.gz"  
