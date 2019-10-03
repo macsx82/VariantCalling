@@ -27,22 +27,22 @@ echo
 if [[ ${cR1} -eq 0 ]]; then
     if [[ ${tpcR1} -eq 0 ]]; then
         echo "> Trimming"
-        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
+        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -j ${tr} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
         echo "- END -"
     else
         echo "> Trimming"
-        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
+        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -j ${tr} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
         echo "- END -"
     fi
 else
     if [[ ${tpcR1} -eq 0 ]]; then
         echo "> Trimming"
-        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
+        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -j ${tr} -clip_R1 ${cR1} -clip_R2 ${cR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
         echo "- END -"
     
     else
         echo "> Trimming"
-        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
+        ${ph5} -paired -q ${q} -e ${e} -o ${fol4}/ -j ${tr} -clip_R1 ${cR1} -clip_R2 ${cR2} -three_prime_clip_R1 ${tpcR1} -three_prime_clip_R2 ${tpcR2} --stringency ${stringency} --retain_unpaired "${fastq1}" "${fastq2}"
         echo "- END -"
     fi
 fi
