@@ -30,7 +30,7 @@ echo
 #IN val OUT uBAM /// FastqToSam, ValidateSamFile, flagsta, view
 
 #echo "bash \${hs}/0101.GATK4_step0101.sh \${param_file}" | qsub -N G4s0101_\${SM} -cwd -l h_vmem=\${sge_m} -o \${lg}/\\\$JOB_ID_g0101_\${SM}.log -e \${lg}/\\\$JOB_ID_g0101_\${SM}.error -m a -M \${mail} -q \${sge_q}
-jid_step_0101_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0101_${SM}.error -o \${lg}/%j_g0101_\${SM}.log --mem=\${seq_m} -J "G4s0101_\${SM}" --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0101.GATK4_step0101.sh ${param_file})
+jid_step_0101_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0101_\${SM}.error -o \${lg}/%j_g0101_\${SM}.log --mem=\${seq_m} -J "G4s0101_\${SM}" --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0101.GATK4_step0101.sh ${param_file})
 jid_step_0101=\$(echo \${jid_step_0101_m}| cut -f 4 -d " ")
 
 #Pre-processing
@@ -41,7 +41,7 @@ jid_step_0101=\$(echo \${jid_step_0101_m}| cut -f 4 -d " ")
 #echo "bash \${hs}/0202.GATK4_step0202.sh \${param_file}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${sge_m} -pe \${sge_pe} \${thr} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e \${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 #We work straight wit fastq files
-jid_step_0202_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0202_${SM}.error -o \${lg}/%j_g0202_\${SM}.log --mem=\${seq_m} -J "G4s0202_\${SM}" --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0202.GATK4_step0202.sh ${param_file})
+jid_step_0202_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0202_\${SM}.error -o \${lg}/%j_g0202_\${SM}.log --mem=\${seq_m} -J "G4s0202_\${SM}" --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0202.GATK4_step0202.sh ${param_file})
 jid_step_0202=\$(echo \${jid_step_0202_m}| cut -f 4 -d " ")
 
 #Pre-processing
