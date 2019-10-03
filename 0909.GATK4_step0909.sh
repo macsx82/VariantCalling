@@ -10,7 +10,7 @@ echo
 ### - SOURCEs - ###
 #source functions file
 own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+source ${hs}/pipeline_functions.sh
 
 ### - VARIABILI FISSE - ###
 if [[ ${job_a} -eq 0 ]]; then

@@ -13,7 +13,7 @@ source ${param_file}
 mkdir -p ${tmp}
 #source functions file
 own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+source ${hs}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 f1=$1					#interval file
 # f2=$2                    #interval file

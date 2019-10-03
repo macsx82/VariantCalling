@@ -12,7 +12,7 @@ param_file=$1
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+source ${hs}/pipeline_functions.sh
 ### - CODE - ###
 #generate the common folders needed for the following steps
 mkdir -p ${fol7} ${fol8} ${fol9}

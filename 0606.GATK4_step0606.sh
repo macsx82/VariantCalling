@@ -13,7 +13,7 @@ param_file=$3
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+source ${hs}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 #Here we need an option to work on the whole genome dataset, instead of downsampling with the -L option
 ### - CODE - ###

@@ -12,7 +12,7 @@ param_file=$1
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
-source ${own_folder}/pipeline_functions.sh
+source ${hs}/pipeline_functions.sh
 ### - CODE - ###
 
 #16a
