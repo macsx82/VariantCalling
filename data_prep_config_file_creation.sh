@@ -134,6 +134,7 @@ mail=$3
 cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 sge_q=${exec_queue}
 seq_m=10G
+tr=1 #number of threads required: default to 1
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
 ### - PATH FILE - ###
@@ -284,7 +285,7 @@ mkdir -p \${lg}
 #IN fastq OUT val /// trim_galore
 # echo "bash \${hs}/05.preGATK4_step5.sh ${param_file}" | qsub -N pGs05_\${SM} -cwd -l h_vmem=\${seq_m} -hold_jid pGs04_\${SM} -o \${lg}/\\\$JOB_ID_pG05_\${SM}.log -e \${lg}/\\\$JOB_ID_pG05_\${SM}.error -m a -M \${mail} -q \${sge_q}
 # jid_step_5_m=\$(sbatch --partition=\${sge_q} -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --dependency=afterok:\${jid_step_4} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
-jid_step_5_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --get-user-env -n ${tr} --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
+jid_step_5_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_pG05_\${SM}.error -o \${lg}/%j_pG05_\${SM}.log --mem=\${seq_m} -J "pGs05_\${SM}" --get-user-env -n \${tr} --mail-type END,FAIL --mail-user \${mail} \${hs}/05.preGATK4_step5.sh ${param_file})
 jid_step_5=\$(echo \${jid_step_5_m}| cut -f 4 -d " ")
 
 #step 6
