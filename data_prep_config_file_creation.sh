@@ -51,7 +51,7 @@ mail=$3
 cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 sge_q=all
 seq_m=10G
-tr=1 #number of threads required: default to 1
+tr=4 #number of threads required: default to 4
 #######SET UP SGE/QUEUE MANAGER PARAMETERS HERE ############
 
 ### - PATH FILE - ###
@@ -134,7 +134,7 @@ mail=$3
 cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 sge_q=${exec_queue}
 seq_m=10G
-tr=1 #number of threads required: default to 1
+tr=4 #number of threads required: default to 4
 #########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
 ### - PATH FILE - ###
