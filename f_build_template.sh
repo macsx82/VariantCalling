@@ -9,7 +9,7 @@ cat << EOF
 ### - VARIABLEs- ###
 LB=LibXXX       #libreria       # 01,02
 PL=Illumina     #piattaforma        # 01,02
-thr=16          #number of thread   # 02
+thr=32          #number of thread   # 02
 cl=5            #compression level  # 02,03,04,05
 hg=hg38         #hg version     # 05
 #---#
@@ -38,12 +38,12 @@ sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.int
 # sorgILhg38exons5PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38exons12PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38exons12PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
@@ -148,9 +148,10 @@ filter_interval=\${sorgILhg38wgenesINTERVALS}
 mail=$3
 #########SET UP YOUR EMAIL HERE ##############
 
-#########SET UP SGE PARAMETERS HERE ##########
+#########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
+cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 exec_host=$7 #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
 sge_q=$8 #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queue name, without host spec
@@ -161,7 +162,7 @@ sge_m_j4=120G #this mem requirement will work with java mem selection 4
 sge_m_dbi=15G #mem requirement to work with geneticDB import (it has to be a little higher than the correspondig mem assigned to the jvm in this step)
 sge_pe=orte
 
-#########SET UP SGE PARAMETERS HERE ##########
+#########SET UP SGE/QUEUE MANAGER PARAMETERS HERE ##########
 
 ###########################################################
 #---#
@@ -173,23 +174,43 @@ java_opt4x='-Xms100g -Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 ### - PATH FILEs - ###
 
 ################### Known resources ###################
-GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
-DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
-DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
-INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
-OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
-HAPMAP=/shared/resources/gatk4hg38db/hapmap_3.3.hg38.vcf.gz
-OMNI=/shared/resources/gatk4hg38db/1000G_omni2.5.hg38.vcf.gz
-OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+# GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
+# DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
+# DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
+# INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
+# OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+# AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
+# HAPMAP=/shared/resources/gatk4hg38db/hapmap_3.3.hg38.vcf.gz
+# OMNI=/shared/resources/gatk4hg38db/1000G_omni2.5.hg38.vcf.gz
+# OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf.gz
 
+# ### - PATH TOOLs - ###
+# PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
+# BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
+# SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
+# GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
+# BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
 
-### - PATH TOOLs - ###
-PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
-BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
-SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
-GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
-BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
+### - PATH FILEs - CINECA SLURM version - ###
+
+################### Known resources ###################
+GNMhg38=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.fasta
+DBSNP138=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_138.hg38.vcf.gz
+DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/GCF_000001405.38.gz
+INDELS=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.known_indels.vcf.gz
+OTGindels=/galileo/home/userexternal/mcocca00/resources/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+OTGsnps=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+HAPMAP=/galileo/home/userexternal/mcocca00/resources/hg38/hapmap_3.3.hg38.vcf.gz
+OMNI=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_omni2.5.hg38.vcf.gz
+AXIOM=/galileo/home/userexternal/mcocca00/resources/hg38/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
+
+### - PATH TOOL - CINECA SLURM version - ###
+PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
+BWA=/galileo/prod/opt/applications/bwa/0.7.17/gnu--6.1.0/bin/bwa
+BCFTOOLS=/galileo/prod/opt/tools/bcftools/1.9/gnu--6.1.0/bin/bcftools
+GATK4=/galileo/prod/opt/applications/gatk/4.1.0.0/jre--1.8.0_111--binary/bin/gatk
+
 
 ### - PATH FOLDERs - ###
 # To use the  
@@ -235,10 +256,10 @@ fol9=\${common_base_out}/germlineVariants/4.VCF/storage
 ###########################################################################################
 
 ### - Path / Log / Tmp - ###
-hs=/home/${USER}/scripts/pipelines/VariantCalling
+hs=${HOME}/scripts/pipelines/VariantCalling
 lg=\${base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=/home/${USER}/localtemp/\${rnd_tmp}
+tmp=${WORK}/localtemp/\${rnd_tmp}
 EOF
 }
 
@@ -342,6 +363,7 @@ mail=$2
 #########SET UP SGE PARAMETERS HERE ##########
 # New variables with different values can be added as long as
 # they are also added to the corresponding runner file.
+cluster_man="CINECA" #Specify the cluster manager:BURLO or CINECA
 exec_host=$3 #we can specify here the exec host to use in tmp mode var calling step to store the most of the data
 sge_q=$4 #in var caller tmp mode, here we should need only the queue name, without host spec
 sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queue name, without host spec
@@ -363,24 +385,44 @@ java_opt4x='-Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 
 ### - PATH FILEs - ###
 
+# ################### Known resources ###################
+# GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
+# DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
+# DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
+# INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
+# OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+# AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
+# HAPMAP=/shared/resources/gatk4hg38db/hapmap_3.3.hg38.vcf.gz
+# OMNI=/shared/resources/gatk4hg38db/1000G_omni2.5.hg38.vcf.gz
+# OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+
+
+# ### - PATH TOOLs - ###
+# PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
+# BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
+# SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
+# GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
+# BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
+
+### - PATH FILEs - CINECA SLURM version - ###
+
 ################### Known resources ###################
-GNMhg38=/shared/resources/hgRef/hg38/Homo_sapiens_assembly38.fasta
-DBSNP138=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.dbsnp138.vcf
-DBSNP_latest=/netapp/nfs/resources/dbSNP/human_9606_b151_GRCh38p7/All_20180418.vcf.gz
-INDELS=/shared/resources/gatk4hg38db/Homo_sapiens_assembly38.known_indels.vcf.gz
-OTGindels=/shared/resources/gatk4hg38db/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-AXIOM=/shared/resources/gatk4hg38db/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
-HAPMAP=/shared/resources/gatk4hg38db/hapmap_3.3.hg38.vcf.gz
-OMNI=/shared/resources/gatk4hg38db/1000G_omni2.5.hg38.vcf.gz
-OTGsnps=/shared/resources/gatk4hg38db/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+GNMhg38=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.fasta
+DBSNP138=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_138.hg38.vcf.gz
+DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/GCF_000001405.38.gz
+INDELS=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.known_indels.vcf.gz
+OTGindels=/galileo/home/userexternal/mcocca00/resources/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+OTGsnps=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+HAPMAP=/galileo/home/userexternal/mcocca00/resources/hg38/hapmap_3.3.hg38.vcf.gz
+OMNI=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_omni2.5.hg38.vcf.gz
+AXIOM=/galileo/home/userexternal/mcocca00/resources/hg38/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
 
-
-### - PATH TOOLs - ###
-PICARD=/share/apps/bio/picard-2.17.3/picard.jar # v2.17.3
-BWA=/share/apps/bio/bin/bwa             # v0.7.17-r1188
-SAMTOOLS=/share/apps/bio/samtools/samtools  # v1.9-2-g02d93a1
-GATK4=/share/apps/bio/gatk-4.1.0.0/gatk     # v4.1.0.0
-BCFTOOLS=/share/apps/bio/bcftools/bcftools  # v1.9-18-gbab2aad
+### - PATH TOOL - CINECA SLURM version - ###
+PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
+BWA=/galileo/prod/opt/applications/bwa/0.7.17/gnu--6.1.0/bin/bwa
+BCFTOOLS=/galileo/prod/opt/tools/bcftools/1.9/gnu--6.1.0/bin/bcftools
+GATK4=/galileo/prod/opt/applications/gatk/4.1.0.0/jre--1.8.0_111--binary/bin/gatk
 
 ### - PATH FOLDERs - ###
 
@@ -404,9 +446,9 @@ fol9=\${common_base_out}/germlineVariants/4.VCF/storage
 ###########################################################################################
 
 ### - Path / Log / Tmp - ###
-hs=/home/${USER}/scripts/pipelines/VariantCalling
+hs=${HOME}/scripts/pipelines/VariantCalling
 lg=\${common_base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=/home/${USER}/localtemp/\${rnd_tmp}
+tmp=${WORK}/localtemp/\${rnd_tmp}
 EOF
 }
