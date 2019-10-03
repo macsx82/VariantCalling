@@ -55,7 +55,7 @@ case \${cluster_man} in
 	#pipe step 1
 	#IN val OUT uBAM /// FastqToSam, ValidateSamFile, flagsta, view
 
-	jid_step_0101_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0101_\${SM}.error -o \${lg}/%j_g0101_\${SM}.log --mem=\${seq_m} -J "G4s0101_\${SM}" --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0101.GATK4_step0101.sh ${param_file})
+	jid_step_0101_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0101_\${SM}.error -o \${lg}/%j_g0101_\${SM}.log --mem=\${seq_m} -J "G4s0101_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0101.GATK4_step0101.sh ${param_file})
 	jid_step_0101=\$(echo \${jid_step_0101_m}| cut -f 4 -d " ")
 
 	#Pre-processing
@@ -71,7 +71,7 @@ case \${cluster_man} in
 	#IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 	#IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-	jid_step_0305_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0305_\${SM}.error -o \${lg}/%j_g0305_\${SM}.log --mem=\${seq_m} -J "G4s0305_\${SM}" --dependency=afterok:\${jid_step_0202}:\${jid_step_0101} --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0305.GATK4_step0305.sh ${param_file})
+	jid_step_0305_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0305_\${SM}.error -o \${lg}/%j_g0305_\${SM}.log --mem=\${seq_m} -J "G4s0305_\${SM}" --dependency=afterok:\${jid_step_0202}:\${jid_step_0101} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0305.GATK4_step0305.sh ${param_file})
 
 	;;
 esac
