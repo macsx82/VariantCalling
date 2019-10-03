@@ -107,7 +107,7 @@ fastq2="${r2_fq_file}"      #fastq 2
 filename_fq1=\$(basename \${r1_fq_file})
 filename_fq2=\$(basename \${r2_fq_file})
 
-fq1_prefix=\$(echo |${filename_fq1%%.*})
+fq1_prefix=\$(echo \${filename_fq1%%.*})
 fq2_prefix=\$(echo \${filename_fq1%%.*})
 
 val1="\${fq1_prefix}_trimmed.fq.gz"    
