@@ -42,7 +42,7 @@ case ${read_mode} in
         # -@ $[thr - 1] we will adjust the number of threads used for compression 
         ${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 10000000 -v 3 -t ${thr} -Y ${GNMhg38} ${fol0}/${val1} ${fol0}/${val2} | ${SAMTOOLS} view -1 -o ${fol1}/${bBAMu}
         #need to add a sorting step
-        ${SAMTOOLS} sort -@ ${thr} -o ${fol1}/${bBAM} ${fol1}/${bBAMu}
+        ${SAMTOOLS} sort -@ ${thr} -T ${tmp} -o ${fol1}/${bBAM} ${fol1}/${bBAMu}
     ;;  
     short )
         echo "> Align short reads with bwa-backtrack starting from FASTQ"
@@ -76,6 +76,8 @@ sam_stats ${fol1}/${bBAM}
 
 #generate a file that will tell us if the step is completed
 touch step0202.done
+
+#clean unsorted bam file
 # exit
 
 

@@ -80,43 +80,40 @@ echo
 # ${SAMTOOLS} sort ${fol1}/${fBAM} -o ${fol2}/${fBAMs}
 # echo "- END -"
 
-#Cov - counting 0 -
-echo
-echo "> Coverage - counting also the base coverage at 0 "
-# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-# (for chr in {1..22} X Y M
-# do
-#     echo "-- chr$chr --";
-#     # bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | wc -l)`;
-#     # echo "EXONS target length=${bases}";
-#     cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum/NR}')`;
-#     echo "sum EXONS bases coverage WITH 0x=$cov";
-#     avercov=$((${cov}/${bases}));
-#     echo "EXONS average coverage=${avercov}";
-# done ) | gzip -c > ${fol2}/${SM}_${hg}_WITH_0x_EXONScovstats.txt.gz
+if [[ -z ${EXONS} ]]; then
+	#Coverage check in WGS mode
+	echo "> Coverage - counting also the base coverage at 0 "
+	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+	${SAMTOOLS} depth -aa ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
 
-echo "- END -"
+	echo "- END -"
 
-#Cov - WITHOUT counting 0 -
-echo
-echo "> Coverage - without counting the base coverage at 0"
-# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-# (for chr in {1..22} X Y M
-# do
-#     echo "-- chr$chr --"
-#     # bases=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | wc -l)`
-#     # echo "EXONS target length=$bases"
-#     cov=`(zgrep chr$chr ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.gz | awk '{sum+=$3} END {print sum/NR}')`
-#     echo "sum EXONS bases coverage WITHOUT 0x=$cov"
-#     avercov=$(($cov/$bases))
-#     echo "EXONS average coverage=$avercov"
+	#Cov - WITHOUT counting 0 -
+	echo
+	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	echo "> Coverage - without counting the base coverage at 0"
+	${SAMTOOLS} depth -a ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
 
-# done ) | gzip -c > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONScovstats.txt.gz
-echo "- END -"
+else
+	#Coverage check in WES mode
+	echo "> Coverage - counting also the base coverage at 0 "
+	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+	${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+
+	echo "- END -"
+
+	#Cov - WITHOUT counting 0 -
+	echo
+	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	echo "> Coverage - without counting the base coverage at 0"
+	${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	echo "- END -"
+fi
+
 
 #del
 echo "Cleaning some files..."

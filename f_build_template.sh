@@ -26,8 +26,8 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 ######## UNCOMMENT the desired interval set for the calling step ############################
 #24 contings: Chr contings (1-22,X,Y)
-sorgILhg38Chr=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
-sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
+# sorgILhg38Chr=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
+# sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
 
 #21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
 #sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
@@ -46,7 +46,7 @@ sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.int
 # sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
-EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+#EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 
@@ -206,7 +206,8 @@ OMNI=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_omni2.5.hg38.vcf.g
 AXIOM=/galileo/home/userexternal/mcocca00/resources/hg38/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
 
 ### - PATH TOOL - CINECA SLURM version - ###
-PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+# PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+PICARD=/galileo/home/userexternal/mcocca00/softwares/picardtools/2.21.1/picard.jar
 SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
 BWA=/galileo/prod/opt/applications/bwa/0.7.17/gnu--6.1.0/bin/bwa
 BCFTOOLS=/galileo/prod/opt/tools/bcftools/1.9/gnu--6.1.0/bin/bcftools
@@ -290,8 +291,8 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 ######## UNCOMMENT the desired interval set for the calling step ############################
 #24 contings: Chr contings (1-22,X,Y)
-sorgILhg38Chr=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
-sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
+# sorgILhg38Chr=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_ID.intervals
+# sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.intervals
 
 #21798 intervalli: Whole genes regions hg38 refGene 05 Aug 2018 NM and NR
 #sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_refGene_05_Aug_2018_NMNR_sorted_noALTnoRANDOMnoCHRUNnoCHRM_merged_noID.intervals
@@ -302,15 +303,15 @@ sorgILhg38ChrCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_Chr_noID.int
 # sorgILhg38exons5PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged_noALTnoRANDOMnoCHRUNnoCHRM_noID.intervals
 
 #26507 intervalli: Whole genes regions hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38wgenesCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38wgenesINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_WholeGenes_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #286723 intervalli: Exons +12bp each exon side # hg38 GENCODE v24 merged with hg38 RefSeqCurated Aug-2018
-sorgILhg38exons12PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
-sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38exons12PlusCHECK=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
+# sorgILhg38exons12PlusINTERVALS=/shared/resources/gatk4hg38db/interval_list/hg38_EXONSplus12_GENCODEv24_RefSeqCurated_noALTnoRANDOMnoCHRUNnoCHRM_sorted_merged_noID.intervals
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
-EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+# EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 
@@ -419,7 +420,8 @@ OMNI=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_omni2.5.hg38.vcf.g
 AXIOM=/galileo/home/userexternal/mcocca00/resources/hg38/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz
 
 ### - PATH TOOL - CINECA SLURM version - ###
-PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+# PICARD=/galileo/prod/opt/applications/picardtools/2.3.0/binary/bin/picard.jar
+PICARD=/galileo/home/userexternal/mcocca00/softwares/picardtools/2.21.1/picard.jar
 SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/bin/samtools
 BWA=/galileo/prod/opt/applications/bwa/0.7.17/gnu--6.1.0/bin/bwa
 BCFTOOLS=/galileo/prod/opt/tools/bcftools/1.9/gnu--6.1.0/bin/bcftools
