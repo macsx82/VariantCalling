@@ -63,7 +63,8 @@ val2="$6"      #fastq 2 after trimming
 uBAM="\${SM}_unmapped.bam"       #unmapped bam
 
 #step 2
-bBAM="\${SM}_bwa.bam"            #mapped bam
+bBAMu="\${SM}_bwa_u.bam"            #mapped bam unsorted
+bBAM="\${SM}_bwa.bam"            #mapped bam sorted by queryname
 
 ######## SET THE READ MODE TO SELECT THE BEST ALIGNMENT OPTIONS ##########
 # accepted values are "long" OR "short", DEFAULT set on "long" to use bwa mem
