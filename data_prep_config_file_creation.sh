@@ -108,7 +108,7 @@ filename_fq1=\$(basename \${fastq1})
 filename_fq2=\$(basename \${fastq2})
 
 fq1_prefix=\$(echo \${filename_fq1%%.*})
-fq2_prefix=\$(echo \${filename_fq1%%.*})
+fq2_prefix=\$(echo \${filename_fq2%%.*})
 
 val1="\${fq1_prefix}_val_1.fq.gz"    
 val2="\${fq2_prefix}_val_2.fq.gz"  
