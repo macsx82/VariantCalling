@@ -89,6 +89,6 @@ rm -v ${fol1}/"${SM}_header"
 
 # exit
 #generate a file that will tell us if the step is completed
-touch step0101.done
+touch step0101_${SM}.done
 
 

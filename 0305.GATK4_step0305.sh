@@ -132,7 +132,7 @@ rm -v ${fol1}/${mdBAM}
 # rm -v ${fol2}/"${SM}_fixedsort.bam"
 
 #generate a file that will tell us if the step is completed
-touch step0305.done
+touch step0305_${SM}.done
 # exit
 
 

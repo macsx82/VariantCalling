@@ -6,21 +6,6 @@
 function build_template_sample(){
 
 cat << EOF
-### - VARIABLEs- ###
-LB=LibXXX       #libreria       # 01,02
-PL=Illumina     #piattaforma        # 01,02
-thr=32          #number of thread   # 02
-cl=5            #compression level  # 02,03,04,05
-hg=hg38         #hg version     # 05
-#---#
-ip1=100         #interval_padding (bp)  # HaplotypeCaller
-maa=2           #max alternate alleles  # HaplotypeCaller
-java_opt_all='-XX:ParallelGCThreads=1'       # All GATK steps
-java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
-java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
-bs=1            #batch size     # GenomicsDBImport
-rt=1            #read thread        # GenomicsDBImport
-ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 ####################### INTERVAL sets #######################
 
@@ -65,6 +50,23 @@ uBAM="\${SM}_unmapped.bam"       #unmapped bam
 #step 2
 bBAMu="\${SM}_bwa_u.bam"            #mapped bam unsorted
 bBAM="\${SM}_bwa.bam"            #mapped bam sorted by queryname
+
+### - VARIABLEs- ###
+LB=\$(basename \${val1}| cut -f 2,3 -d "_")       #libreria       # 01,02
+PL=Illumina     #piattaforma        # 01,02
+thr=32          #number of thread   # 02
+cl=5            #compression level  # 02,03,04,05
+hg=hg38         #hg version     # 05
+#---#
+ip1=100         #interval_padding (bp)  # HaplotypeCaller
+maa=2           #max alternate alleles  # HaplotypeCaller
+java_opt_all='-XX:ParallelGCThreads=1'       # All GATK steps
+java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
+java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
+bs=1            #batch size     # GenomicsDBImport
+rt=1            #read thread        # GenomicsDBImport
+ip2=200         #interval_padding (bp)  # GenomicsDBImport
+############################################
 
 ######## SET THE READ MODE TO SELECT THE BEST ALIGNMENT OPTIONS ##########
 # accepted values are "long" OR "short", DEFAULT set on "long" to use bwa mem

@@ -75,7 +75,7 @@ echo "> Calculate stats"
 sam_stats ${fol1}/${bBAM}
 
 #generate a file that will tell us if the step is completed
-touch step0202.done
+touch step0202_${SM}.done
 
 #clean unsorted bam file
 # exit
