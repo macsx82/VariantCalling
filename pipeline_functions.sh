@@ -23,7 +23,7 @@ function sam_stats(){
 #validate the bam file
 function sam_validate(){
     in_bam=$1
-    java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=SUMMARY R=${GNMhg38} TMP_DIR=${tmp}/
+    java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=VERBOSE R=${GNMhg38} TMP_DIR=${tmp}/
     echo "- END -"
 }
 
