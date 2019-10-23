@@ -32,9 +32,12 @@ cat << EOF
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 #EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
-
+#WGS intervals fo variant calling, from GATK bundle
+#WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
 ####################### INTERVAL sets #######################
 
 
@@ -314,8 +317,11 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 # EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
+#WGS intervals fo variant calling, from GATK bundle
+#WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
 
 ####################### INTERVAL sets #######################
 

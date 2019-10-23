@@ -85,7 +85,7 @@ if [[ -z ${EXONS} ]]; then
 	echo "> Coverage - counting also the base coverage at 0 "
 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-	${SAMTOOLS} depth -aa ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+	${SAMTOOLS} depth -aa ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_WGSxBaseCov.bed.xz
 
 	echo "- END -"
 
@@ -94,7 +94,7 @@ if [[ -z ${EXONS} ]]; then
 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
 	echo "> Coverage - without counting the base coverage at 0"
-	${SAMTOOLS} depth -a ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+	${SAMTOOLS} depth -a ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_WGSxBaseCov.bed.xz
 
 else
 	#Coverage check in WES mode
