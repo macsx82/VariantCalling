@@ -41,12 +41,14 @@ case \${cluster_man} in
 	echo "bash \${hs}/0202.GATK4_step0202.sh \${param_file}" | qsub -N G4s0202_\${SM} -cwd -l h_vmem=\${sge_m} -pe \${sge_pe} \${thr} -o \${lg}/\\\$JOB_ID_g0202_\${SM}.log -e \${lg}/\\\$JOB_ID_g0202_\${SM}.error -m a -M \${mail} -q \${sge_q}
 
 	#Pre-processing
-	#pipe step 3-5
+	#pipe step 3 to 5
 	#IN uBAM+bBAM OUT mBAM /// MergeBamAlignment, ValidateSamFile, flagstat, view
 	#IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 	#IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-	echo "bash \${hs}/0305.GATK4_step0305.sh \${param_file}" | qsub -N G4s0305_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0305_\${SM}.log -e \${lg}/\\\$JOB_ID_g0305_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+	echo "bash \${hs}/0303.GATK4_step0303.sh \${param_file}" | qsub -N G4s0303_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0202_\${SM} -o \${lg}/\\\$JOB_ID_g0303_\${SM}.log -e \${lg}/\\\$JOB_ID_g0303_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+	echo "bash \${hs}/0404.GATK4_step0404.sh \${param_file}" | qsub -N G4s0404_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0303_\${SM} -o \${lg}/\\\$JOB_ID_g0404_\${SM}.log -e \${lg}/\\\$JOB_ID_g0404_\${SM}.error -m ea -M \${mail} -q \${sge_q}
+	echo "bash \${hs}/0505.GATK4_step0505.sh \${param_file}" | qsub -N G4s0505_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0404_\${SM} -o \${lg}/\\\$JOB_ID_g0505_\${SM}.log -e \${lg}/\\\$JOB_ID_g0505_\${SM}.error -m ea -M \${mail} -q \${sge_q}
 
 	;;
 	CINECA )
@@ -66,12 +68,18 @@ case \${cluster_man} in
 	jid_step_0202=\$(echo \${jid_step_0202_m}| cut -f 4 -d " ")
 
 	#Pre-processing
-	#pipe step 3-5
+	#pipe step 3 to 5
 	#IN uBAM+bBAM OUT mBAM /// MergeBamAlignment, ValidateSamFile, flagstat, view
 	#IN mBAM OUT mdBAM /// MarkDuplicates, ValidateSamFile, flagstat, view
 	#IN mdBAM OUT fBAM /// SortSam, SetNmAndUqTags, ValidateSamFile, flagstat, view, sort, depth
 
-	jid_step_0305_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0305_\${SM}.error -o \${lg}/%j_g0305_\${SM}.log --mem=\${seq_m} -J "G4s0305_\${SM}" --dependency=afterok:\${jid_step_0202}:\${jid_step_0101} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0305.GATK4_step0305.sh ${param_file})
+	jid_step_0303_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0303_\${SM}.error -o \${lg}/%j_g0303_\${SM}.log --mem=\${seq_m} -J "G4s0303_\${SM}" --dependency=afterok:\${jid_step_0202}:\${jid_step_0101} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0303.GATK4_step0303.sh ${param_file})
+	jid_step_0303=\$(echo \${jid_step_0303_m}| cut -f 4 -d " ")
+
+	jid_step_0404_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0404_\${SM}.error -o \${lg}/%j_g0404_\${SM}.log --mem=\${seq_m} -J "G4s0404_\${SM}" --dependency=afterok:\${jid_step_0303} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0404.GATK4_step0404.sh ${param_file})
+	jid_step_0404=\$(echo \${jid_step_0404_m}| cut -f 4 -d " ")
+
+	jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem=\${seq_m} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
 
 	;;
 esac
