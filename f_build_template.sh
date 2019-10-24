@@ -32,7 +32,7 @@ cat << EOF
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 #EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
-EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+#EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
 
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
@@ -266,7 +266,7 @@ fol9=\${common_base_out}/germlineVariants/4.VCF/storage
 hs=${HOME}/scripts/pipelines/VariantCalling
 lg=\${base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=${WORK}/localtemp/\${rnd_tmp}
+tmp=${CINECA_SCRATCH}/localtemp/\${rnd_tmp}
 EOF
 }
 
@@ -317,7 +317,7 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 
 #232227 intervalli: Exons +5bp each exon side # 2018/07/25
 # EXONS=/shared/resources/hgRef/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
-EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
+#EXONS=/galileo/home/userexternal/mcocca00/resources/hg38/hg38_RefSeqCurated_ExonsPLUS5bp/hg38_RefSeqCurated_ExonsPLUS5bp_sorted_merged.bed
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 #WGS intervals fo variant calling, from GATK bundle
@@ -460,6 +460,6 @@ fol9=\${common_base_out}/germlineVariants/4.VCF/storage
 hs=${HOME}/scripts/pipelines/VariantCalling
 lg=\${common_base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=${WORK}/localtemp/\${rnd_tmp}
+tmp=${CINECA_SCRATCH}/localtemp/\${rnd_tmp}
 EOF
 }

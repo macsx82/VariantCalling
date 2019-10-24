@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-
+#####################################################
+# Original scripts from Athanasakis Emmanouil       #
+# e-mail: emmanouil.athanasakis[at]burlo.trieste.it #
+#                                                   #
+# Mods by Massimiliano Cocca - 06/09/2018           #
+# e-mail: massimiliano.cocca[at]burlo.trieste.it    #
+#                                                   #
+#                                                   #
+#####################################################
 
 
 echo
@@ -40,9 +48,20 @@ case ${read_mode} in
         # java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} SamToFastq INPUT=${fol1}/${uBAM} FASTQ=/dev/stdout INTERLEAVE=true NON_PF=true TMP_DIR=${tmp}/ | ${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 10000000 -p -v 3 -t ${thr} -Y ${GNMhg38} /dev/stdin | ${SAMTOOLS} view -1 - > ${fol1}/${bBAM}
         echo "> Align FASTQ files with BWA MEM"
         # -@ $[thr - 1] we will adjust the number of threads used for compression 
-        #${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 10000000 -v 3 -t ${thr} -Y ${GNMhg38} ${fol0}/${val1} ${fol0}/${val2} | ${SAMTOOLS} view -1 -o ${fol1}/${bBAMu}
+        ${BWA} mem -R "@RG\tID:${PU1}.${PU2}\tSM:${SM}\tLB:${LB}\tPL:${PL}" -K 10000000 -v 3 -t ${thr} -Y ${GNMhg38} ${fol0}/${val1} ${fol0}/${val2} | ${SAMTOOLS} view -1 -o ${fol1}/${bBAMu}
         #need to add a sorting step
-        ${SAMTOOLS} sort -n -@ ${thr} -T ${tmp} -o ${fol1}/${bBAM} ${fol1}/${bBAMu}
+        case ${cluster_man} in
+            BURLO )
+                #on the burlo cluster, since we don't have any time limit, we will use samtools to sort the aligned bam file by queryname
+                echo "Sort with samtools on Burlo cluster.."
+                ${SAMTOOLS} sort -n -@ ${thr} -T ${tmp} -o ${fol1}/${bBAM} ${fol1}/${bBAMu}
+                ;;
+            CINECA )
+                #on the cineca cluster, since we don't have any processor limit, we will use picard to sort the aligned bam file by queryname, so we will skip a sorting step during the bam merging
+                echo "Sort with samtools on CINECA cluster.."
+                java -jar ${PICARD} SortSam I=${fol1}/${bBAMu} O=${fol1}/${bBAM} SORT_ORDER=queryname TMP_DIR=${tmp}/
+                ;;
+        esac
     ;;  
     short )
         echo "> Align short reads with bwa-backtrack starting from FASTQ"
@@ -65,9 +84,10 @@ echo "- END -"
 
 #Validation
 echo
-# call the sam_validate function
-echo "> Validation bBAM"
-sam_validate ${fol1}/${bBAM}
+# call the sam_validate function:
+#We don't need this step since the file is not coordinate sorted and it will rise a validation error
+# echo "> Validation bBAM"
+# sam_validate ${fol1}/${bBAM}
 
 #Stat
 echo "> Calculate stats"
