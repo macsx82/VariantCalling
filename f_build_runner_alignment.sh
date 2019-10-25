@@ -79,7 +79,8 @@ case \${cluster_man} in
 	jid_step_0404_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0404_\${SM}.error -o \${lg}/%j_g0404_\${SM}.log --mem=\${seq_m} -J "G4s0404_\${SM}" --dependency=afterok:\${jid_step_0303} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0404.GATK4_step0404.sh ${param_file})
 	jid_step_0404=\$(echo \${jid_step_0404_m}| cut -f 4 -d " ")
 
-	jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem=\${seq_m} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
+	#in this last step we are using samtools calmd piping to sort and than producing the cram file: we can ask for 3 threads, to perform this step!
+	jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem=\${seq_m} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
 
 	;;
 esac

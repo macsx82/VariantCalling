@@ -58,7 +58,7 @@ case ${read_mode} in
                 ;;
             CINECA )
                 #on the cineca cluster, since we don't have any processor limit, we will use picard to sort the aligned bam file by queryname, so we will skip a sorting step during the bam merging
-                echo "Sort with samtools on CINECA cluster.."
+                echo "Sort with Picard on CINECA cluster.."
                 java -jar ${PICARD} SortSam I=${fol1}/${bBAMu} O=${fol1}/${bBAM} SORT_ORDER=queryname MAX_RECORDS_IN_RAM=1500000 TMP_DIR=${tmp}/
                 ;;
         esac
