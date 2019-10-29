@@ -80,7 +80,7 @@ read_mode=long
 mBAM="\${SM}_merged.bam"         #merge unmapped bam and mapped bam
 mdBAM="\${SM}_markdup.bam"       #mark dupplicates of the merged bam
 metfile="\${SM}_dupmetrics.txt"      #metrics file
-# fBAM="\${SM}_fixed.bam"          #sorted and fixed file
+fBAM="\${SM}_fixed.bam"          #sorted and fixed file
 fCRAM="\${SM}_fixed.cram"          #sorted and fixed file
 # fBAMs="\${SM}_fixedsort.bam"     #fixed sorted bam
 

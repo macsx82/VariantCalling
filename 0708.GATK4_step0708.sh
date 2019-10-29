@@ -34,7 +34,7 @@ echo "- END -"
 echo
 # cd ${fol1}/
 echo "> ApplyBQSR"
-${GATK4} --java-options "${java_opt2x}" ApplyBQSR -R ${GNMhg38} -I ${fol1}/${fBAM} -O ${fol4}/${applybqsr} -bqsr ${fol3}/${bqsrrd} --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 --add-output-sam-program-record --create-output-bam-md5 --use-original-qualities
+${GATK4} --java-options "${java_opt2x}" ApplyBQSR -R ${GNMhg38} -I ${fol1}/${fCRAM} -O ${fol4}/${applybqsr} -bqsr ${fol3}/${bqsrrd} --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 --add-output-sam-program-record --create-output-bam-md5 --use-original-qualities
 echo "- END -"
 
 #Validation
