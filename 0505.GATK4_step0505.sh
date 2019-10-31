@@ -35,7 +35,8 @@ echo "> Sort BAM file by coordinate order and generate the CRAM file: CRAM recal
 #Use SAMTOOLS for sorting and NM and MD calculation on BURLO (or cluster without time limit)
 #If we convert to CRAM files, btw, CRAM recalculates MD and NM tags on the fly, so we could simply sort the bam and convert it to CRAM
 # ${SAMTOOLS} calmd -r -u ${fol1}/${mdBAM} ${GNMhg38} | ${SAMTOOLS} sort -T ${tmp}/ | ${SAMTOOLS} view -h -T ${GNMhg38} -C -o ${fol1}/${fCRAM}
-${SAMTOOLS} sort -T ${tmp}/ ${fol1}/${mdBAM} | ${SAMTOOLS} view -h -T ${GNMhg38} -C -o ${fol1}/${fCRAM}
+# ${SAMTOOLS} sort -T ${tmp}/ ${fol1}/${mdBAM} | ${SAMTOOLS} view -h -T ${GNMhg38} -C -o ${fol1}/${fCRAM}
+${SAMTOOLS} sort -@ 20 -T ${tmp}/ ${fol1}/${mdBAM} | ${SAMTOOLS} view -@ 10 -h -T ${GNMhg38} -C -o ${fol1}/${fCRAM}
 
 fCRAM_idx=${fCRAM%.*}
 ${SAMTOOLS} index ${fol1}/${fCRAM} ${fol1}/${fCRAM_idx}.bai
