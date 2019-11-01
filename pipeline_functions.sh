@@ -14,10 +14,8 @@ function sam_stats(){
     ${SAMTOOLS} flagstat ${infile}
     echo
     ${SAMTOOLS} view -H ${infile} | grep -e '@RG' -e '@PG'
-    # echo
-    # ${SAMTOOLS} view -H ${fol1}/${uBAM} | grep '@PG'
     echo "- END -"
-
+    # ${SAMTOOLS} stats -r ${GNMhg38} ${infile} > ${infile}.stats
 }
 
 #validate the bam file

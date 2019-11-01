@@ -40,49 +40,49 @@ mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} ${tmp} #${fol7} ${fol8}
 sam_stats ${fol1}/${fCRAM}
 
 
-if [[ -z ${EXONS} ]]; then
-	#Coverage check in WGS mode
-	echo "> Coverage - counting also the base coverage at 0 "
-	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-	${SAMTOOLS} depth -aa ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_WGSxBaseCov.bed.xz
+# if [[ -z ${EXONS} ]]; then
+# 	#Coverage check in WGS mode
+# 	echo "> Coverage - counting also the base coverage at 0 "
+# 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# 	${SAMTOOLS} depth -aa ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_WGSxBaseCov.bed.xz
 
-	echo "- END -"
+# 	echo "- END -"
 
-	#Cov - WITHOUT counting 0 -
-	echo
-	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-	echo "> Coverage - without counting the base coverage at 0"
-	${SAMTOOLS} depth -a ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_WGSxBaseCov.bed.xz
+# 	#Cov - WITHOUT counting 0 -
+# 	echo
+# 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# 	echo "> Coverage - without counting the base coverage at 0"
+# 	${SAMTOOLS} depth -a ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_WGSxBaseCov.bed.xz
 
-else
-	#Coverage check in WES mode
-	echo "> Coverage - counting also the base coverage at 0 "
-	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
-	${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# else
+# 	#Coverage check in WES mode
+# 	echo "> Coverage - counting also the base coverage at 0 "
+# 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol2}/${fBAMs} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# 	# ${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fBAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
+# 	${SAMTOOLS} depth -aa -b ${EXONS} ${fol1}/${fCRAM} | xz > ${fol2}/${SM}_${hg}_WITH_0x_EXONSxBaseCov.bed.xz
 
-	echo "- END -"
+# 	echo "- END -"
 
-	#Cov - WITHOUT counting 0 -
-	echo
-	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-	echo "> Coverage - without counting the base coverage at 0"
-	${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
-fi
+# 	#Cov - WITHOUT counting 0 -
+# 	echo
+# 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol2}/${fBAMs}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# 	# ${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fBAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# 	echo "> Coverage - without counting the base coverage at 0"
+# 	${SAMTOOLS} depth -a -b ${EXONS} ${fol1}/${fCRAM}| xz > ${fol2}/${SM}_${hg}_WITHOUT_0x_EXONSxBaseCov.bed.xz
+# fi
 	
 echo "- END -"
 #del
 echo "Cleaning some files..."
 #Remove unmapped bam
 # rm -v ${fol1}/"${SM}_unmapped.bam"
-# rm -v ${fol1}/${uBAM}
+rm -v ${fol1}/${uBAM}
 # rm -v ${fol1}/${bBAM}
 #Remove merged bam
 # rm -v ${fol1}/"${SM}_merged.bam"
-# rm -v ${fol1}/${mBAM}
+rm -v ${fol1}/${mBAM}
 # rm -v ${fol1}/"${SM}_dupmetrics.txt"
 #Remove dup marked bam
 # rm -v ${fol1}/"${SM}_markdup.bam"
