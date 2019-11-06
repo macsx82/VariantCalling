@@ -217,7 +217,7 @@ SAMTOOLS=/galileo/prod/opt/applications/samtools/1.9/intel--pe-xe-2018--binary/b
 BWA=/galileo/prod/opt/applications/bwa/0.7.17/gnu--6.1.0/bin/bwa
 BCFTOOLS=/galileo/prod/opt/tools/bcftools/1.9/gnu--6.1.0/bin/bcftools
 GATK4=/galileo/prod/opt/applications/gatk/4.1.0.0/jre--1.8.0_111--binary/bin/gatk
-
+SAMBAMBA=/galileo/prod/opt/applications/sambamba/0.7.0/none/bin/sambamba-0.7.0-linux-static
 
 ### - PATH FOLDERs - ###
 # To use the  
