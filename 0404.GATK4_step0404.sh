@@ -30,7 +30,8 @@ mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} ${tmp} #${fol7} ${fol8}
 echo
 # cd ${fol1}/
 echo "> Mark duplicate reads to avoid counting non-independent observations"
-java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MarkDuplicates INPUT=${fol1}/${mBAM} OUTPUT=${fol1}/${mdBAM} METRICS_FILE=${fol1}/${metfile} VALIDATION_STRINGENCY=SILENT OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 ASSUME_SORT_ORDER=queryname MAX_RECORDS_IN_RAM=2000000 CREATE_MD5_FILE=true TMP_DIR=${tmp}/
+# java -Dsamjdk.compression_level=${cl} ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MarkDuplicates INPUT=${fol1}/${mBAM} OUTPUT=${fol1}/${mdBAM} METRICS_FILE=${fol1}/${metfile} VALIDATION_STRINGENCY=SILENT OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 ASSUME_SORT_ORDER=queryname MAX_RECORDS_IN_RAM=2000000 CREATE_MD5_FILE=true TMP_DIR=${tmp}/
+${SAMBAMBA} markdup -t 24 --compression-level=${cl} --tmpdir=${tmp}/ ${fol1}/${mBAM} ${fol1}/${mdBAM}
 echo "- END -"
 
 #Stat
