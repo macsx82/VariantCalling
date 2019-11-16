@@ -78,7 +78,7 @@ case \${cluster_man} in
 
 	#use sambamba for duplicate marking
 	#jid_step_0404_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0404_\${SM}.error -o \${lg}/%j_g0404_\${SM}.log --mem=\${sge_m} -J "G4s0404_\${SM}" --dependency=afterok:\${jid_step_0303} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0404.GATK4_step0404.sh ${param_file})
-	jid_step_0404_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0404_\${SM}.error -o \${lg}/%j_g0404_\${SM}.log --mem-per-cpu=\${sge_m_u} -J "G4s0404_\${SM}" --dependency=afterok:\${jid_step_0303} --get-user-env -n 24 --mail-type END,FAIL --mail-user \${mail} \${hs}/0404.GATK4_step0404.sh ${param_file})
+	jid_step_0404_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0404_\${SM}.error -o \${lg}/%j_g0404_\${SM}.log --mem-per-cpu=\${sge_m_u} -J "G4s0404_\${SM}" --dependency=afterok:\${jid_step_0303} --get-user-env -n 8 --mail-type END,FAIL --mail-user \${mail} \${hs}/0404.GATK4_step0404.sh ${param_file})
 	jid_step_0404=\$(echo \${jid_step_0404_m}| cut -f 4 -d " ")
 
 	#in this last step we are using samtools to sort and than producing the cram file
