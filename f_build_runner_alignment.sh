@@ -83,7 +83,8 @@ case \${cluster_man} in
 
 	#in this last step we are using samtools to sort and than producing the cram file
 	# jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem=\${sge_m} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 30 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
-	jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem-per-cpu=\${sge_m_u} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 30 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
+	# jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem-per-cpu=\${sge_m_u} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 30 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
+	jid_step_0505_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0505_\${SM}.error -o \${lg}/%j_g0505_\${SM}.log --mem-per-cpu=\${sge_m_u} -J "G4s0505_\${SM}" --dependency=afterok:\${jid_step_0404} --get-user-env -n 16 --mail-type END,FAIL --mail-user \${mail} \${hs}/0505.GATK4_step0505.sh ${param_file})
 	jid_step_0505=\$(echo \${jid_step_0505_m}| cut -f 4 -d " ")
 
 	#in this last step we are just validating and calculating stats and depth for our files, before BQSR

@@ -80,6 +80,8 @@ echo "Cleaning some files..."
 # rm -v ${fol1}/"${SM}_unmapped.bam"
 rm -v ${fol1}/${uBAM}
 # rm -v ${fol1}/${bBAM}
+#Remove aligned unsorted bam
+rm -v ${fol1}/${bBAMu}
 #Remove merged bam
 # rm -v ${fol1}/"${SM}_merged.bam"
 rm -v ${fol1}/${mBAM}
