@@ -53,10 +53,11 @@ case \${cluster_man} in
 
 		if [[ \${whole_genome} -eq 1 ]]; then
 		    #statements
-		    jid_step_0606_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0606_\${SM}.error -o \${lg}/%j_g0606_\${SM}.log --mem=\${sge_m} -J "G4s0606_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0606.GATK4_step0606.sh \${param_file}
+		    jid_step_0606_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0606_\${SM}.error -o \${lg}/%j_g0606_\${SM}.log --mem=\${sge_m} -J "G4s0606_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0606.GATK4_step0606.sh \${param_file})
 			jid_step_0606=\$(echo \${jid_step_0606_m}| cut -f 4 -d " ")
 		    
 		else
+		    echo "Job array option in the making...."
 		    #a_size=\`wc -l \${bqsr_intervals} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -d \${hs}/0606.GATK4_step0606.sh \${bqsr_intervals} \${param_file}" | qsub -t 1-\${a_size} -N G4s0606_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0305_\${SM} -o \${lg}/g0606_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0606_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 		fi
 
