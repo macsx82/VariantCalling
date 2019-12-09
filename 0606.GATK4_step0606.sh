@@ -17,6 +17,8 @@ source ${hs}/pipeline_functions.sh
 ### - VARIABILI FISSE - ###
 #Here we need an option to work on the whole genome dataset, instead of downsampling with the -L option
 ### - CODE - ###
+mkdir -p ${fol1} ${fol2} ${fol3} ${fol4} ${fol5} ${fol6} ${tmp}
+
 f1=${bqsr_intervals}                   #interval contigs
 
 echo "> BaseRecalibrator"
