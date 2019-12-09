@@ -203,7 +203,7 @@ java_opt4x='-Xms100g -Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 ################### Known resources ###################
 GNMhg38=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.fasta
 DBSNP138=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_138.hg38.vcf.gz
-DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/GCF_000001405.38.gz
+DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_151.hg38.vcf.gz
 INDELS=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.known_indels.vcf.gz
 OTGindels=/galileo/home/userexternal/mcocca00/resources/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
 OTGsnps=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
@@ -421,7 +421,7 @@ java_opt4x='-Xmx100g -XX:+UseSerialGC'   #memoria java       # 20
 ################### Known resources ###################
 GNMhg38=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.fasta
 DBSNP138=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_138.hg38.vcf.gz
-DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/GCF_000001405.38.gz
+DBSNP_latest=/galileo/home/userexternal/mcocca00/resources/hg38/dbsnp_151.hg38.vcf.gz
 INDELS=/galileo/home/userexternal/mcocca00/resources/hg38/Homo_sapiens_assembly38.known_indels.vcf.gz
 OTGindels=/galileo/home/userexternal/mcocca00/resources/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
 OTGsnps=/galileo/home/userexternal/mcocca00/resources/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
