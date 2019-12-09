@@ -26,14 +26,14 @@ if [[ ${whole_genome} -eq 1 ]]; then
     # f1=$2                   #interval contigs
     #No need for intervals...we'll use them only in the calling step
 	# ${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels}
-	${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fCRAM} --use-original-qualities --showHidden --TMP_DIR ${tmp}/ -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels}
+	${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fCRAM} --use-original-qualities --showHidden --tmp-dir ${tmp}/ -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels}
 
 else
     # f1=$1                   #interval contigs
     # f2=$2                   #interval qsubID
     c_bqsrrd="${SM}_wes_recaldata.csv"    #contig recalibration report
 	# ${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fBAM} --use-original-qualities -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
-	${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fCRAM} --use-original-qualities --showHidden --TMP_DIR ${tmp}/ -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
+	${GATK4} --java-options "${java_opt2x}" BaseRecalibrator -R ${GNMhg38} -I ${fol1}/${fCRAM} --use-original-qualities --showHidden --tmp-dir ${tmp}/ -O ${fol3}/${c_bqsrrd} --known-sites ${DBSNP_latest} --known-sites ${INDELS} --known-sites ${OTGindels} -ip 100 -L ${f1}
 fi
 
 echo "- END -"
