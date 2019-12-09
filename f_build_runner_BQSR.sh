@@ -64,7 +64,10 @@ case \${cluster_man} in
 		#pipe step 7-8
 		#IN conting-bqsrrd OUT bqsrrd /// GatherBQSRReports
 		#IN fBAM+bqsrrd OUT conting-bqsrrd /// ApplyBQSR, ValidateSamFile, flagstat, view
-		jid_step_0708_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0708_\${SM}.error -o \${lg}/%j_g0708_\${SM}.log --mem=\${seq_m} -J "G4s0708_\${SM}" --dependency=afterok:\${jid_step_0606} --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0708.GATK4_step0708.sh \${param_file})
+		jid_step_0707_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0708_\${SM}.error -o \${lg}/%j_g0708_\${SM}.log --mem=\${seq_m} -J "G4s0708_\${SM}" --dependency=afterok:\${jid_step_0606} --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0707.GATK4_step0707.sh \${param_file})
+		jid_step_0707=\$(echo \${jid_step_0707_m}| cut -f 4 -d " ")
+
+		jid_step_0808_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0708_\${SM}.error -o \${lg}/%j_g0708_\${SM}.log --mem=\${seq_m} -J "G4s0708_\${SM}" --dependency=afterok:\${jid_step_0707} --get-user-env -n \${thr} --mail-type END,FAIL --mail-user \${mail} \${hs}/0808.GATK4_step0808.sh \${param_file})
 
 	;;
 esac
