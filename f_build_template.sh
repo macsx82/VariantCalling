@@ -164,8 +164,10 @@ sge_q_vcall=\${sge_q} #in var caller tmp mode, here we should need only the queu
 sge_m_j1=8G #this mem requirement will work with java mem selection 1
 sge_m_u=3G #this mem requirement is for the mem-per-cpu option in slurm
 sge_m=15G #this mem requirement will work with java mem selection 2
+sge_m_j2=20G #this mem requirement will work with other java mem selection
 sge_m_j3=30G #this mem requirement will work with java mem selection 3 
 sge_m_j4=120G #this mem requirement will work with java mem selection 4
+sge_m_j5=40G #this mem requirement will work with other java mem selection
 sge_m_dbi=15G #mem requirement to work with geneticDB import (it has to be a little higher than the correspondig mem assigned to the jvm in this step)
 sge_pe=orte
 

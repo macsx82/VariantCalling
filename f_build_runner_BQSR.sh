@@ -53,6 +53,7 @@ case \${cluster_man} in
 
 		if [[ \${whole_genome} -eq 1 ]]; then
 		    #statements
+		    echo "Whole genome option..."
 		    jid_step_0606_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0606_\${SM}.error -o \${lg}/%j_g0606_\${SM}.log --mem=\${sge_m} -J "G4s0606_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0606.GATK4_step0606.sh \${param_file})
 			jid_step_0606=\$(echo \${jid_step_0606_m}| cut -f 4 -d " ")
 		    
