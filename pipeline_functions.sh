@@ -21,7 +21,9 @@ function sam_stats(){
 #validate the bam file
 function sam_validate(){
     in_bam=$1
-    java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=VERBOSE R=${GNMhg38} TMP_DIR=${tmp}/
+    samtools quickcheck -v -v -v ${in_bam}
+    
+    # java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile I=${in_bam} MODE=VERBOSE R=${GNMhg38} TMP_DIR=${tmp}/
     #get ready for new Picard syntax: 23/10/2019
     # java -XX:+UseSerialGC -jar ${PICARD} ValidateSamFile -I ${in_bam} -MODE VERBOSE -R ${GNMhg38} -TMP_DIR ${tmp}/
     echo "- END -"
