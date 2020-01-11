@@ -37,14 +37,14 @@ cat << EOF
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 #WGS intervals fo variant calling, from GATK bundle
-#WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
+WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
 ####################### INTERVAL sets #######################
 
 
 ### - VARIABLEs to be used in each pipeline step - ###
 #step 1
 SM=$2                   #sample name
-
+sex=${10}      #sample's sex: we need this to correctly call sex chromosomes (1:male/2:female)
 val1="$5"      #fastq 1 after trimming
 val2="$6"      #fastq 2 after trimming
 
@@ -61,8 +61,8 @@ thr=32          #number of thread   # 02
 cl=5            #compression level  # 02,03,04,05
 hg=hg38         #hg version     # 05
 #---#
-ip1=100         #interval_padding (bp)  # HaplotypeCaller
-maa=2           #max alternate alleles  # HaplotypeCaller
+ip1=500         #interval_padding (bp)  # HaplotypeCaller
+maa=3           #max alternate alleles  # HaplotypeCaller
 java_opt_all='-XX:ParallelGCThreads=1'       # All GATK steps
 java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
 java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
@@ -99,7 +99,7 @@ applybqsr="\${SM}_bqsr.cram"      #final_merged apply recalibration report in cr
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
 vcall_interval=\${bqsr_intervals}
-split_interval=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more tha 30K interval file
+split_interval=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more than 30K interval file
                     # the number selected will be the splitting line number for the interval file
 job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval) or just use the interval file as it is for job submission
 ##############################################################################
@@ -286,8 +286,8 @@ thr=16          #number of thread   # 02
 cl=5            #compression level  # 02,03,04,05
 hg=hg38         #hg version     # 05
 #---#
-ip1=100         #interval_padding (bp)  # HaplotypeCaller
-maa=2           #max alternate alleles  # HaplotypeCaller
+ip1=500         #interval_padding (bp)  # HaplotypeCaller
+maa=3           #max alternate alleles  # HaplotypeCaller
 java_opt_all='-XX:ParallelGCThreads=1'       # All GATK steps
 java_XX1='-XX:GCTimeLimit=50'           # 09-HaplotypeCaller
 java_XX2='-XX:GCHeapFreeLimit=10'       # 09-HaplotypeCaller
@@ -324,7 +324,7 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 #WGS intervals fo variant calling, from GATK bundle
-#WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
+WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
 
 ####################### INTERVAL sets #######################
 

@@ -119,7 +119,8 @@ case ${work_mode} in
         #get the fastq files path
         r1_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $2}' ${input_file_list})
         r2_fq=$(awk -v smp_name=${sample_name} '$1==smp_name {print $3}' ${input_file_list})
-
+        #we need to provide the sex so we can correctly call X and Y chromosomes
+        sex=$(awk -v smp_name=${sample_name} '$1==smp_name {print $4}' ${input_file_list})
         #now, get the fastq folder
         fastq_input_folder=$(dirname ${r1_fq})
         r1_fq_names=$(basename ${r1_fq})

@@ -57,8 +57,13 @@ suffix=`date +"%d%m%Y%H%M%S"`
 runner_mode=()
 
 echo "${@}"
-while getopts ":t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
+while getopts ":x:t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
   case $opt in
+    x)
+    #we need sex to correctly handle ploidity on sex chromosomes
+    echo "${OPTARG}" 
+    sex=${OPTARG}
+    ;;
     d)
     common_out_dir=${OPTARG}
     ;;
@@ -229,7 +234,7 @@ if [[ -z "${conf_file_path}" ]]; then
   fi
 
   if [[ -z ${pooled_mode} ]]; then
-    build_template_sample ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} ${common_out_dir} > ${template_dir}/VarCall_${suffix}.conf
+    build_template_sample ${out_dir} ${sample_name} ${mail_to} ${input_file_folder} ${r1_fq_file} ${r2_fq_file} ${exec_host} ${exec_queue} ${common_out_dir} ${sex} > ${template_dir}/VarCall_${suffix}.conf
     echo "Template file ${template_dir}/VarCall_${suffix}.conf created. You can edit it to modify any non default parameter."
   else
     build_template_pooled ${input_file_folder} ${mail_to} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_pooled_${suffix}.conf
