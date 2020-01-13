@@ -63,12 +63,12 @@ case \${cluster_man} in
             if [[ \${job_a} -eq 1 ]]; then
                 #Normal job array
                 echo "Generate a job array submission.."
-                #a_size=\`wc -l \${vcall_interval} | cut -f 1 -d " "\`; echo "\${hs}/runner_job_array.sh -s \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file}" | qsub -t 1-\${a_size} -N G4s0909_\${SM} -cwd -l h_vmem=\${sge_m} -hold_jid G4s0708_\${SM} -o \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/g0909_\${SM}_\\\$JOB_ID.\\\$TASK_ID.error -q \${sge_q_vcall}
+                size=\`wc -l \${vcall_interval}|cut -f 1 -d " "\`;jid_step_0909_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\$[size] --time=24:00:00 -e \${lg}/%A_%a_g0909_\${SM}.error -o \${lg}/%A_%a_g0909_\${SM}.log --mem=1GB -J "G4s0909_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} /galileo/home/userexternal/mcocca00/scripts/bash_scripts/ja_runner_par_CINECA.sh -s \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file})
             else
                 echo "Whole interval file option..."
                 jid_step_0909_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g0909_\${SM}.error -o \${lg}/%j_g0909_\${SM}.log --mem=\${sge_m} -J "G4s0909_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/0909.GATK4_step0909.sh \${vcall_interval} \${param_file})
-                jid_step_0909=\$(echo \${jid_step_0909_m}| cut -f 4 -d " ")
             fi
+            jid_step_0909=\$(echo \${jid_step_0909_m}| cut -f 4 -d " ")
         else
             #we need to split the interval file by split_interval lines and run n job arrays
             echo "We will split the interval according to the parameter file data..."
