@@ -10,10 +10,10 @@ echo
 ### - SOURCEs - ###
 #source functions file
 own_folder=`dirname $0`
+source ${param_file}
 source ${hs}/pipeline_functions.sh
 f1=$1                   ##interval contings
 param_file=$2
-source ${param_file}
 
 # We don't need to differentiate here if there is job array or not, since we will use the ja_runner par approach
 #We need to know if the f1 value is a file name or an actual interval
