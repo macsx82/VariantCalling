@@ -129,7 +129,7 @@ case ${work_mode} in
         
         #now we can start creating templates for each sample
         # echo "${config_file_creator} -i ${fastq_input_folder} -t ${template_dir} -o ${out_dir} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p ${optional_pars[@]}"
-        ${config_file_creator} -i ${fastq_input_folder} -t ${template_dir}/${sample_name} -o ${out_dir}/${sample_name} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p "${optional_pars[@]}"
+        ${config_file_creator} -i ${fastq_input_folder} -x ${sex} -t ${template_dir}/${sample_name} -o ${out_dir}/${sample_name} -s ${sample_name} -1 ${r1_fq_names} -2 ${r2_fq_names} -m ${mail_to} -a -b -v -p "${optional_pars[@]}"
     done
     ;;
     B)

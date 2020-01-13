@@ -44,6 +44,7 @@ then
     echo "                   -n: Execution host full name"
     echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
     echo "                   -z: Activate POOLED mode: generation of pooled templates and pooled configuration file."
+    echo "                   -x: sample sex"
     echo "                   -h: this help message "
     echo "#########################"
     exit 1
