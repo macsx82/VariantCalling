@@ -99,10 +99,10 @@ applybqsr="\${SM}_bqsr.cram"      #final_merged apply recalibration report in cr
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for CALLING #######
 # #step 9
-vcall_interval=\${bqsr_intervals}
+vcall_interval=\${WGS_GATK}
 split_interval=0   #[0/n-split]select if you want to split the interval file in order to run multiple jobs array: mandatory with more than 30K interval file
                     # the number selected will be the splitting line number for the interval file
-job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval) or just use the interval file as it is for job submission
+job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval or an interval list) or just use the interval file as it is for job submission
 ##############################################################################
 
 #step 10-11 (chr-wgs)
