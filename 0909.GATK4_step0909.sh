@@ -71,7 +71,7 @@ if [[ -z "${fol4_tmp}" || -z "${fol5_tmp}" || -z "${fol5_host}" ]];then
 		if [[ ${chrY_content} -eq 0 ]]; then
 			#we will submit the job
 			echo "Job submitted for female sample on non Y chromosome."
-			${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+			${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
 		fi
 	else
 		#we are working with male samples: we need to worry about ploidy
@@ -105,11 +105,11 @@ if [[ -z "${fol4_tmp}" || -z "${fol5_tmp}" || -z "${fol5_host}" ]];then
 		case ${chrom_status} in
 			AUTOSOMAL )
 				echo "Job submitted for male sample on autosomal chromosome or chrX PAR regions."
-				${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+				${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
 				;;
 			SEXC )
 				echo "Job submitted for male sample on Y chromosome or chrX NON_PAR regions."
-				${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} -ploidy ${sex} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+				${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} -ploidy ${sex} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
 				;;
 		esac
 		# ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
@@ -156,7 +156,7 @@ else
         if [[ ${chrY_content} -eq 0 ]]; then
             #we will submit the job
             echo "Job submitted for female sample on non Y chromosome."
-            ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+            ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
         fi
     else
         #we are working with male samples: we need to worry about ploidy
@@ -190,11 +190,11 @@ else
         case ${chrom_status} in
             AUTOSOMAL )
                 echo "Job submitted for male sample on autosomal chromosome or chrX PAR regions."
-                ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+                ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
                 ;;
             SEXC )
                 echo "Job submitted for male sample on Y chromosome or chrX NON_PAR regions."
-                ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} -ploidy ${sex} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
+                ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4_tmp}/${applybqsr} -O ${fol5_tmp}/${c_gv} -L "${f1}" -ip ${ip1} -ploidy ${sex} --max-alternate-alleles ${maa} -ERC GVCF --native-pair-hmm-threads 1 --output-mode EMIT_ALL_CONFIDENT_SITES
                 ;;
         esac
         # ${GATK4} --java-options "${java_opt2x} ${java_XX1} ${java_XX2}" HaplotypeCaller -R ${GNMhg38} -I ${fol4}/${applybqsr} -O ${fol5}/${c_gv} -L "${f1}" -ip ${ip1} --max-alternate-alleles ${maa} -ERC GVCF --output-mode EMIT_ALL_CONFIDENT_SITES
