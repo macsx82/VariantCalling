@@ -14,7 +14,7 @@ source ${param_file}
 own_folder=`dirname $0`
 source ${hs}/pipeline_functions.sh
 ### - CODE - ###
-mkdir -p ${fol6}
+mkdir -p ${fol6} ${tmp}
 #10a
 echo
 # cd ${fol5}/
