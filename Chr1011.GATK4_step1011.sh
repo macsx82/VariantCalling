@@ -9,6 +9,8 @@ echo
 
 ### - SOURCEs - ###
 param_file=$1
+#we need a chr parameter, since the file name we generated is not completely standardized
+chr=$2
 source ${param_file}
 #source functions file
 own_folder=`dirname $0`
@@ -21,15 +23,13 @@ mkdir -p ${fol6} ${tmp}
 #the files here will be sent to the GDBimport step, so we can work on single chromosomes
 echo "gVCF collection step for the current sample "
 # ${SM}_wgs_calling_regions_chr6.hg38.interval_list_g.vcf.gz
-
-
-ls ${fol5}/${SM}_*_g.vcf.gz > "${fol6}/${SM}.list"
+current_file=$(ls ${fol5}/${SM}_*_g.vcf.gz | sed -n "s/\(chr${chr}\.\)/\1/p")
 echo "- END -"
 
 #10b
-echo
-# cd ${fol5}/
-echo "> MergeVcfs"
+#We have to process the files and save them in the correct location
+#We also have to take care of the chrX problem
+echo "> Copy gVcf files in the correct path"
 # ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MergeVcfs -I "${fol6}/${SM}.list" -O ${fol6}/${gVCF}
 #use the bcftools option: faster and without java (which is a drag!!)
 #Since we added padding to the HapCaller step, we need to take care of chrX par and non par region merging
