@@ -16,13 +16,9 @@ source ${hs}/pipeline_functions.sh
 ### - CODE - ###
 mkdir -p ${fol6} ${tmp}
 #10a
-#in this version of the script, we are working by chromosome, so what we need is just to create a folder for the actual chr and copy the files related to the current sample in it
-#we will handle here the chrX overlap problem for males, removing the overlapping variants in the par and non par regions
-#the files here will be sent to the GDBimport step, so we can work on single chromosomes
-echo "gVCF collection step for the current sample "
-# ${SM}_wgs_calling_regions_chr6.hg38.interval_list_g.vcf.gz
-
-
+echo
+# cd ${fol5}/
+echo "> gVCF list"
 ls ${fol5}/${SM}_*_g.vcf.gz > "${fol6}/${SM}.list"
 echo "- END -"
 
