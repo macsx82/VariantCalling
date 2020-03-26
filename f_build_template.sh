@@ -262,17 +262,17 @@ fol6=\${base_out}/germlineVariants/2.gVCF/storage
 # This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
 # and should be created right after the merging step for the single vcf files
 common_base_out=$9
-fol6_link=\${common_base_out}/germlineVariants/all_samples/2.gVCF/storage
+fol6_link=\${common_base_out}/all_samples/germlineVariants/2.gVCF/storage
 
 
 ######################### DBImport/CombineGVCF folder###############
 #To generate a combined gvcf, we need to have 
-fol7=\${common_base_out}/germlineVariants/3.genomicsDB
+fol7=\${common_base_out}/all_samples/germlineVariants/3.genomicsDB
 
 ######################### DBImport/CombineGVCF folder###############
 
-fol8=\${common_base_out}/germlineVariants/4.VCF/processing
-fol9=\${common_base_out}/germlineVariants/4.VCF/storage
+fol8=\${common_base_out}/all_samples/germlineVariants/4.VCF/processing
+fol9=\${common_base_out}/all_samples/germlineVariants/4.VCF/storage
 ###########################################################################################
 
 ### - Path / Log / Tmp - ###
@@ -472,17 +472,17 @@ GATK4=/galileo/prod/opt/applications/gatk/4.1.0.0/jre--1.8.0_111--binary/bin/gat
 # This folder should be the same for all processed samples, in order to get the correct list for GVCF merge on DBImport
 # and should be created right after the merging step for the single vcf files
 common_base_out=$1
-fol6_link=\${common_base_out}/germlineVariants/all_samples/2.gVCF/storage
+fol6_link=\${common_base_out}/all_samples/germlineVariants/2.gVCF/storage
 
 
 ######################### DBImport/CombineGVCF folder###############
 #To generate a combined gvcf, we need to have 
-fol7=\${common_base_out}/germlineVariants/3.genomicsDB
+fol7=\${common_base_out}/all_samples/germlineVariants/3.genomicsDB
 
 ######################### DBImport/CombineGVCF folder###############
 
-fol8=\${common_base_out}/germlineVariants/4.VCF/processing
-fol9=\${common_base_out}/germlineVariants/4.VCF/storage
+fol8=\${common_base_out}/all_samples/germlineVariants/4.VCF/processing
+fol9=\${common_base_out}/all_samples/germlineVariants/4.VCF/storage
 ###########################################################################################
 
 ### - Path / Log / Tmp - ###
