@@ -35,6 +35,7 @@ do
 		#We also have to take care of the chrX problem
 		# we need to check if there is no chrY file (we're working with a female sample)
 
+		echo "Processing chromosome ${chr}."
 		echo ">Normalize indels and Merge variants"
 		${BCFTOOLS} norm -f ${GNMhg38} ${current_file} | ${BCFTOOLS} norm -m +any -Oz -o ${fol6_link}/${chr}/${current_file_name}
 		echo "- END -"
@@ -42,7 +43,7 @@ do
 		${BCFTOOLS} index -t -f ${fol6_link}/${chr}/${current_file_name}
 		echo "- END -"
 	else
-		echo "Missing ${chr} chromosome."
+		echo "Missing chromosome ${chr}."
 	fi
 
 done
