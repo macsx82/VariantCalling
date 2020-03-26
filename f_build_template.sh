@@ -334,7 +334,8 @@ ip2=200         #interval_padding (bp)  # GenomicsDBImport
 #---#
 #21589 intervalli: Whole genes regions (old version, dismissed); hg38RefSeqCurGenes_ID.intervals; hg38RefSeqCurGenes_noID.intervals
 #WGS intervals fo variant calling, from GATK bundle
-WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.interval_list
+WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.hg38.bed_intervals.list	#I want this to be used as a job array parameter
+																									# so this will be a list of bed files for the calling step
 
 ####################### INTERVAL sets #######################
 

@@ -24,9 +24,12 @@ for chr in ${chr_pool[@]}
 do
 	current_file=$(find ${fol5}/ -name "${SM}_*_chr${chr}.*_g.vcf.gz" -type f)
 	if [[ ${current_file} != "" ]]; then
+		#we have access to the variable ${validate_interval}, the file with the list of intervals used for calling with hapCaller
+		#We will subset this file extracting each time the list of interval fo the current chromosome
+		current_interval_file=$(sed -n "/chr${chr}\./p" ${validate_interval})
 		current_file_name=$(basename ${current_file})
     	#all files are already moved to the final destination, so we just need to validate them
-    	${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6_link}/${chr}/${current_file_name} -R ${GNMhg38} -gvcf -Xtype ALLELES
+    	${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6_link}/${chr}/${current_file_name} -R ${GNMhg38} -L ${current_interval_file} -gvcf -Xtype ALLELES
 	else
 		echo "Missing ${chr} chromosome."
 	fi
