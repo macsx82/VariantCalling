@@ -28,15 +28,23 @@ for chr in ${chr_pool[@]}
 do
 
 	current_file=$(find ${fol5}/ -name "${SM}_*_chr${chr}.*_g.vcf.gz" -type f)
-	current_file_name=$(basename ${current_file})
-	#We have to process the files and save them in the correct location
-	#We also have to take care of the chrX problem
-	echo ">Normalize indels and Merge variants"
-	${BCFTOOLS} norm -f ${GNMhg38} ${current_file} | ${BCFTOOLS} norm -m +any -Oz -o ${fol6_link}/${chr}/${current_file_name}
-	echo "- END -"
-	echo "> Create index"
-	${BCFTOOLS} index -t -f ${fol6_link}/${chr}/${current_file_name}
-	echo "- END -"
+	
+	if [[ ${current_file} != "" ]]; then
+		current_file_name=$(basename ${current_file})
+		#We have to process the files and save them in the correct location
+		#We also have to take care of the chrX problem
+		# we need to check if there is no chrY file (we're working with a female sample)
+
+		echo ">Normalize indels and Merge variants"
+		${BCFTOOLS} norm -f ${GNMhg38} ${current_file} | ${BCFTOOLS} norm -m +any -Oz -o ${fol6_link}/${chr}/${current_file_name}
+		echo "- END -"
+		echo "> Create index"
+		${BCFTOOLS} index -t -f ${fol6_link}/${chr}/${current_file_name}
+		echo "- END -"
+	else
+		echo "Missing ${chr} chromosome."
+	fi
+
 done
 # rm -v ${fol5}/${SM}_*_g.vcf.gz
 # rm -v ${fol5}/${SM}_*_g.vcf.gz.tbi
