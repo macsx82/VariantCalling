@@ -105,13 +105,22 @@ split_interval=0   #[0/n-split]select if you want to split the interval file in 
 job_a=1             #[0/1] define if we want to work with job arrays (each task is an interval or an interval list) or just use the interval file as it is for job submission
 ##############################################################################
 
+#We add a modifier to define if we are working pooling by sample o by chromosome
+pool_mode="CHROM" #alternative value is "SAMPLE", to work pooling by sample
+#################################################
+# This section is in place if we work by sample
+#
 #step 10-11 (chr-wgs)
+#We need to specify all the chromosomes we want to work on
+chr_pool=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_PAR X_NONPAR Y)
 gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
 fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
 
 #step 12 (chr-wgs)
 validate_interval=\${vcall_interval}
 gVCF="\${SM}_g.vcf.gz"           #final_merged 
+#
+#################################################
 
 ########### Set the variant db name for GenomicDB import #######
 #step 13
@@ -331,6 +340,21 @@ WGS_GATK=/galileo/home/userexternal/mcocca00/resources/hg38/wgs_calling_regions.
 
 
 ### - VARIABLEs to be used in each pipeline step - ###
+
+#We add a modifier to define if we are working pooling by sample o by chromosome
+pool_mode="CHROM" #alternative value is "SAMPLE", to work pooling by sample
+############################################################
+# This section is in place if we work in pooled mode by chr
+#
+#step 10-11 (chr-wgs)
+gVCF="\${SM}_g.vcf.gz"           #final_merged gVCF file
+fixgVCF="\${SM}-g.vcf.gz"        #fixed gVCF file
+
+#step 12 (chr-wgs)
+validate_interval=\${vcall_interval}
+gVCF="\${SM}_g.vcf.gz"           #final_merged 
+#
+#############################################################
 
 ########### Set the variant db name for GenomicDB import #######
 #step 13

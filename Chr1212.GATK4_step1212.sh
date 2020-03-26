@@ -20,18 +20,14 @@ mkdir -p ${fol7} ${fol8} ${fol9}
 echo
 # cd ${fol6}/
 echo "> Check gVCF"
-# while read -r f1
-# do
-    # ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L "${f1}" -gvcf -Xtype ALLELES
-    ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6}/${gVCF} -R ${GNMhg38} -L ${validate_interval} -gvcf -Xtype ALLELES
+for chr in ${chr_pool[@]}
+do
+	current_file=$(find ${fol5}/ -name "${SM}_*_chr${chr}.*_g.vcf.gz" -type f)
+	current_file_name=$(basename ${current_file})
+    #all files are already moved to the final destination, so we just need to validate them
+    ${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ValidateVariants -V ${fol6_link}/${chr}/${current_file_name} -R ${GNMhg38} -gvcf -Xtype ALLELES
 
-# done < ${validate_interval}
-
-#after the merging and validating, we need to copy the file in the collective folder
-rsync -au -Pv ${fol6}/${gVCF} ${fol6_link}/${gVCF}
-# and index them
-bcftools index -t ${fol6_link}/${gVCF}
-
+done
 echo "- END -"
 
 touch step12.done

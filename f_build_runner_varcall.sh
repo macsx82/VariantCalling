@@ -152,14 +152,37 @@ case \${cluster_man} in
         #pipe step 10-11
         #IN conting-bqsrrd OUT gVCF /// MergeVcfs
         #IN gVCF OUT fixed gVCF /// bcftools
-        jid_step_1011_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1011_\${SM}.error -o \${lg}/%j_g1011_\${SM}.log --mem=\${sge_m} -J "G4s1011_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/Chr1011.GATK4_step1011.sh \${param_file})
-        jid_step_1011=\$(echo \${jid_step_1011_m}| cut -f 4 -d " ")
-        
-        #gVCF check
-        #pipe step 12
-        #IN fixed gVCF OUT checked gVCF /// ValidateVariants
-        jid_step_1212_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1212_\${SM}.error -o \${lg}/%j_g1212_\${SM}.log --mem=\${sge_m} -J "G4s1212_\${SM}" --dependency=afterok:\${jid_step_1011} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/Chr1212.GATK4_step1212.sh \${param_file})
-        jid_step_1212=\$(echo \${jid_step_1212_m}| cut -f 4 -d " ")
+        #we need to add a modifier to select if we want to work by sample or by chr
+
+        case \${pool_mode} in
+            CHROM )
+                #this should run as a job array or submit as many jobs as the chromosomes
+                #we ahve access to the param file variables, so we can create all oputput folders once
+                for chr in \${chr_pool[@]}
+                do
+                    mkdir -p \${fol6_link}/\${chr}
+                done
+
+                jid_step_1011_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1011_\${SM}.error -o \${lg}/%j_g1011_\${SM}.log --mem=\${sge_m} -J "G4s1011_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/Chr1011.GATK4_step1011.sh \${param_file})
+                jid_step_1011=\$(echo \${jid_step_1011_m}| cut -f 4 -d " ")
+                
+                #gVCF check
+                #pipe step 12
+                #IN fixed gVCF OUT checked gVCF /// ValidateVariants
+                jid_step_1212_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1212_\${SM}.error -o \${lg}/%j_g1212_\${SM}.log --mem=\${sge_m} -J "G4s1212_\${SM}" --dependency=afterok:\${jid_step_1011} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/Chr1212.GATK4_step1212.sh \${param_file})
+                jid_step_1212=\$(echo \${jid_step_1212_m}| cut -f 4 -d " ")
+            ;;
+            SAMPLE)
+                jid_step_1011_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1011_\${SM}.error -o \${lg}/%j_g1011_\${SM}.log --mem=\${sge_m} -J "G4s1011_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/sample1011.GATK4_step1011.sh \${param_file})
+                jid_step_1011=\$(echo \${jid_step_1011_m}| cut -f 4 -d " ")
+                
+                #gVCF check
+                #pipe step 12
+                #IN fixed gVCF OUT checked gVCF /// ValidateVariants
+                jid_step_1212_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1212_\${SM}.error -o \${lg}/%j_g1212_\${SM}.log --mem=\${sge_m} -J "G4s1212_\${SM}" --dependency=afterok:\${jid_step_1011} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/sample1212.GATK4_step1212.sh \${param_file})
+                jid_step_1212=\$(echo \${jid_step_1212_m}| cut -f 4 -d " ")
+            ;;
+        esac
 
     ;;
 esac
