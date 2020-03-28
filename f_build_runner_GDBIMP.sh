@@ -77,6 +77,8 @@ case \${cluster_man} in
                 for chr in \${chr_pool[@]}
                 do
                     mkdir -p \${fol7}/\${variantdb}_\${chr}
+            		mkdir -p \${fol8}/\${variantdb}_\${chr}
+					mkdir -p \${fol9}/\${variantdb}_\${chr}/xSamplePassedVariantsVCFs
                 done
 
                 jid_step_1313_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1313_\${SM}.error -o \${lg}/%j_g1313_\${SM}.log --mem=\${sge_m} -J "G4s1313_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/1313.GATK4_step1313.sh \${param_file})
