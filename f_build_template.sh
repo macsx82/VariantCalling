@@ -363,7 +363,11 @@ variantdb="VcalledDB"                #db name
 
 ########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
 joint_mode="DB"  #Specify "GENO" if not using the GenomicDBimport feature but the CombineGvcf feature
-vdb_interval=\${sorgILhg38exons12PlusINTERVALS} #same used in calling and BQSR steps!
+#based on the pool_mode this should behave differently
+#in case of WGS data, this is going to be al list of files containing intervals
+#Uncomment the correct option
+vdb_interval=\${WGS_GATK} #same used in calling and BQSR steps!
+# vdb_interval=\${sorgILhg38exons12PlusINTERVALS} #same used in calling and BQSR steps!
 
 #step 14 - 15 are job array based, working with intervals from the previous step
 

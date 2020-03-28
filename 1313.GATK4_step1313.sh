@@ -14,10 +14,6 @@ source ${param_file}
 own_folder=`dirname $0`
 source ${hs}/pipeline_functions.sh
 ### - CODE - ###
-mkdir -p ${fol7}/${variantdb}
-mkdir -p ${fol8}/${variantdb}
-mkdir -p ${fol9}/${variantdb}
-mkdir -p ${fol9}/${variantdb}/xSamplePassedVariantsVCFs
 #13
 echo
 # cd ${fol6}/
@@ -37,6 +33,11 @@ case ${pool_mode} in
 		done
 	;;
 	SAMPLE)
+		mkdir -p ${fol7}/${variantdb}
+		mkdir -p ${fol8}/${variantdb}
+		mkdir -p ${fol9}/${variantdb}
+		mkdir -p ${fol9}/${variantdb}/xSamplePassedVariantsVCFs
+		
 		echo "> cohort gVCF ID list"
 		find -L ${fol6_link}/*_g.vcf.gz -type f -printf "%f\n" | sed 's/_g.vcf.gz//g' | awk -v base_folder=${fol6_link} '{print $1"\t"base_folder"/"$1"_g.vcf.gz"}' > ${fol7}/${variantdb}/gVCF.list
 		echo -n "gVCF files count= "; ls -lh ${fol6_link}/*gz | wc -l; wc -l ${fol7}/${variantdb}/gVCF.list
