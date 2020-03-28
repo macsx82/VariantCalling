@@ -22,11 +22,27 @@ mkdir -p ${fol9}/${variantdb}/xSamplePassedVariantsVCFs
 echo
 # cd ${fol6}/
 #Now We need to get all the gVCF produced in the same folder to add them to GenomicDB import step or to use them with Combine GVCF
-echo "> cohort gVCF ID list"
-find -L ${fol6_link}/*_g.vcf.gz -type f -printf "%f\n" | sed 's/_g.vcf.gz//g' | awk -v base_folder=${fol6_link} '{print $1"\t"base_folder"/"$1"_g.vcf.gz"}' > ${fol7}/${variantdb}/gVCF.list
-echo -n "gVCF files count= "; ls -lh ${fol6_link}/*gz | wc -l; wc -l ${fol7}/${variantdb}/gVCF.list
-echo "- END -"
-
+#we need to behave differently based on the fact that we work by chromosome or by sample
+case ${pool_mode} in
+	CHROM)
+		#now we have access to the chr_pool variable, we can use it to iterate and get files from each chr in the right place
+		for chr in ${chr_pool[@]}
+		do
+			#in this case whe already have all the info we need for each chr, son we don't need to take in account missing data for females
+			current_variant_db=${variantdb}_${chr}
+			echo "> cohort gVCF ID list for chr ${chr}"
+			find -L ${fol6_link}/${chr}/*_g.vcf.gz -type f -printf "%f\n" | sed 's/_g.vcf.gz//g' | awk -v base_folder="${fol6_link}/${chr}" '{print $1"\t"base_folder"/"$1"_g.vcf.gz"}' > ${fol7}/${current_variant_db}/gVCF.list
+			echo -n "gVCF files count= "; ls -lh ${fol6_link}/${chr}/*gz | wc -l; wc -l ${fol7}/${current_variant_db}/gVCF.list
+			echo "- END -"
+		done
+	;;
+	SAMPLE)
+		echo "> cohort gVCF ID list"
+		find -L ${fol6_link}/*_g.vcf.gz -type f -printf "%f\n" | sed 's/_g.vcf.gz//g' | awk -v base_folder=${fol6_link} '{print $1"\t"base_folder"/"$1"_g.vcf.gz"}' > ${fol7}/${variantdb}/gVCF.list
+		echo -n "gVCF files count= "; ls -lh ${fol6_link}/*gz | wc -l; wc -l ${fol7}/${variantdb}/gVCF.list
+		echo "- END -"
+	;;
+esac
 touch step13.done
 
 
