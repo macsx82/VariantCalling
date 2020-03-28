@@ -27,7 +27,7 @@ case ${pool_mode} in
 			#in this case whe already have all the info we need for each chr, son we don't need to take in account missing data for females
 			current_variant_db=${variantdb}_${chr}
 			echo "> cohort gVCF ID list for chr ${chr}"
-			find -L ${fol6_link}/${chr}/*_g.vcf.gz -type f -printf "%f\n" | sed 's/_g.vcf.gz//g' | awk -v base_folder="${fol6_link}/${chr}" '{print $1"\t"base_folder"/"$1"_g.vcf.gz"}' > ${fol7}/${current_variant_db}/gVCF.list
+			find -L ${fol6_link}/${chr}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder="${fol6_link}/${chr}" '{OFS="\t"}{split($1,n,"_");print n[1],base_folder"/"$1}' > ${fol7}/${current_variant_db}/gVCF.list
 			echo -n "gVCF files count= "; ls -lh ${fol6_link}/${chr}/*gz | wc -l; wc -l ${fol7}/${current_variant_db}/gVCF.list
 			echo "- END -"
 		done

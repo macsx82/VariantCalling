@@ -122,44 +122,6 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged
 #
 #################################################
 
-########### Set the variant db name for GenomicDB import #######
-#step 13
-variantdb="VcalledDB"                #db name
-
-########### SPECIFY THE INTERVAL FILE TO USE IN THE JOB ARRAY CREATION for DB import #######
-joint_mode="DB"  #Specify "GENO" if not using the GenomicDBimport feature but the CombineGvcf feature
-vdb_interval=\${sorgILhg38Chr}
-
-#step 14 - 15 are job array based, working with intervals from the previous step
-
-#step 16
-
-#step 17-18
-raw="\${variantdb}_raw.vcf"
-HF="\${variantdb}_rawHF.vcf"
-SO="\${variantdb}_rawHFSO.vcf"
-
-#step 19-20-21
-SO="\${variantdb}_rawHFSO.vcf"
-iVR="\${variantdb}_rawHFSO-iVR.vcf"
-tri="\${variantdb}_indel.tranches"
-mode_I=INDEL
-
-#step 20
-sVR="\${variantdb}_rawHFSO-sVR.vcf"
-trs="\${variantdb}_snp.tranches"
-mode_S=SNP
-
-#step 21
-vqsr_thr_s="....."  #select vqsr threshold for SNPs
-vqsr_thr_i="....."  #select vqsr threshold for INDELs
-final="\${variantdb}_VQSR_output.vcf"    # -O
-inout="\${variantdb}_tmp.indel.recalibrated.vcf"
-
-#step 22-24-25(-26)
-passed="\${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
-filter_interval=\${sorgILhg38wgenesINTERVALS}
-
 #########SET UP YOUR EMAIL HERE ##############
 mail=$3
 #########SET UP YOUR EMAIL HERE ##############
