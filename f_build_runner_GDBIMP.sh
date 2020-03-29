@@ -91,14 +91,14 @@ case \${cluster_man} in
 				#We will need to work with a job array by chromosome
 				#we will have one array with 25 tasks, each passing a file containing intervals for DBimport
 				size=\$(wc -l \${vdb_interval}|cut -f 1 -d " ")
-				jid_step_1414_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1414_%A_%a.error -o \${lg}/g1414_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1414" --dependency=afterok:\${jid_step_1313} --get-user-env -n \${rt} --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file}
+				jid_step_1414_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1414_%A_%a.error -o \${lg}/g1414_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1414" --dependency=afterok:\${jid_step_1313} --get-user-env -n \${rt} --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file})
                 jid_step_1414=\$(echo \${jid_step_1414_m}| cut -f 4 -d " ")
 
 
 				#GenotypeGVCFs
 				#pipe step 15, job-array
 				#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
-				jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file}
+				jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file})
                 jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
 
 				#GenotypeGVCFs
