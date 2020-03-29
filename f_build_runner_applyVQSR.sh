@@ -40,7 +40,7 @@ case \${cluster_man} in
 	CINECA )
 		#Apply VQSR
 		#IN Site cohort Site Only raw-VCF, tranche file, recal file OUT cohort VQSR vcf 
-		jid_step_2121_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g2121_%j.error -o \${lg}/g2121_%j.log --mem=\${sge_m_j1} -J "G4s2121_\${variantdb}" --dependency=afterok:\${jid_step_1919},\${jid_step_2020} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/2121.GATK4_step2121.sh \${param_file})
+		jid_step_2121_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g2121_%j.error -o \${lg}/g2121_%j.log --mem=\${sge_m_j1} -J "G4s2121_\${variantdb}" --dependency=afterok:\${jid_step_1919}:\${jid_step_2020} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/2121.GATK4_step2121.sh \${param_file})
 		jid_step_2121=\$(echo \${jid_step_2121_m}| cut -f 4 -d " ")
 	;;
 esac
