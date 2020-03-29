@@ -33,6 +33,7 @@ case ${joint_mode} in
                   current_chr_file=$(echo ${f2} | fgrep "_chr${current_chr}.")
                   if [[ ${current_chr_file} != "" ]]; then
                       chr=${current_chr}
+                      echo "current chr is ${chr}"
                       break
                   fi
                 done
