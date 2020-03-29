@@ -78,7 +78,7 @@ case \${cluster_man} in
                 do
                     mkdir -p \${fol7}/\${variantdb}_\${chr}
             		mkdir -p \${fol8}/\${variantdb}_\${chr}
-					mkdir -p \${fol9}/\${variantdb}_\${chr}/xSamplePassedVariantsVCFs
+					mkdir -p \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
                 done
 
                 jid_step_1313_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1313_%j.error -o \${lg}/g1313_%j.log --mem=\${sge_m} -J "G4s1313" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/1313.GATK4_step1313.sh \${param_file})
@@ -104,7 +104,7 @@ case \${cluster_man} in
 				#GenotypeGVCFs
 				#pipe step 16
 				#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
-                jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/\${variantdb}/g1616_\${variantdb}_%j.error -o \${lg}/\${variantdb}/g1616_\${variantdb}_%j.log --mem=\${sge_m} -J "G4s1616_\${variantdb}" --dependency=afterok:\${jid_step_1515} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
+                jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
 				
             ;;
             SAMPLE)
