@@ -320,6 +320,9 @@ gVCF="\${SM}_g.vcf.gz"           #final_merged
 #############################################################
 
 ########### Set the variant db name for GenomicDB import #######
+#We need to specify all the chromosomes we want to work on
+chr_pool=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_PAR X_NONPAR Y)
+
 #step 13
 variantdb="VcalledDB"                #db name
 
