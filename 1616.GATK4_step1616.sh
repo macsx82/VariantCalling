@@ -37,6 +37,7 @@ case ${pool_mode} in
 		# concat , sort and normalize indels 
 		${BCFTOOLS} concat -a -f ${fol9}/${variantdb}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
 		tabix -f -p vcf ${fol9}/${variantdb}/${raw}.gz
+		echo "- END -"
 
     ;;
     SAMPLE)
