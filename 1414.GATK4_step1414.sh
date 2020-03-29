@@ -30,6 +30,8 @@ case ${joint_mode} in
                 #The file name is fixed but it's better to use the ${chr_pool[@]} variable
                 for current_chr in ${chr_pool[@]}
                 do
+                  echo "current chr to check is ${current_chr}"
+                  echo "${f2}"
                   current_chr_file=$(echo ${f2} | fgrep "_chr${current_chr}.")
                   if [[ ${current_chr_file} != "" ]]; then
                       chr=${current_chr}
