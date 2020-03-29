@@ -337,11 +337,10 @@ vdb_interval=\${WGS_GATK} #same used in calling and BQSR steps!
 
 #step 17-18
 raw="\${variantdb}_raw.vcf"
-HF="\${variantdb}_rawHF.vcf"
-SO="\${variantdb}_rawHFSO.vcf"
+HF="\${variantdb}_rawHF.vcf.gz"
+SO="\${variantdb}_rawHFSO.vcf.gz"
 
 #step 19-20-21
-SO="\${variantdb}_rawHFSO.vcf"
 iVR="\${variantdb}_rawHFSO-iVR.vcf"
 tri="\${variantdb}_indel.tranches"
 mode_I=INDEL
@@ -354,11 +353,12 @@ mode_S=SNP
 #step 21
 vqsr_thr_s="99.9"  #select vqsr threshold for SNPs
 vqsr_thr_i="99.9"  #select vqsr threshold for INDELs
-final="\${variantdb}_VQSR_output.vcf"    # -O
-inout="\${variantdb}_tmp.indel.recalibrated.vcf"
+inout="\${variantdb}_tmp.indel.recalibrated.vcf.gz"
+final="\${variantdb}_VQSR_output.vcf.gz"    # -O
 
 #step 22-24-25(-26)
-passed="\${variantdb}_CohortOnlyPASS_Variants_PostVQSR.vcf"
+passed="\${variantdb}_VQSR_PASSED.vcf.gz"
+rsID_added="\${variantdb}_VQSR_PASSED_rsID.vcf.gz"
 filter_interval=\${sorgILhg38exons12PlusINTERVALS}
 
 #########SET UP YOUR EMAIL HERE ##############

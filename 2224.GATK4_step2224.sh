@@ -19,23 +19,18 @@ source ${hs}/pipeline_functions.sh
 echo
 # cd ${fol9}/${variantdb}/
 echo "> Sample list"
-${BCFTOOLS} view -h ${fol9}/${variantdb}/${final}| tail -n 1 |cut -f 10-| tr "\t" "\n" > ${fol8}/${variantdb}/"${variantdb}_sample.list"
+${BCFTOOLS} view -h ${fol9}/${variantdb}/${final}| tail -n 1 |cut -f 10-| tr "\t" "\n" > ${fol9}/${variantdb}/"${variantdb}_sample.list"
 echo "- END -"
 
 #22b
-echo
-# cd ${fol9}/${variantdb}/
-echo "> PASS variants list"
-grep -w "PASS" ${fol9}/${variantdb}/${final} | tail -n +2 | awk '{print $1":"$2}' > ${fol8}/${variantdb}/"${variantdb}_pass.list"
-echo "- END -"
+# echo
+# # cd ${fol9}/${variantdb}/
+# echo "> PASS variants list"
+# ${BCFTOOLS} view -H -i "FILTER=='PASS'" ${fol9}/${variantdb}/${final} | awk '{print $1":"$2}' > ${fol8}/"${variantdb}_pass.list"
+# echo "- END -"
 
-#22c
-echo
-# cd ${fol8}/${variantdb}/
-echo "> Count Samples and Variants"
-echo -n "samples n. = "; wc -l "${fol8}/${variantdb}/${variantdb}_sample.list" | awk '{print $1}'
-echo -n "PASS variants n. in pass list   = "; wc -l "${fol8}/${variantdb}/${variantdb}_pass.list" | awk '{print $1}'
-echo -n "PASS variants n. in VQSR output = "; grep "PASS" ${fol9}/${variantdb}/"${variantdb}_VQSR_output.vcf" | tail -n +2 | wc -l 
+echo "> Calculate stats for all the called sites"
+vcf_stats ${fol9}/${variantdb}/${final} ${fol9}/${variantdb}/${final}.vchk
 echo "- END -"
 
 #23
@@ -43,17 +38,17 @@ echo
 # cd ${fol9}/${variantdb}/
 echo "> Extract from the cohort vcf only the PASS variants by the VQSR steps"
 # ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" SelectVariants -R ${GNMhg38} -V ${fol9}/${variantdb}/${raw} -O ${fol9}/${variantdb}/${passed} -L ${fol8}/${variantdb}/"${variantdb}_pass.list"
-${BCFTOOLS} view -i "FILTER=='PASS'" ${fol9}/${variantdb}/${variantdb}_VQSR_output.vcf -O z -o ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
-tabix -p vcf -f ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz
+${BCFTOOLS} view -i "FILTER=='PASS'" ${fol9}/${variantdb}/${final} -O z -o ${fol9}/${variantdb}/${passed}
+tabix -p vcf -f ${fol9}/${variantdb}/${passed}
 
 echo "> Calculate stats for the VQSR passed sites"
-vcf_stats ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vchk
+vcf_stats ${fol9}/${variantdb}/${passed} ${fol9}/${variantdb}/${passed}
 echo "- END -"
 
 #24
 echo e "\nAdd rsID annotations from dbSNP and some other useful fields"
-${BCFTOOLS} annotate -a ${DBSNP_latest} -c ID ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED.vcf.gz | ${BCFTOOLS} +fill-tags -O z -o ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED_rsID.vcf.gz
-tabix -p vcf -f ${fol9}/${variantdb}/${variantdb}_VQSR_PASSED_rsID.vcf.gz
+${BCFTOOLS} annotate -a ${DBSNP_latest} -c ID ${fol9}/${variantdb}/${passed} | ${BCFTOOLS} +fill-tags -O z -o ${fol9}/${variantdb}/${rsID_added}
+tabix -p vcf -f ${fol9}/${variantdb}/${rsID_added}
 # cd ${fol9}/${variantdb}/
 # echo "> Create per sample only the PASS variants vcf"
 # while read -r SM 
