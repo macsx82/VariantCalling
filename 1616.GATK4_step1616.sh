@@ -26,7 +26,7 @@ case ${pool_mode} in
 	        current_variant_db=${variantdb}_${chr}
     	    int_vcf="${current_variant_db}.vcf.gz"
 			find ${fol8}/${current_variant_db}/${int_vcf} -type f 
-        done > ${fol9}/${variantdb}/${variantdb}_all_vcf.list
+        done > ${fol8}/${variantdb}_all_vcf.list
 		# wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 		# find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f > ${fol8}/${variantdb}/${variantdb}_all_vcf.list
 		# We need to proceed by steps, splitting we need to and sorting data by chunks of 1000 files each maximum (bcftools limit)
@@ -35,7 +35,7 @@ case ${pool_mode} in
 		#16b
 		echo -e "\n> Merge VCFs"
 		# concat , sort and normalize indels 
-		${BCFTOOLS} concat -a -f ${fol9}/${variantdb}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
+		${BCFTOOLS} concat -a -f ${fol8}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
 		tabix -f -p vcf ${fol9}/${variantdb}/${raw}.gz
 		echo "- END -"
 

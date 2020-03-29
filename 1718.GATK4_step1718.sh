@@ -17,16 +17,16 @@ source ${hs}/pipeline_functions.sh
 
 #17
 echo
-# cd ${fol9}/${variantdb}/
 echo "> Hard Filtering pre-VQSR"
-${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" VariantFiltration --filter-expression 'ExcessHet > 54.69' --filter-name 'ExcessHet' -V ${fol9}/${variantdb}/${raw}.gz -O ${fol8}/${variantdb}/${HF}
+${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" VariantFiltration --filter-expression 'ExcessHet > 54.69' --filter-name 'ExcessHet' -V ${fol9}/${variantdb}/${raw}.gz -O ${fol8}/${HF}
 echo "- END -"
 
 #18
 echo
-# cd ${fol8}/${variantdb}/
 echo "> Site Only pre-VQSR"
-${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MakeSitesOnlyVcf -I ${fol8}/${variantdb}/${HF} -O ${fol8}/${variantdb}/${SO}
+# ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" MakeSitesOnlyVcf -I ${fol8}/${HF} -O ${fol8}/${SO}
+#this should be done with picard!
+java ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MakeSitesOnlyVcf -I ${fol8}/${HF} -O ${fol8}/${SO}
 echo "- END -"
 
 #del
