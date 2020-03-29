@@ -70,7 +70,7 @@ case \${cluster_man} in
 		#pipe step 20
 		#IN Site cohort Site Only raw-VCF OUT snp tranches, snp recal /// VariantRecalibrator
 		jid_step_2020_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g2020_%j.error -o \${lg}/g2020_%j.log --mem=\${sge_m_j4} -J "G4s2020_\${variantdb}" --dependency=afterok:\${jid_step_1718} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/2020.GATK4_step2020.sh \${param_file})
-		jid_step_2020=\$(echo \${jid_step_1919_m}| cut -f 4 -d " ")
+		jid_step_2020=\$(echo \${jid_step_2020_m}| cut -f 4 -d " ")
 		
 
 	;;
