@@ -17,16 +17,14 @@ source ${hs}/pipeline_functions.sh
 
 #21a
 echo
-# cd ${fol8}/${variantdb}/
 echo "> indel Apply VQSR"
-${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol8}/${variantdb}/${inout} -V ${fol8}/${variantdb}/${HF} --recal-file ${fol8}/${variantdb}/${iVR} --tranches-file ${fol8}/${variantdb}/${tri} --truth-sensitivity-filter-level ${vqsr_thr_i} --create-output-variant-index true -mode ${mode_I}
+${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol8}/${inout} -V ${fol8}/${HF} --recal-file ${fol8}/${iVR} --tranches-file ${fol8}/${tri} --truth-sensitivity-filter-level ${vqsr_thr_i} --create-output-variant-index true -mode ${mode_I}
 echo "- END -"
 
 #21b
 echo
-# cd ${fol8}/${variantdb}/
 echo "> snp Apply VQSR"
-${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${fol8}/${variantdb}/${inout} --recal-file ${fol8}/${variantdb}/${sVR} --tranches-file ${fol8}/${variantdb}/${trs} --truth-sensitivity-filter-level ${vqsr_thr_s} --create-output-variant-index true -mode ${mode_S}
+${GATK4} --java-options "${java_opt1x} -XX:+UseSerialGC" ApplyVQSR -O ${fol9}/${variantdb}/${final} -V ${fol8}/${inout} --recal-file ${fol8}/${sVR} --tranches-file ${fol8}/${trs} --truth-sensitivity-filter-level ${vqsr_thr_s} --create-output-variant-index true -mode ${mode_S}
 echo "- END -"
 
 #del
