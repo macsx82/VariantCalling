@@ -32,7 +32,8 @@ case ${joint_mode} in
                 do
                   echo "current chr to check is ${current_chr}"
                   echo "${f2}"
-                  current_chr_file=$(echo ${f2} | fgrep "_chr${current_chr}.")
+                  # current_chr_file=$(echo ${f2} | fgrep "_chr${current_chr}.")
+                  current_chr_file=$(echo ${f2} | | sed -n "/_chr${current_chr}\./p")
                   echo "${current_chr_file}"
                   if [[ ${current_chr_file} != "" ]]; then
                       chr=${current_chr}
