@@ -17,10 +17,11 @@ source ${param_file}
 #source functions file
 source \${hs}/pipeline_functions.sh
 
+### - mkdir FOLDER / make FILE - ###
+mkdir -p \${fol9}/\${variantdb}
+
 #log folders creation
 mkdir -p \${lg}
-
-### - mkdir FOLDER / make FILE - ###
 mkdir -p \${lg}/\${variantdb}
 
 ### - CODE - ###
@@ -78,7 +79,6 @@ case \${cluster_man} in
                 do
                     mkdir -p \${fol7}/\${variantdb}_\${chr}
             		mkdir -p \${fol8}/\${variantdb}_\${chr}
-					mkdir -p \${fol9}/\${variantdb}/xSamplePassedVariantsVCFs
                 done
 
                 jid_step_1313_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1313_%j.error -o \${lg}/g1313_%j.log --mem=\${sge_m} -J "G4s1313" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/1313.GATK4_step1313.sh \${param_file})
