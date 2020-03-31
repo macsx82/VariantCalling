@@ -23,7 +23,9 @@ case ${pool_mode} in
         #I need generate the list of files to merge together
         for current_chr in ${chr_pool[@]}
         do
-	        current_variant_db=${variantdb}_${chr}
+        	#we need to collect ALL chunks for all chromosomes to merge them we are not working by chr at this point
+        	current_variant_db="${variantdb}_${chr}_*"
+	        # current_variant_db=${variantdb}_${chr}
     	    int_vcf="${current_variant_db}.vcf.gz"
 			find ${fol8}/${current_variant_db}/${int_vcf} -type f 
         done > ${fol8}/${variantdb}_all_vcf.list

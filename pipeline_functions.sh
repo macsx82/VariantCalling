@@ -37,8 +37,15 @@ function vcf_stats(){
     ${BCFTOOLS} stats -s - -d 0,1000,10 -F ${GNMhg38} ${in_vcf} > ${out_file}
 
     stats_plots=`dirname ${out_file}`
-
-    /share/apps/bio/bin/plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
+    # /share/apps/bio/bin/plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
+    plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
     echo "- END -"
 }
 
+#######################
+# utilities fucntions
+
+# function interval_header(){
+#     in_file=$1
+#     { head -n 1 ${in_file}; cat; } > "$FILE";
+# }

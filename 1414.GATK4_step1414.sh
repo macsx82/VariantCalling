@@ -37,11 +37,13 @@ case ${joint_mode} in
                   echo "${current_chr_file}"
                   if [[ ${current_chr_file} != "" ]]; then
                       chr=${current_chr}
+                      #we need to specify the chunk file we are using
+                      current_chunk=${current_chr_file%%_*}
                       echo "current chr is ${chr}"
                       break
                   fi
                 done
-                current_variant_db=${variantdb}_${chr}
+                current_variant_db=${variantdb}_${chr}_${current_chunk}
 
                 bs=`wc -l ${fol7}/${current_variant_db}/gVCF.list| cut -f 1 -d " "`
                 ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${current_variant_db}/dbImport_${chr} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${current_variant_db}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}

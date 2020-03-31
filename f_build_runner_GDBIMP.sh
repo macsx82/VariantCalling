@@ -90,16 +90,33 @@ case \${cluster_man} in
 				#IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
 				#We will need to work with a job array by chromosome
 				#we will have one array with 25 tasks, each passing a file containing intervals for DBimport
-				size=\$(wc -l \${vdb_interval}|cut -f 1 -d " ")
-				jid_step_1414_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1414_%A_%a.error -o \${lg}/g1414_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1414" --dependency=afterok:\${jid_step_1313} --get-user-env -n \${rt} --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1414.GATK4_step1414.sh \${vdb_interval} \${param_file})
-                jid_step_1414=\$(echo \${jid_step_1414_m}| cut -f 4 -d " ")
 
+				#IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
+				#we need to split the interval file by 100 lines, but we need to do it on the fly
+				#than we nedd to collect each interval file path in another file and run a job array of intervals
+				#We will need to split the data of each chromosome in single intervals
+				#so we will have multiple jobs array with chromosome chunks instead of one job array with all chromosomes
 
-				#GenotypeGVCFs
-				#pipe step 15, job-array
-				#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
-				jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${vdb_interval} \${param_file})
-                jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
+                for chr in \${chr_pool[@]}
+                do
+                	#Here we need to generate the lists of intervals for each chromosome
+					mkdir -p \${tmp}/db_imp_int_\${chr}
+					cd \${tmp}/db_imp_int_\${chr}
+					vdb_interval_current_chr_file=\$(sed -n "/_chr\${chr}\./p" \${vdb_interval})
+					fgrep -v "@" \${vdb_interval_current_chr_file} | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
+					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
+
+					#Now we can take the list for the current chromosome and submit the job array for that chromosome for the dbimport step
+					size=\$(wc -l \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals|cut -f 1 -d " ")
+					jid_step_1414_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1414_%A_%a.error -o \${lg}/g1414_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1414" --dependency=afterok:\${jid_step_1313} --get-user-env -n \${rt} --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
+                	jid_step_1414=\$(echo \${jid_step_1414_m}| cut -f 4 -d " ")
+
+					#GenotypeGVCFs
+					#pipe step 15, job-array
+					#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
+					jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
+	                jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
+                done
 
 				#GenotypeGVCFs
 				#pipe step 16
