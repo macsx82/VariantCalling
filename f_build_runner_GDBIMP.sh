@@ -104,7 +104,7 @@ case \${cluster_man} in
 					cd \${tmp}/db_imp_int_\${chr}
 					vdb_interval_current_chr_file=\$(sed -n "/_chr\${chr}\./p" \${vdb_interval})
 					fgrep -v "@" \${vdb_interval_current_chr_file} | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
-					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
+					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp_chr\${chr}.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
 
 					#Now we can take the list for the current chromosome and submit the job array for that chromosome for the dbimport step
 					size=\$(wc -l \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals|cut -f 1 -d " ")
