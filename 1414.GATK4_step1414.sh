@@ -45,6 +45,7 @@ case ${joint_mode} in
                 done
                 current_variant_db=${variantdb}_${chr}_${current_chunk}
                 #We need to replicate the vcf list in the new location
+                mkdir -p ${fol7}/${current_variant_db}
                 cp ${fol7}/${variantdb}_${chr}/gVCF.list ${fol7}/${current_variant_db}/gVCF.list
 
                 bs=`wc -l ${fol7}/${current_variant_db}/gVCF.list| cut -f 1 -d " "`
