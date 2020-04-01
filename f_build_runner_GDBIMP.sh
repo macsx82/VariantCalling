@@ -116,12 +116,16 @@ case \${cluster_man} in
 					#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
 					jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
 	                jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
+
+	                
                 done
 
 				#GenotypeGVCFs
 				#pipe step 16
 				#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
-                jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
+                #jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
+                #Here we are using the singleton  dependecy option, so this job can begin execution after any previously launched jobs sharing the same job name and user have terminated. In other words, only one job by that name and owned by that user can be running or suspended at any point in time.
+                jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1515" --dependency=singleton --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
 				
             ;;
             SAMPLE)
