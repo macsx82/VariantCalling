@@ -44,6 +44,8 @@ case ${joint_mode} in
                   fi
                 done
                 current_variant_db=${variantdb}_${chr}_${current_chunk}
+                #We need to replicate the vcf list in the new location
+                cp ${fol7}/${variantdb}_${chr}/gVCF.list ${fol7}/${current_variant_db}/gVCF.list
 
                 bs=`wc -l ${fol7}/${current_variant_db}/gVCF.list| cut -f 1 -d " "`
                 ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${current_variant_db}/dbImport_${chr} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${current_variant_db}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
