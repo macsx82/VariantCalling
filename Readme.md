@@ -86,12 +86,12 @@ bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -v 
 
 done
 
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -b -m <(email)> -i <fastq_file path>
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -w -m <(email)> -i <fastq_file path>
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -p -m <(email)> -i <fastq_file path>
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -g -m <(email)> -i <fastq_file path>
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -q -m <(email)> -i <fastq_file path>
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -l -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -b -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -w -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -p -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -g -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -q -m <(email)> -i <fastq_file path>
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -l -m <(email)> -i <fastq_file path>
 
 
 ```
