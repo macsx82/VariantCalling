@@ -77,21 +77,21 @@ Alternative calling option will involve samtools as the main caller.
 
 ```bash
 
-for sample in CHW CHX CHY
+for sample in A B C
 do 
 
-base_template=/home/cocca/analyses/hearing/F_call/19092018/${sample}
-base_out=/scratch1/cocca/analyses/hearing/F_call/pipe_run
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -v -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
+base_template= <base_folder>/${sample}
+base_out= <base_out_path>/pipe_run
+bash config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -v -m <(email)> -i <fastq_file path>
 
 done
 
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -b -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -w -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -p -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -g -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -q -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
-bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -l -m massimiliano.cocca@burlo.trieste.it -i /scratch1/cocca/analyses/hearing/Ferrua_call/${sample}/4.fastq_post
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -b -m <(email)> -i <fastq_file path>
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -w -m <(email)> -i <fastq_file path>
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -p -m <(email)> -i <fastq_file path>
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -g -m <(email)> -i <fastq_file path>
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -q -m <(email)> -i <fastq_file path>
+bash /home/cocca/scripts/pipelines/VariantCalling/config_file_creation.sh -t ${base_template} -o ${base_out} -s ${sample} -l -m <(email)> -i <fastq_file path>
 
 
 ```
