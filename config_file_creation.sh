@@ -71,6 +71,9 @@ while getopts ":x:t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
     z)
     pooled_mode="ON"
     ;;
+    x)
+    pooled_mode_cluster="SGE"
+    ;;
     n)
     # specify execution node
     exec_host=${OPTARG}
@@ -111,6 +114,7 @@ while getopts ":x:t:o:s:m:i:c:d:abvpgqlwkh1:2:n:j:z" opt ${@}; do
       echo "                   -n: Execution host full name"
       echo "                   -j: Execution queue name: it is possible to use the format <queue>@<hostname>, to select a specific host for execution."
       echo "                   -z: Activate POOLED mode: generation of pooled templates and pooled configuration file."
+      echo "                   -x: Activate POOLED mode on SGE"
       echo "                   -h: this help message "
       echo "#########################"
       exit 1
@@ -240,7 +244,6 @@ if [[ -z "${conf_file_path}" ]]; then
   else
     build_template_pooled ${input_file_folder} ${mail_to} ${exec_host} ${exec_queue} > ${template_dir}/VarCall_pooled_${suffix}.conf
     echo "Template file ${template_dir}/VarCall_pooled_${suffix}.conf created. You can edit it to modify any non default parameter."
-    
   fi
 
   

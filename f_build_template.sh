@@ -683,6 +683,6 @@ fol9=\${common_base_out}/all_samples/germlineVariants/4.VCF/storage
 hs=${HOME}/scripts/pipelines/VariantCalling
 lg=\${common_base_out}/Log
 rnd_tmp=\`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8|head -1\`
-tmp=${CINECA_SCRATCH}/localtemp/\${rnd_tmp}
+tmp=/shared/localtemp/\${rnd_tmp}
 EOF
 }

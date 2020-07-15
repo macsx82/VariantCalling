@@ -56,7 +56,7 @@ while getopts ":i:t:o:m:c:l:n:j:d:abh" opt ${@}; do
     #or GVCF files for the GATK implementation, that we created using a fixed path structure for each sample, to make things easier
         work_mode="B"
     ;;
-	h)
+    h)
       echo "#########################"
       echo "Usage:"
       echo "varcall_pipe.sh -l <launcher_script> -i <input_file_list> -t <template_folder> -o <output_folder> [-m <mail_address>] "
