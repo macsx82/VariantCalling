@@ -3,14 +3,18 @@
 #function file for the pipeline, to include in the header, after the CONFIG FILE
 echo ${cluster_man}
 
-if [[ ${cluster_man}=="CINECA" ]]; then
+if [[ ${cluster_man} == "CINECA" ]]; then
+    echo "We're at CINECA"
     source ${HOME}/.startup_modules 
     # conda init bash
     # conda activate py37
     source activate py37
 fi
 
-if [[ ${cluster_man}=="BURLO" ]]; then
+echo "We're going on"
+
+if [[ ${cluster_man} == "BURLO" ]]; then
+    echo "We're at BURLO"
     #set at gatk 4.1 @ 2020/07/17
     source activate gatk4100
 fi
