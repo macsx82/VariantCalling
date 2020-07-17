@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 #function file for the pipeline, to include in the header, after the CONFIG FILE
+echo ${cluster_man}
+
 if [[ ${cluster_man}=="CINECA" ]]; then
     source ${HOME}/.startup_modules 
     # conda init bash

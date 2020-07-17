@@ -63,22 +63,18 @@ case \${cluster_man} in
 					mkdir -p \${tmp}/db_imp_int_\${chr}
 					cd \${tmp}/db_imp_int_\${chr}
 					vdb_interval_current_chr_file=\$(sed -n "/_chr\${chr}\./p" \${vdb_interval})
-					fgrep -v "@" \${vdb_interval_current_chr_file} | awk '{print \$1":"\$2"-"\$3"}' | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
+					fgrep -v "@" \${vdb_interval_current_chr_file} | awk '{print \$1":"\$2"-"\$3}' | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
 					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp_chr\${chr}.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
 
 					#Now we can take the list for the current chromosome and submit the job array for that chromosome for the dbimport step
 					a_size=\$(wc -l \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals|cut -f 1 -d " ")
 					
-					#jid_step_1414_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1414_%A_%a.error -o \${lg}/g1414_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1414" --dependency=afterok:\${jid_step_1313} --get-user-env -n \${rt} --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
-                	#jid_step_1414=\$(echo \${jid_step_1414_m}| cut -f 4 -d " ")
 
                 	echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 15 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 					#GenotypeGVCFs
 					#pipe step 15, job-array
 					#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
-					#jid_step_1515_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --array=1-\${size} --time=24:00:00 -e \${lg}/g1515_%A_%a.error -o \${lg}/g1515_%A_%a.log --mem=\${sge_m_dbi} -J "G4s1515" --dependency=afterok:\${jid_step_1414} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/runner_job_array_CINECA.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
-	                #jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
 
 	                echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 15 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
@@ -144,7 +140,7 @@ case \${cluster_man} in
 					mkdir -p \${tmp}/db_imp_int_\${chr}
 					cd \${tmp}/db_imp_int_\${chr}
 					vdb_interval_current_chr_file=\$(sed -n "/_chr\${chr}\./p" \${vdb_interval})
-					fgrep -v "@" \${vdb_interval_current_chr_file} | awk '{print \$1":"\$2"-"\$3"}' | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
+					fgrep -v "@" \${vdb_interval_current_chr_file} | awk '{print \$1":"\$2"-"\$3}' | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
 					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp_chr\${chr}.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
 
 					#Now we can take the list for the current chromosome and submit the job array for that chromosome for the dbimport step
