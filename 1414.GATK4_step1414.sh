@@ -9,6 +9,7 @@ echo
 
 ### - SOURCEs - ###
 param_file=$2
+echo ${param_file}
 source ${param_file}
 mkdir -p ${tmp}
 #source functions file
