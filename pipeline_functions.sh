@@ -7,6 +7,12 @@ if [[ ${cluster_man}=="CINECA" ]]; then
     # conda activate py37
     source activate py37
 fi
+
+if [[ ${cluster_man}=="BURLO" ]]; then
+    #set at gatk 4.1 @ 2020/07/17
+    source activate gatk4100
+fi
+
 #extract stats from the file
 function sam_stats(){
     infile=$1
