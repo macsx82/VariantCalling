@@ -29,7 +29,7 @@ case ${pool_mode} in
 			echo "> cohort gVCF ID list for chr ${chr}"
 			ls ${fol7}/${current_variant_db}
 			find -L ${fol6_link}/${chr}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder="${fol6_link}/${chr}" '{OFS="\t"}{split($1,n,"_");print n[1],base_folder"/"$1}' > ${fol7}/${current_variant_db}/gVCF.list
-			echo -n "gVCF files count= "; ls -lh ${fol6_link}/${chr}/*gz | wc -l; wc -l ${fol7}/${current_variant_db}/gVCF.list
+			echo -n "gVCF files count= "; find ${fol6_link}/${chr}/ -type f -name "*.gz" | wc -l; wc -l ${fol7}/${current_variant_db}/gVCF.list
 			echo "- END -"
 		done
 	;;
