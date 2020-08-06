@@ -44,7 +44,7 @@ case ${joint_mode} in
                 # ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${current_variant_db}/dbImport_${chr} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${current_variant_db}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
                 # ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${current_variant_db}/${int_vcf} -G StandardAnnotation --include-non-variant-sites --only-output-calls-starting-in-intervals --use-new-qual-calculator -V gendb://${fol7}/${current_variant_db}/dbImport_${chr} -L "${f1}"
                 # ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${current_variant_db}/${int_vcf} -G StandardAnnotation --include-non-variant-sites --only-output-calls-starting-in-intervals -V gendb://${fol7}/${current_variant_db}/dbImport_${chr} -L "${f1}"
-                ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC" GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${current_variant_db}/${int_vcf} -G StandardAnnotation --include-non-variant-sites --only-output-calls-starting-in-intervals -V gendb://${fol7}/${current_variant_db}/dbImport_${chr} -L "${f1}"
+                ${GATK4} --java-options "${java_opt2x}" GenotypeGVCFs -R ${GNMhg38} -O ${fol8}/${current_variant_db}/${int_vcf} -G StandardAnnotation --include-non-variant-sites --only-output-calls-starting-in-intervals -V gendb://${fol7}/${current_variant_db}/dbImport_${chr} -L "${f1}"
                 echo "- END -"
 
             ;;

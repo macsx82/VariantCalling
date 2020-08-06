@@ -19,12 +19,12 @@ case ${pool_mode} in
     CHROM)
 		#16a
 		#Here we need to collect the data from each chromosome and put them all together
-		echo -e "\n> Raw VCFs ID data"
+		echo -e "\n> Raw VCFs ID data in chromosome pool mode"
         #I need generate the list of files to merge together
         for current_chr in ${chr_pool[@]}
         do
         	#we need to collect ALL chunks for all chromosomes to merge them we are not working by chr at this point
-        	current_variant_db="${variantdb}_${chr}_*"
+        	current_variant_db="${variantdb}_${current_chr}_*"
 	        # current_variant_db=${variantdb}_${chr}
     	    int_vcf="${current_variant_db}.vcf.gz"
 			find ${fol8}/${current_variant_db}/${int_vcf} -type f 
@@ -45,7 +45,7 @@ case ${pool_mode} in
     SAMPLE)
 		#16a
 		# cd ${fol8}/${variantdb}/
-		echo -e "\n> Raw VCFs ID data"
+		echo -e "\n> Raw VCFs ID data in sample pool mode"
 		# wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 		# find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f > ${fol8}/${variantdb}/${variantdb}_all_vcf.list
 		# We need to proceed by steps, splitting we need to and sorting data by chunks of 1000 files each maximum (bcftools limit)

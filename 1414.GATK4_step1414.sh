@@ -50,7 +50,7 @@ case ${joint_mode} in
                 cp ${fol7}/${variantdb}_${chr}/gVCF.list ${fol7}/${current_variant_db}/gVCF.list
 
                 bs=`wc -l ${fol7}/${current_variant_db}/gVCF.list| cut -f 1 -d " "`
-                ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${current_variant_db}/dbImport_${chr} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${current_variant_db}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
+                ${GATK4} --java-options "${java_opt2x} -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${current_variant_db}/dbImport_${chr} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${current_variant_db}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
                 echo "- END -"
 
             ;;
@@ -60,7 +60,7 @@ case ${joint_mode} in
                 # cd ${fol7}/${variantdb}/
                 echo "> GenomicsDBImport"
                 bs=`wc -l ${fol7}/${variantdb}/gVCF.list| cut -f 1 -d " "`
-                ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/dbImport_${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
+                ${GATK4} --java-options "${java_opt2x} -DGATK_STACKTRACE_ON_USER_EXCEPTION=true" GenomicsDBImport --genomicsdb-workspace-path ${fol7}/${variantdb}/dbImport_${f2} --batch-size ${bs} -L "${f1}" --sample-name-map ${fol7}/${variantdb}/gVCF.list --reader-threads ${rt} -ip ${ip2} --tmp-dir ${tmp}
                 echo "- END -"
             ;;
         esac
@@ -71,7 +71,7 @@ case ${joint_mode} in
         # cd ${fol7}/${variantdb}/
         samples_list=`find ${fol6_link}/*_g.vcf.gz -type f -printf "%f\n" | awk -v base_folder=${fol6_link} '{print "-V "base_folder"/"$1}'| tr "\n" " "`
         echo "> CombineGVCFs"
-        ${GATK4} --java-options "${java_opt2x} -XX:+UseSerialGC -Dsamjdk.use_async_io_write_samtools=false " CombineGVCFs -O ${fol7}/${variantdb}/${f2}_g.vcf.gz -R ${GNMhg38} -L "${f1}" ${samples_list}
+        ${GATK4} --java-options "${java_opt2x} -Dsamjdk.use_async_io_write_samtools=false " CombineGVCFs -O ${fol7}/${variantdb}/${f2}_g.vcf.gz -R ${GNMhg38} -L "${f1}" ${samples_list}
         echo "- END -"
     ;;
 esac
