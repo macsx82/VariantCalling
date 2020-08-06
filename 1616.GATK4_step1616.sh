@@ -43,6 +43,11 @@ case ${pool_mode} in
 		${BCFTOOLS} concat -a -f ${current_all_vcf_list} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		tabix -f -p vcf ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		echo "- END -"
+		echo -e "\n> Validate VCF"
+		vcf-validator -d ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz > ${fol9}/${variantdb}/${raw}_${current_chr}.validate
+
+		echo -e "\n> Produce VCF stats"
+		vcf_stats ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz ${fol9}/${variantdb}/${raw}_${current_chr}.vchk
 
     ;;
     SAMPLE)
@@ -74,15 +79,15 @@ case ${pool_mode} in
 
 		#add reference tag in vcf
 		##reference=file:///nfs/users/GD/resource/human/hg19/hg19.fasta
+		echo -e "\n> Validate VCF"
+		vcf-validator -d ${fol9}/${variantdb}/${raw}.vcf.gz > ${fol9}/${variantdb}/${raw}.validate
+
+		echo -e "\n> Produce VCF stats"
+		vcf_stats ${fol9}/${variantdb}/${raw}.vcf.gz ${fol9}/${variantdb}/${raw}.vchk
 
     ;;
 esac
 
-echo -e "\n> Validate VCF"
-vcf-validator -d ${fol9}/${variantdb}/${raw}.gz > ${fol9}/${variantdb}/${raw}.validate
-
-echo -e "\n> Produce VCF stats"
-vcf_stats ${fol9}/${variantdb}/${raw}.gz ${fol9}/${variantdb}/${raw}.vchk
 
 
 echo "- END -"

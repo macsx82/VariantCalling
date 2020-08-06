@@ -41,8 +41,9 @@ case \${cluster_man} in
             		mkdir -p \${fol8}/\${variantdb}_\${chr}
                 done
 
+				jid_step_1313=\$(qsub -N G4s1313_\${variantdb} -terse -cwd -l h_vmem=\${sge_m} -q \${sge_q} -o \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1313_\${variantdb}_\\\\$JOB_ID.error -m ea -M \${mail} \${hs}/1313.GATK4_step1313.sh \${param_file})
             
-            	echo "bash \${hs}/1313.GATK4_step1313.sh \${param_file}" | qsub -N G4s1313_\${variantdb} -cwd -l h_vmem=\${sge_m} -q \${sge_q} -o \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail}
+            	# echo "bash \${hs}/1313.GATK4_step1313.sh \${param_file}" | qsub -N G4s1313_\${variantdb} -cwd -l h_vmem=\${sge_m} -q \${sge_q} -o \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail}
 
 				
 				#GenomicsDBImport
@@ -70,25 +71,25 @@ case \${cluster_man} in
 					a_size=\$(wc -l \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals|cut -f 1 -d " ")
 					
 
-                	echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+					jid_step_1414=\$(qsub -t 1-\${a_size} -tc 10 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid \${jid_step_1313} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q} -terse \${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
+                	# echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
 
 					#GenotypeGVCFs
 					#pipe step 15, job-array
 					#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
 
-	                echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+	                #echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+					jid_step_1515=\$(qsub -t 1-${a_size} -tc 10 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid \${jid_step_1414%.*} -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q} -terse \${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
 
+
+					#pipe step 16
+					#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
+                  	current_variant_db="${variantdb}_${chr}_*"
+					int_vcf="${current_variant_db}.vcf.gz"
+					find ${fol8}/${current_variant_db}/${int_vcf} -type f > ${fol8}/${variantdb}_all_${chr}_vcf.list
+                	echo "bash ${hs}/1616.GATK4_step1616.sh ${param_file} ${fol8}/${variantdb}_all_${chr}_vcf.list ${chr}" | qsub -N G4s1616_${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.log -e ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.error -m ea -M ${mail} -cwd -l h_vmem=${sge_m} -q ${sge_q}
 
                 done
-
-				#GenotypeGVCFs
-				#pipe step 16
-				#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
-                #jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
-                #Here we are using the singleton  dependecy option, so this job can begin execution after any previously launched jobs sharing the same job name and user have terminated. In other words, only one job by that name and owned by that user can be running or suspended at any point in time.
-                #jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1515" --dependency=singleton --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
-				
-                echo "bash  \${hs}/1616.GATK4_step1616.sh \${param_file}" | qsub -N G4s1616_\${variantdb} -hold_jid G4s1515_\${variantdb}_* -o \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q}
 
             ;;
             SAMPLE)
