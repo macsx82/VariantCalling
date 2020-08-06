@@ -20,25 +20,28 @@ case ${pool_mode} in
 		#16a
 		#Here we need to collect the data from each chromosome and put them all together
 		echo -e "\n> Raw VCFs ID data in chromosome pool mode"
+        current_all_vcf_list=$2
+        current_chr=$3
         #I need generate the list of files to merge together
-        for current_chr in ${chr_pool[@]}
-        do
-        	#we need to collect ALL chunks for all chromosomes to merge them we are not working by chr at this point
-        	current_variant_db="${variantdb}_${current_chr}_*"
-	        # current_variant_db=${variantdb}_${chr}
-    	    int_vcf="${current_variant_db}.vcf.gz"
-			find ${fol8}/${current_variant_db}/${int_vcf} -type f 
-        done > ${fol8}/${variantdb}_all_vcf.list
+   #      for current_chr in ${chr_pool[@]}
+   #      do
+   #      	#we need to collect ALL chunks for all chromosomes to merge them we are not working by chr at this point
+   #      	current_variant_db="${variantdb}_${current_chr}_*"
+	  #       # current_variant_db=${variantdb}_${chr}
+   #  	    int_vcf="${current_variant_db}.vcf.gz"
+			# find ${fol8}/${current_variant_db}/${int_vcf} -type f 
+   #      done > ${fol8}/${variantdb}_all_vcf.list
+
 		# wVCF=`find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f | awk '{print " I="$1}' | tr "\n" "\t" | sed 's/\t / /g'`
 		# find ${fol8}/${variantdb}/${variantdb}_*.vcf.gz -type f > ${fol8}/${variantdb}/${variantdb}_all_vcf.list
 		# We need to proceed by steps, splitting we need to and sorting data by chunks of 1000 files each maximum (bcftools limit)
-		echo "- END -"
-
 		#16b
-		echo -e "\n> Merge VCFs"
+		echo -e "\n> Merge VCFs, by chr"
 		# concat , sort and normalize indels 
-		${BCFTOOLS} concat -a -f ${fol8}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
-		tabix -f -p vcf ${fol9}/${variantdb}/${raw}.gz
+		# ${BCFTOOLS} concat -a -f ${fol8}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
+		
+		${BCFTOOLS} concat -a -f ${current_all_vcf_list} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
+		tabix -f -p vcf ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		echo "- END -"
 
     ;;

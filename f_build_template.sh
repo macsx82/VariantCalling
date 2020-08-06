@@ -338,9 +338,9 @@ vdb_interval=\${WGS_GATK} #same used in calling and BQSR steps!
 #step 16
 
 #step 17-18
-raw="\${variantdb}_raw.vcf"
-HF="\${variantdb}_rawHF.vcf.gz"
-SO="\${variantdb}_rawHFSO.vcf.gz"
+raw="\${variantdb}_raw"
+HF="\${variantdb}_rawHF"
+SO="\${variantdb}_rawHFSO"
 
 #step 19-20-21
 iVR="\${variantdb}_rawHFSO-iVR.vcf"
