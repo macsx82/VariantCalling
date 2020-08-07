@@ -50,7 +50,7 @@ function vcf_stats(){
 
     stats_plots=`dirname ${out_file}`
     # /share/apps/bio/bin/plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
-    plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
+    #plot-vcfstats -s -p ${stats_plots}/stats ${out_file}
     echo "- END -"
 }
 
