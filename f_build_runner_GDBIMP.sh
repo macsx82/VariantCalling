@@ -87,7 +87,7 @@ case \${cluster_man} in
                   	current_variant_db="${variantdb}_${chr}_*"
 					int_vcf="${current_variant_db}.vcf.gz"
 					find ${fol8}/${current_variant_db}/${int_vcf} -type f > ${fol8}/${variantdb}_all_${chr}_vcf.list
-                	echo "bash ${hs}/1616.GATK4_step1616.sh ${param_file} ${fol8}/${variantdb}_all_${chr}_vcf.list ${chr}" | qsub -N G4s1616_${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.log -e ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.error -m ea -M ${mail} -cwd -l h_vmem=${sge_m} -q ${sge_q}
+                	echo "bash ${hs}/1616.GATK4_step1616.sh ${param_file} ${fol8}/${variantdb}_all_${chr}_vcf.list ${chr}" | qsub -N G4s1616_${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.log -e ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.error -m ea -M ${mail} -cwd -l h_vmem=${sge_m} -q ${sge_q} -pe ${sge_pe} 3
 
                 done
 

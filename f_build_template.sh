@@ -343,24 +343,24 @@ HF="\${variantdb}_rawHF"
 SO="\${variantdb}_rawHFSO"
 
 #step 19-20-21
-iVR="\${variantdb}_rawHFSO-iVR.vcf"
+iVR="\${variantdb}_rawHFSO-iVR"
 tri="\${variantdb}_indel.tranches"
 mode_I=INDEL
 
 #step 20
-sVR="\${variantdb}_rawHFSO-sVR.vcf"
+sVR="\${variantdb}_rawHFSO-sVR"
 trs="\${variantdb}_snp.tranches"
 mode_S=SNP
 
 #step 21
 vqsr_thr_s="99.9"  #select vqsr threshold for SNPs
 vqsr_thr_i="99.9"  #select vqsr threshold for INDELs
-inout="\${variantdb}_tmp.indel.recalibrated.vcf.gz"
-final="\${variantdb}_VQSR_output.vcf.gz"    # -O
+inout="\${variantdb}_tmp.indel.recalibrated"
+final="\${variantdb}_VQSR_output"    # -O
 
 #step 22-24-25(-26)
-passed="\${variantdb}_VQSR_PASSED.vcf.gz"
-rsID_added="\${variantdb}_VQSR_PASSED_rsID.vcf.gz"
+passed="\${variantdb}_VQSR_PASSED"
+rsID_added="\${variantdb}_VQSR_PASSED"
 filter_interval=\${sorgILhg38exons12PlusINTERVALS}
 
 #########SET UP YOUR EMAIL HERE ##############

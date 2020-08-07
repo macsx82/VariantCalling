@@ -44,7 +44,7 @@ case ${pool_mode} in
 		tabix -f -p vcf ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		echo "- END -"
 		echo -e "\n> Validate VCF"
-		vcf-validator -d ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz > ${fol9}/${variantdb}/${raw}_${current_chr}.validate
+		# vcf-validator -d ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz > ${fol9}/${variantdb}/${raw}_${current_chr}.validate
 
 		echo -e "\n> Produce VCF stats"
 		vcf_stats ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz ${fol9}/${variantdb}/${raw}_${current_chr}.vchk
@@ -74,8 +74,8 @@ case ${pool_mode} in
 		pVCF=$(find ${fol9}/${variantdb}/${variantdb}_*_all_vcf.list.vcf.gz -type f)
 
 		# concat , sort and normalize indels 
-		${BCFTOOLS} concat -a ${pVCF} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
-		tabix -f -p vcf ${fol9}/${variantdb}/${raw}.gz
+		${BCFTOOLS} concat -a ${pVCF} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.vcf.gz
+		tabix -f -p vcf ${fol9}/${variantdb}/${raw}.vcf.gz
 
 		#add reference tag in vcf
 		##reference=file:///nfs/users/GD/resource/human/hg19/hg19.fasta
