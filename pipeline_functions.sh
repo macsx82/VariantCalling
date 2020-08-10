@@ -8,7 +8,7 @@ if [[ ${cluster_man} == "CINECA" ]]; then
     source ${HOME}/.startup_modules 
     # conda init bash
     # conda activate py37
-    source activate py37
+    # source activate py37
 fi
 
 echo "We're going on"

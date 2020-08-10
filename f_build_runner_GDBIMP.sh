@@ -84,10 +84,10 @@ case \${cluster_man} in
 
 					#pipe step 16
 					#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
-                  	current_variant_db="${variantdb}_${chr}_*"
-					int_vcf="${current_variant_db}.vcf.gz"
-					find ${fol8}/${current_variant_db}/${int_vcf} -type f > ${fol8}/${variantdb}_all_${chr}_vcf.list
-                	echo "bash ${hs}/1616.GATK4_step1616.sh ${param_file} ${fol8}/${variantdb}_all_${chr}_vcf.list ${chr}" | qsub -N G4s1616_${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.log -e ${lg}/${variantdb}/g1616_${variantdb}_\$JOB_ID.error -m ea -M ${mail} -cwd -l h_vmem=${sge_m} -q ${sge_q} -pe ${sge_pe} 3
+                  	current_variant_db="\${variantdb}_\${chr}_*"
+					int_vcf="\${current_variant_db}.vcf.gz"
+					find \${fol8}/\${current_variant_db}/\${int_vcf} -type f > \${fol8}/\${variantdb}_all_\${chr}_vcf.list
+                	echo "bash \${hs}/1616.GATK4_step1616.sh \${param_file} \${fol8}/\${variantdb}_all_\${chr}_vcf.list \${chr}" | qsub -N G4s1616_\${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} -pe \${sge_pe} 3
 
                 done
 
@@ -156,15 +156,18 @@ case \${cluster_man} in
 	                jid_step_1515=\$(echo \${jid_step_1515_m}| cut -f 4 -d " ")
 
 	                
+					#GenotypeGVCFs
+					#pipe step 16
+					#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
+		            #jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
+		            #Here we are using the singleton  dependecy option, so this job can begin execution after any previously launched jobs sharing the same job name and user have terminated. In other words, only one job by that name and owned by that user can be running or suspended at any point in time.
+		            current_variant_db="\${variantdb}_\${chr}_*"
+					int_vcf="\${current_variant_db}.vcf.gz"
+					find \${fol8}/\${current_variant_db}/\${int_vcf} -type f > \${fol8}/\${variantdb}_all_\${chr}_vcf.list
+		            jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=\${q_account} --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m_u} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file} ${fol8}/${variantdb}_all_${chr}_vcf.list ${chr})
+					
                 done
 
-				#GenotypeGVCFs
-				#pipe step 16
-				#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
-                #jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1616" --dependency=afterok:\${jid_step_1515} --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
-                #Here we are using the singleton  dependecy option, so this job can begin execution after any previously launched jobs sharing the same job name and user have terminated. In other words, only one job by that name and owned by that user can be running or suspended at any point in time.
-                jid_step_1616_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/g1616_%j.error -o \${lg}/g1616_%j.log --mem=\${sge_m} -J "G4s1515" --dependency=singleton --get-user-env -n 3 --mail-type END,FAIL --mail-user \${mail} \${hs}/1616.GATK4_step1616.sh \${param_file})
-				
             ;;
             SAMPLE)
                 jid_step_1011_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1011_\${SM}.error -o \${lg}/%j_g1011_\${SM}.log --mem=\${sge_m} -J "G4s1011_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/sample1011.GATK4_step1011.sh \${param_file})
