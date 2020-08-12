@@ -19,6 +19,12 @@ if [[ ${cluster_man} == "BURLO" ]]; then
     source activate gatk4100
 fi
 
+if [[ ${cluster_man} == "ORFEO" ]]; then
+    echo "We're at ORFEO"
+    #set at gatk 4.1 @ 2020/07/17
+    conda activate gatk4100
+fi
+
 #extract stats from the file
 function sam_stats(){
     infile=$1

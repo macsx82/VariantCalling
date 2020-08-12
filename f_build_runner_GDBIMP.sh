@@ -180,12 +180,82 @@ case \${cluster_man} in
                 jid_step_1212=\$(echo \${jid_step_1212_m}| cut -f 4 -d " ")
             ;;
         esac
+        ;;
+
+	ORFEO )
+
+	case \${pool_mode} in
+            CHROM )
+                #this should run as a job array or submit as many jobs as the chromosomes
+                #we have access to the param file variables, so we can create all oputput folders once
+                for chr in \${chr_pool[@]}
+                do
+                    mkdir -p \${fol7}/\${variantdb}_\${chr}
+            		mkdir -p \${fol8}/\${variantdb}_\${chr}
+                done
+
+				jid_step_1313=\$(qsub -N G4s1313_\${variantdb} -terse -cwd -l h_vmem=\${sge_m} -q \${sge_q} -o \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1313_\${variantdb}_\\\\$JOB_ID.error -m ea -M \${mail} \${hs}/1313.GATK4_step1313.sh \${param_file})
+            
+            	# echo "bash \${hs}/1313.GATK4_step1313.sh \${param_file}" | qsub -N G4s1313_\${variantdb} -cwd -l h_vmem=\${sge_m} -q \${sge_q} -o \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1313_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail}
+
+				
+				#GenomicsDBImport
+				#pipe step 14, job-array
+				#IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
+				#We will need to work with a job array by chromosome
+				#we will have one array with 25 tasks, each passing a file containing intervals for DBimport
+
+				#IN gCVF (gVCF-list) OUT gVCFDB /// GenomicsDBImport
+				#we need to split the interval file by 100 lines, but we need to do it on the fly
+				#than we nedd to collect each interval file path in another file and run a job array of intervals
+				#We will need to split the data of each chromosome in single intervals
+				#so we will have multiple jobs array with chromosome chunks instead of one job array with all chromosomes
+
+                for chr in \${chr_pool[@]}
+                do
+                	#Here we need to generate the lists of intervals for each chromosome
+					mkdir -p \${tmp}/db_imp_int_\${chr}
+					cd \${tmp}/db_imp_int_\${chr}
+					vdb_interval_current_chr_file=\$(sed -n "/_chr\${chr}\./p" \${vdb_interval})
+					fgrep -v "@" \${vdb_interval_current_chr_file} | awk '{print \$1":"\$2"-"\$3}' | split -a 4 --additional-suffix _dbImp_chr\${chr}.intervals -d -l 1
+					ls \${tmp}/db_imp_int_\${chr}/x*_dbImp_chr\${chr}.intervals > \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals
+
+					#Now we can take the list for the current chromosome and submit the job array for that chromosome for the dbimport step
+					a_size=\$(wc -l \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals|cut -f 1 -d " ")
+					
+
+					jid_step_1414=\$(qsub -t 1-\${a_size} -tc 10 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid \${jid_step_1313} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q} -terse \${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
+                	# echo "\${hs}/runner_job_array.sh -s \${hs}/1414.GATK4_step1414.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1414_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1313_\${variantdb} -o \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1414_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+
+					#GenotypeGVCFs
+					#pipe step 15, job-array
+					#IN gVCFDB OUT raw-VCFs /// GenotypeGVCFs
+
+	                #echo "\${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file}" | qsub -t 1-\${a_size} -tc 5 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid G4s1414_\${variantdb}_* -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q}
+					jid_step_1515=\$(qsub -t 1-${a_size} -tc 10 -N G4s1515_\${variantdb}_ -cwd -l h_vmem=\${sge_m_dbi} -hold_jid \${jid_step_1414%.*} -o \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.log -e \${lg}/\${variantdb}/g1515_\\\$JOB_ID.\\\$TASK_ID.error -m ea -M \${mail} -q \${sge_q} -terse \${hs}/runner_job_array.sh -s \${hs}/1515.GATK4_step1515.sh \${tmp}/db_imp_int_\${chr}/ALL_dbImp.intervals \${param_file})
 
 
+					#pipe step 16
+					#IN raw-VCFs OUT cohort raw-VCF /// GatherVcfs
+                  	current_variant_db="\${variantdb}_\${chr}_*"
+					int_vcf="\${current_variant_db}.vcf.gz"
+					find \${fol8}/\${current_variant_db}/\${int_vcf} -type f > \${fol8}/\${variantdb}_all_\${chr}_vcf.list
+                	echo "bash \${hs}/1616.GATK4_step1616.sh \${param_file} \${fol8}/\${variantdb}_all_\${chr}_vcf.list \${chr}" | qsub -N G4s1616_\${variantdb} -hold_jid \${jid_step_1414%.*},\${jid_step_1515%.*} -o \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g1616_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} -pe \${sge_pe} 3
 
+                done
 
-
-
+            ;;
+            SAMPLE)
+                jid_step_1011_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1011_\${SM}.error -o \${lg}/%j_g1011_\${SM}.log --mem=\${sge_m} -J "G4s1011_\${SM}" --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/sample1011.GATK4_step1011.sh \${param_file})
+                jid_step_1011=\$(echo \${jid_step_1011_m}| cut -f 4 -d " ")
+                
+                #gVCF check
+                #pipe step 12
+                #IN fixed gVCF OUT checked gVCF /// ValidateVariants
+                jid_step_1212_m=\$(sbatch --partition=\${sge_q} --account=uts19_dadamo --time=24:00:00 -e \${lg}/%j_g1212_\${SM}.error -o \${lg}/%j_g1212_\${SM}.log --mem=\${sge_m} -J "G4s1212_\${SM}" --dependency=afterok:\${jid_step_1011} --get-user-env -n 1 --mail-type END,FAIL --mail-user \${mail} \${hs}/sample1212.GATK4_step1212.sh \${param_file})
+                jid_step_1212=\$(echo \${jid_step_1212_m}| cut -f 4 -d " ")
+            ;;
+        esac
 	;;
 esac
 echo
