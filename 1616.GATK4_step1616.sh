@@ -40,7 +40,7 @@ case ${pool_mode} in
 		# concat , sort and normalize indels 
 		# ${BCFTOOLS} concat -a -f ${fol8}/${variantdb}_all_vcf.list | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}.gz
 		
-		${BCFTOOLS} concat -a -f ${current_all_vcf_list} | ${BCFTOOLS} sort -T ${tmp} | bcftools norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
+		${BCFTOOLS} concat -a -f ${current_all_vcf_list} | ${BCFTOOLS} sort -T ${tmp} | ${BCFTOOLS} norm -f ${GNMhg38} -O z -o ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		tabix -f -p vcf ${fol9}/${variantdb}/${raw}_${current_chr}.vcf.gz
 		echo "- END -"
 		echo -e "\n> Validate VCF"
