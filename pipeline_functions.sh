@@ -22,7 +22,7 @@ fi
 if [[ ${cluster_man} == "ORFEO" ]]; then
     echo "We're at ORFEO"
     #set at gatk 4.1 @ 2020/07/17
-    conda activate gatk4100
+    # conda activate gatk4100
 fi
 
 #extract stats from the file
@@ -61,9 +61,3 @@ function vcf_stats(){
 }
 
 #######################
-# utilities fucntions
-
-# function interval_header(){
-#     in_file=$1
-#     { head -n 1 ${in_file}; cat; } > "$FILE";
-# }
