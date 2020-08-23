@@ -13,7 +13,10 @@ source ${param_file}
 #source functions file
 own_folder=`dirname $0`
 source ${hs}/pipeline_functions.sh
+#we need to re-create the tmp folder after this source, otherwise, the folder will not be generated
+mkdir -p ${tmp}
 ### - CODE - ###
+
 
 case ${pool_mode} in
     CHROM)
