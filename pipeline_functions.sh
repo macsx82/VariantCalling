@@ -22,7 +22,8 @@ fi
 if [[ ${cluster_man} == "ORFEO" ]]; then
     echo "We're at ORFEO"
     #set at gatk 4.1 @ 2020/07/17
-    # conda activate gatk4100
+    eval "$(conda shell.bash hook)"
+    conda activate gatk4100
 fi
 
 #extract stats from the file
