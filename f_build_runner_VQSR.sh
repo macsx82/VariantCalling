@@ -82,6 +82,7 @@ case \${cluster_man} in
 
 				echo "bash \${hs}/2020.GATK4_step2020.sh \${param_file}" | qsub -N G4s2020_\${variantdb} -hold_jid G4s1718_\${variantdb} -o \${lg}/\${variantdb}/g2020_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2020_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m_j4} -q \${sge_q} 
 			;;
+		esac
 	;;
 	CINECA)
 		#Pre-VQSR
