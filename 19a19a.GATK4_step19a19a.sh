@@ -30,6 +30,7 @@ case ${pool_mode} in
 	echo -e "\n> Merge sites only VCFs"
 	# concat , sort and normalize indels 
 	${BCFTOOLS} concat -a -f ${fol8}/${variantdb}_all_chr_vcf.list | ${BCFTOOLS} sort -T ${tmp} | ${BCFTOOLS} norm -f ${GNMhg38} -O z -o ${fol8}/${SO}.vcf.gz
+	${BCFTOOLS} index -t ${fol8}/${SO}.vcf.gz
 	;;
 esac
 

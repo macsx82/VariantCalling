@@ -34,6 +34,7 @@ case ${pool_mode} in
 		#this should be done with picard!
 		# java ${java_opt2x} -XX:+UseSerialGC -jar ${PICARD} MakeSitesOnlyVcf -I ${fol8}/${HF} -O ${fol8}/${SO}
 		${BCFTOOLS} view -G ${fol8}/${HF}_${current_chr}.vcf.gz -O z -o ${fol8}/${SO}_${current_chr}.vcf.gz
+		${BCFTOOLS} index -t ${fol8}/${SO}_${current_chr}.vcf.gz
 	;;
 	SAMPLE)
 		echo
