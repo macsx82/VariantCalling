@@ -568,8 +568,8 @@ mode_S=SNP
 #step 21
 vqsr_thr_s="99.9"  #select vqsr threshold for SNPs
 vqsr_thr_i="99.9"  #select vqsr threshold for INDELs
-inout="\${variantdb}_tmp.indel.recalibrated.vcf.gz"
-final="\${variantdb}_VQSR_output.vcf.gz"    # -O
+inout="\${variantdb}_tmp.indel.recalibrated"
+final="\${variantdb}_VQSR_output"    # -O
 
 #step 22-24-25(-26)
 passed="\${variantdb}_VQSR_PASSED.vcf.gz"

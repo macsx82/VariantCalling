@@ -36,8 +36,12 @@ case \${cluster_man} in
 	#IN cohort VQSR.vcf, cohort raw.vcf OUT pass.list, sample.list /// grep
 	#IN cohort raw.vcf, pass.list OUT cohort-PASS-variants postVQSR /// SelectVariants
 	#IN cohort-PASS-variants postVQSR, sample.list OUT per sample-PASS-variants postVQSR /// SelectVariants
+	for chr in \${chr_pool[@]}
+    do
+		#echo "bash \${hs}/2224.GATK4_step2224.sh \${param_file}" | qsub -N G4s2224_\${variantdb} -hold_jid G4s2121_\${variantdb} -o \${lg}/\${variantdb}/g2224_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2224_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} 
+		echo "bash \${hs}/2224.GATK4_step2224.sh \${param_file} \${chr}" | qsub -N G4s2224_\${variantdb}_\${chr} -o \${lg}/\${variantdb}/g2224_\${variantdb}_\${chr}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2224_\${variantdb}_\${chr}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} 
 
-	echo "bash \${hs}/2224.GATK4_step2224.sh \${param_file}" | qsub -N G4s2224_\${variantdb} -hold_jid G4s2121_\${variantdb} -o \${lg}/\${variantdb}/g2224_\${variantdb}_\\\$JOB_ID.log -e \${lg}/\${variantdb}/g2224_\${variantdb}_\\\$JOB_ID.error -m ea -M \${mail} -cwd -l h_vmem=\${sge_m} -q \${sge_q} 
+    done
 
 	#Interval Filtered PASS variants selection
 	#pipe step 25
